@@ -6,5 +6,10 @@ type Ticket struct {
 	Description string
 }
 
-// TicketList will be passed over to the HTML template
+// Tickets will be passed over to the HTML template
 type Tickets []Ticket
+
+// Tasks is a collection of all of the ticktes (ToDo, InProgress and Done)
+type Tasks struct {
+	ToDo, InProgress, Done Tickets
+}
