@@ -8,16 +8,11 @@
         <h1 id="header">My kanban board</h1>
 
         <div class="main">
-            <div class="board-header">
-                <div>Todo</div>
-                <div>InProgress</div>
-                <div>Done</div>
-            </div>
             
             <div class="board-body">
 
                     <div class="board-body-column">
-
+                        <div>Todo</div>
                         {{range .ToDo}}    
                         
                             <div class="ticket">
@@ -35,7 +30,7 @@
                     <div class="board-body-column">
 
                         {{range .InProgress}}    
-                        
+                        <div>InProgress</div>
                             <div class="ticket">
                                 <div class="ticket-header">{{.Title}}</div>
                                 <div class="ticket-desc">{{.Description}}</div>                        
@@ -48,7 +43,8 @@
                     <div class="board-body-column">
 
                         {{range .Done}}    
-                        
+                        <div>Done</div>
+
                             <div class="ticket">
                                 <div class="ticket-header">{{.Title}}</div>
                                 <div class="ticket-desc">{{.Description}}</div>                        

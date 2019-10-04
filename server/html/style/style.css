@@ -2,20 +2,7 @@ body {
     background-color: #ffeec0;
 }
 
-.main{ 
-    background-color: #c0f0ff ;
-}
-
-.board-header {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    margin-bottom: 3%;
-}
-
-.board-header > div {
-    width: 33%;
-    margin: 10px;
+.board-header{
     font-size: 32px;
 }
 
@@ -29,7 +16,9 @@ body {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    width: 33%;
+    background-color: #c0f0ff;
+    margin: 1%;
+    width: 30%;
 }
 
 .ticket {
