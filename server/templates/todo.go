@@ -4,6 +4,7 @@ package templates
 type Ticket struct {
 	Title       string
 	Description string
+	ID          int
 }
 
 // Tickets will be passed over to the HTML template
