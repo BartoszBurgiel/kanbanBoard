@@ -7,8 +7,51 @@ import (
 )
 
 func main() {
+	const body = `<!DOCTYPE html>
+		<html>
+			<head>
+				<title>Title</title>
+				<link rel="stylesheet" href="/css/style.css" />
+			</head>
+		
+		<body>
+			<h1 id="header">My kanban board</h1>
 
-	tmpl := template.Must(template.ParseFiles("../server/html/index.html"))
+			<div class="main">
+				<div class="board-header">
+					<div>Todo</div>
+					<div>InProgress</div>
+					<div>Done</div>
+				</div>
+			{{template "content"}}
+
+			<!-- close board-body -->
+			</div>
+	
+		<!-- close main -->
+		</div>
+		</body>
+		</html>`
+
+	const content = `{{define "second"}}<div class="board-body-column">
+
+		{{range .ToDo}}
+
+			<div class="ticket">
+				<div class="ticket-header">{{.Title}}</div>
+				<div class="ticket-desc">{{.Description}}</div>
+			</div>
+
+		{{end}}
+
+	</div>
+	{{end}}`
+
+	// Handle all CSS files
+	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("../server/html/style/"))))
+
+	// Handle templates
+	http.Handle("/tmpl/", http.StripPrefix("/tmpl/", http.FileServer(http.Dir("../server/engine/templates/"))))
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		toDoTickets := templates.Tickets{
@@ -31,11 +74,10 @@ func main() {
 
 		tasks := templates.Tasks{toDoTickets, inProgressTickets, doneTickets}
 
-		tmpl.Execute(w, tasks)
+		temp := template.Must(template.New("body").Parse(body))
 
+		temp.Execute(w, tasks)
 	})
-
-	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("../server/html/style/"))))
 
 	http.ListenAndServe(":8080", nil)
 }
