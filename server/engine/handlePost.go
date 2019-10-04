@@ -10,7 +10,15 @@ func handlePost(r *http.Request) {
 	case "POST":
 
 		r.ParseForm()
-		fmt.Println("Button pressed: ", r.FormValue("ticketID"))
+
+		if  r.FormValue("ticketID") != "" {
+			fmt.Println("Button pressed: ", r.FormValue("ticketID"))
+		} else {
+			fmt.Println("New ticket:")
+			fmt.Println("title: ", r.FormValue("newTitle"))
+			fmt.Println("desc: ", r.FormValue("newDescription"))
+		}
+
 	default:
 
 	}
