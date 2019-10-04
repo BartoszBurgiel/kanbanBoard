@@ -34,6 +34,7 @@ func main() {
 						<div class="ticket-header">{{.Title}}</div>
 						<div class="ticket-desc">{{.Description}}</div>
 						<form action="/" method="POST">
+							<input type="hidden" id="custId" name="ticketID" value="{{.ID}}">
 							<input class="ticket-button" type="submit" name='{{.ID}}' value="&rarr;" />
 						</form>                     
 
@@ -50,7 +51,7 @@ func main() {
 						<div class="ticket-header">{{.Title}}</div>
 						<div class="ticket-desc">{{.Description}}</div>
 						<form action="/" method="POST">
-						<input type="hidden" id="custId" name="custId" value="3487">
+							<input type="hidden" id="custId" name="ticketID" value="{{.ID}}">
 							<input class="ticket-button" type="submit" name='{{.ID}}' value="&rarr;" />
 						</form>                      
 
@@ -67,7 +68,7 @@ func main() {
 							<div class="ticket-header">{{.Title}}</div>
 							<div class="ticket-desc">{{.Description}}</div>
 							<form action="/delete" method="post">
-								<input class="ticket-button" type="submit" name='{{.ID}}' value="&rarr;" />
+								<input class="ticket-button" type="submit" name='{{.ID}}' value="X" />
 							</form>                       
 
 					</div>
@@ -110,7 +111,8 @@ func main() {
 		switch r.Method {
 		case "POST":
 			//change data
-			fmt.Println("Button pressed: ", r.Form["username"])
+			r.ParseForm()
+			fmt.Println("Button pressed: ", r.Form["ticketID"])
 		default:
 
 		}
