@@ -1,0 +1,50 @@
+body {
+    background-color: #ffeec0;
+}
+
+.main{ 
+    background-color: #c0ffcf;
+}
+
+.board-header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-bottom: 3%;
+}
+
+.board-header > div {
+    width: 33%;
+    margin: 10px;
+    font-size: 32px;
+}
+
+.board-body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.board-body-column {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 33%;
+}
+
+.ticket {
+    margin: 10px;
+    background-color: #ffcfc0;   
+}
+
+.ticket-header {
+    text-align: left;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 24px;
+}
+
+.ticket-desc {
+    margin-top: 5px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+}
