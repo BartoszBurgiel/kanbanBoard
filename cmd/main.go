@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"text/template"
 	"webserver/server/templates"
@@ -32,7 +33,7 @@ func main() {
 					<div class="ticket">
 						<div class="ticket-header">{{.Title}}</div>
 						<div class="ticket-desc">{{.Description}}</div>
-						<form action="" method="post">
+						<form action="/" method="POST">
 							<input class="ticket-button" type="submit" name='{{.ID}}' value="&rarr;" />
 						</form>                     
 
@@ -48,7 +49,8 @@ func main() {
 					<div class="ticket">
 						<div class="ticket-header">{{.Title}}</div>
 						<div class="ticket-desc">{{.Description}}</div>
-						<form action="" method="post">
+						<form action="/" method="POST">
+						<input type="hidden" id="custId" name="custId" value="3487">
 							<input class="ticket-button" type="submit" name='{{.ID}}' value="&rarr;" />
 						</form>                      
 
@@ -64,7 +66,7 @@ func main() {
 					<div class="ticket">
 							<div class="ticket-header">{{.Title}}</div>
 							<div class="ticket-desc">{{.Description}}</div>
-							<form action="" method="post">
+							<form action="/delete" method="post">
 								<input class="ticket-button" type="submit" name='{{.ID}}' value="&rarr;" />
 							</form>                       
 
@@ -86,6 +88,7 @@ func main() {
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("../server/html/style/"))))
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+
 		toDoTickets := templates.Tickets{
 			templates.Ticket{"T1", "T1desc", 1},
 			templates.Ticket{"T2", "T2desc", 2},
@@ -104,11 +107,19 @@ func main() {
 			templates.Ticket{"T3d", "T3descd", 9},
 		}
 
-		tasks := templates.Tasks{toDoTickets, inProgressTickets, doneTickets}
+		switch r.Method {
+		case "POST":
+			//change data
+			fmt.Println("Button pressed: ", r.Form["username"])
+		default:
 
+		}
+
+		tasks := templates.Tasks{toDoTickets, inProgressTickets, doneTickets}
 		temp := template.Must(template.New("body").Parse(body))
 
 		temp.Execute(w, tasks)
+
 	})
 
 	http.ListenAndServe(":8080", nil)
