@@ -17,34 +17,43 @@
             <div class="board-body">
 
                     <div class="board-body-column">
-                        <div class="ticket">
-                            <div class="ticket-header">Element-Left</div>
-                            <div class="ticket-desc">Description</div>                        
-                        </div>
-                        <div class="ticket">
-                            <div class="ticket-header">Element-Left1</div>
-                            <div class="ticket-desc">Description</div>                        
-                        </div>
+
+                        {{range .}}    
+                        
+                            <div class="ticket">
+                                <div class="ticket-header">{{.Title}}</div>
+                                <div class="ticket-desc">{{.Description}}</div>                        
+                            </div>
+
+                        {{end}}
+
+                    </div>
+
+                    <div class="board-body-column">
+
+                        {{range .}}    
+                        
+                            <div class="ticket">
+                                <div class="ticket-header">{{.Title}}</div>
+                                <div class="ticket-desc">{{.Description}}</div>                        
+                            </div>
+
+                        {{end}}
 
                     </div>
     
                     <div class="board-body-column">
-                        <div class="ticket">
-                            <div class="ticket-header">Element-Middle</div>
-                            <div class="ticket-desc">Description</div>                        
 
-                        </div>
-                    </div>
-    
-                    <div class="board-body-column">
-                        <div class="ticket">
-                            <div class="ticket-header">Element-Rigth</div>
-                            <div class="ticket-desc">Description</div>                        
+                        {{range .}}    
+                        
+                            <div class="ticket">
+                                <div class="ticket-header">{{.Title}}</div>
+                                <div class="ticket-desc">{{.Description}}</div>                        
+                            </div>
 
-                        </div>
-                    </div>
-
-
+                        {{end}}
+                    
+                </div>
             </div>
         </div>
     </body>
