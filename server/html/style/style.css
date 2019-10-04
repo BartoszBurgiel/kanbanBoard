@@ -69,8 +69,20 @@ body {
 
 }
 
-@media screen and (min-width: 480px) {
-    body {
-        background-color: red;
+@media screen and (max-width: 700px) {
+    .board-body {
+        flex-flow: column;
+        flex-wrap: column wrap;
+    }
+
+    .board-body-column {
+        width: 95%;
+        margin-bottom: 10%;
+    }
+
+    .ticket > form {
+        grid-column:  2;
+        grid-row: 1/3;
+        justify-self: right;
     }
 }
