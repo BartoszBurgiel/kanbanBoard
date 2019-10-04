@@ -13,5 +13,8 @@ func Run(w http.ResponseWriter, r *http.Request) {
 	// assemble the page
 	temp := template.Must(template.New("body").Parse(body))
 
+	handlePost(r)
+
 	temp.Execute(w, dummyData)
+
 }

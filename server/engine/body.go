@@ -57,7 +57,7 @@ const body = `<!DOCTYPE html>
 			<div class="ticket">
 					<div class="ticket-header">{{.Title}}</div>
 					<div class="ticket-desc">{{.Description}}</div>
-					<form action="/delete" method="post">
+					<form action="/" method="post">
 						<input type="hidden" id="custId" name="ticketID" value="{{.ID}}">
 						<input class="ticket-button" type="submit" name='{{.ID}}' value="X" />
 					</form>                       

@@ -8,10 +8,14 @@ import (
 func handlePost(r *http.Request) {
 	switch r.Method {
 	case "POST":
-		//change data
+
 		r.ParseForm()
-		fmt.Println("Button pressed: ", r.Form["ticketID"])
+		fmt.Println("Button pressed: ", r.FormValue("ticketID"))
 	default:
 
 	}
+}
+
+func moveTicket(id string) {
+
 }
