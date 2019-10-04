@@ -23,7 +23,9 @@
                             <div class="ticket">
                                 <div class="ticket-header">{{.Title}}</div>
                                 <div class="ticket-desc">{{.Description}}</div> 
-                                <div class="ticket-button">&rarr;</div>                       
+                                    <form action="" method="post">
+                                        <input class="ticket-button" type="submit" name="upvote" value="&rarr;" />
+                                    </form>                    
                             </div>
 
                         {{end}}

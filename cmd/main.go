@@ -32,7 +32,11 @@ func main() {
 					<div class="ticket">
 						<div class="ticket-header">{{.Title}}</div>
 						<div class="ticket-desc">{{.Description}}</div>
-						<div class="ticket-button">&rarr;</div>                       
+						<div class="ticket-button">
+							<form action="" method="post">
+								<input type="submit" name="upvote" value="&rarr;" />
+							</form>
+						</div>                       
 
 					</div>
 			
