@@ -35,6 +35,7 @@ body {
 .ticket {
     margin: 10px;
     background-color: #ffcfc0;   
+    box-shadow: 5px 5px #ffbca7;
 }
 
 .ticket-header {
