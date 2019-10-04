@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="./style/style.css">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
     </head>
 
     <body>
@@ -18,7 +18,7 @@
 
                     <div class="board-body-column">
 
-                        {{range .}}    
+                        {{range .ToDo}}    
                         
                             <div class="ticket">
                                 <div class="ticket-header">{{.Title}}</div>
@@ -31,7 +31,7 @@
 
                     <div class="board-body-column">
 
-                        {{range .}}    
+                        {{range .InProgress}}    
                         
                             <div class="ticket">
                                 <div class="ticket-header">{{.Title}}</div>
@@ -44,7 +44,7 @@
     
                     <div class="board-body-column">
 
-                        {{range .}}    
+                        {{range .Done}}    
                         
                             <div class="ticket">
                                 <div class="ticket-header">{{.Title}}</div>
