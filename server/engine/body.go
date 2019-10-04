@@ -5,6 +5,7 @@ const body = `<!DOCTYPE html>
 	<head>
 		<title>My kanban board</title>
 		<link rel="stylesheet" href="/css/style.css" />
+		<meta content="width=device-width, initial-scale=1" name="viewport" />
 	</head>
 
 <body>
@@ -24,10 +25,10 @@ const body = `<!DOCTYPE html>
 				<form action="/" method="POST">
 					<input type="hidden" id="custId" name="ticketID" value="{{.ID}}">
 					<input class="ticket-button" type="submit" name='{{.ID}}' value="&rarr;" />
-				</form>                     
+				</form>
 
 			</div>
-	
+
 		{{end}}
 
 		</div>
@@ -35,14 +36,14 @@ const body = `<!DOCTYPE html>
 		<div class="board-header">InProgress</div>
 
 		{{range .InProgress}}
-	
+
 			<div class="ticket">
 				<div class="ticket-header">{{.Title}}</div>
 				<div class="ticket-desc">{{.Description}}</div>
 				<form action="/" method="POST">
 					<input type="hidden" id="custId" name="ticketID" value="{{.ID}}">
 					<input class="ticket-button" type="submit" name='{{.ID}}' value="&rarr;" />
-				</form>                      
+				</form>
 
 			</div>
 
@@ -53,19 +54,19 @@ const body = `<!DOCTYPE html>
 		<div class="board-header">Done</div>
 
 		{{range .Done}}
-	
+
 			<div class="ticket">
 					<div class="ticket-header">{{.Title}}</div>
 					<div class="ticket-desc">{{.Description}}</div>
 					<form action="/" method="post">
 						<input type="hidden" id="custId" name="ticketID" value="{{.ID}}">
 						<input class="ticket-button" type="submit" name='{{.ID}}' value="X" />
-					</form>                       
+					</form>
 
 			</div>
 
 		{{end}}
-		
+
 		</div>
 
 	<!-- close board-body -->

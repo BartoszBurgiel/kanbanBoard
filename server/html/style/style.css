@@ -8,8 +8,7 @@ body {
 
 .board-body {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: row wrap;
 }
 
 .board-body-column {
@@ -19,6 +18,18 @@ body {
     background-color: #c0f0ff;
     margin: 1%;
     width: 30%;
+}
+
+#toDo {
+    order: 1;
+}
+
+#inProgress {
+    order: 2;
+}
+
+#done {
+    order: 3;
 }
 
 .ticket {
@@ -58,7 +69,7 @@ body {
 
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (min-width: 480px) {
     body {
         background-color: red;
     }
