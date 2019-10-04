@@ -10,7 +10,7 @@ func main() {
 	const body = `<!DOCTYPE html>
 		<html>
 			<head>
-				<title>Title</title>
+				<title>My kanban board</title>
 				<link rel="stylesheet" href="/css/style.css" />
 			</head>
 		
@@ -23,7 +23,50 @@ func main() {
 					<div>InProgress</div>
 					<div>Done</div>
 				</div>
-			{{template "content"}}
+
+			<div class="board-body">
+				<div class="board-body-column">
+
+				{{range .ToDo}}
+			
+					<div class="ticket">
+						<div class="ticket-header">{{.Title}}</div>
+						<div class="ticket-desc">{{.Description}}</div>
+						<div class="ticket-button">&rarr;</div>                       
+
+					</div>
+			
+				{{end}}
+
+				</div>
+				<div class="board-body-column">
+
+				{{range .InProgress}}
+			
+					<div class="ticket">
+						<div class="ticket-header">{{.Title}}</div>
+						<div class="ticket-desc">{{.Description}}</div>
+						<div class="ticket-button">&rarr;</div>                       
+
+					</div>
+		
+				{{end}}
+
+				</div>
+				<div class="board-body-column">
+
+				{{range .Done}}
+			
+					<div class="ticket">
+							<div class="ticket-header">{{.Title}}</div>
+							<div class="ticket-desc">{{.Description}}</div>
+							<div class="ticket-button">&rarr;</div>                       
+
+					</div>
+
+				{{end}}
+				
+				</div>
 
 			<!-- close board-body -->
 			</div>
@@ -33,25 +76,10 @@ func main() {
 		</body>
 		</html>`
 
-	const content = `{{define "second"}}<div class="board-body-column">
-
-		{{range .ToDo}}
-
-			<div class="ticket">
-				<div class="ticket-header">{{.Title}}</div>
-				<div class="ticket-desc">{{.Description}}</div>
-			</div>
-
-		{{end}}
-
-	</div>
-	{{end}}`
-
 	// Handle all CSS files
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("../server/html/style/"))))
 
-	// Handle templates
-	http.Handle("/tmpl/", http.StripPrefix("/tmpl/", http.FileServer(http.Dir("../server/engine/templates/"))))
+	// mit post stucts manipulieren + action
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		toDoTickets := templates.Tickets{

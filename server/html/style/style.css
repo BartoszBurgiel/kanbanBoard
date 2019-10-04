@@ -3,7 +3,7 @@ body {
 }
 
 .main{ 
-    background-color: #c0ffcf;
+    background-color: #c0f0ff ;
 }
 
 .board-header {
@@ -36,16 +36,31 @@ body {
     margin: 10px;
     background-color: #ffcfc0;   
     box-shadow: 5px 5px #ffbca7;
+    display: grid;
 }
 
 .ticket-header {
     text-align: left;
     font-family: 'Courier New', Courier, monospace;
     font-size: 24px;
+    grid-column: 1;
 }
 
 .ticket-desc {
     margin-top: 5px;
     font-family: 'Courier New', Courier, monospace;
     font-size: 16px;
+    grid-column: 1;
+}
+
+.ticket-button {
+    margin: 20px;
+    width: 20%;
+    justify-self: right;
+    text-align: center;
+    vertical-align: middle;
+    grid-column:  2;
+    grid-row: 1/3;
+    background-color: #c0ffcf;
+    font-size: 36px;
 }
