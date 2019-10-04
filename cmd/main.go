@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"kanbanBoard/server/templates"
 	"net/http"
 	"text/template"
-	"webserver/server/templates"
 )
 
 func main() {
@@ -68,6 +68,7 @@ func main() {
 							<div class="ticket-header">{{.Title}}</div>
 							<div class="ticket-desc">{{.Description}}</div>
 							<form action="/delete" method="post">
+								<input type="hidden" id="custId" name="ticketID" value="{{.ID}}">
 								<input class="ticket-button" type="submit" name='{{.ID}}' value="X" />
 							</form>                       
 
@@ -91,21 +92,21 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 
 		toDoTickets := templates.Tickets{
-			templates.Ticket{"T1", "T1desc", 1},
-			templates.Ticket{"T2", "T2desc", 2},
-			templates.Ticket{"T3", "T3desc", 3},
+			templates.Ticket{"Ticket1", "Description of the task 1", 1},
+			templates.Ticket{"Ticket2", "Description of the task 2", 2},
+			templates.Ticket{"Ticket3", "Description of the task 3", 3},
 		}
 
 		inProgressTickets := templates.Tickets{
-			templates.Ticket{"T1ip", "T1descip", 4},
-			templates.Ticket{"T2ip", "T2descip", 5},
-			templates.Ticket{"T3ip", "T3descip", 6},
+			templates.Ticket{"Ticket1 in progress", "Task 1 - currently in progress", 4},
+			templates.Ticket{"Ticket2 in progress", "Task 2 - currently in progress", 5},
+			templates.Ticket{"Ticket3 in progress", "Task 3 - currently in progress", 6},
 		}
 
 		doneTickets := templates.Tickets{
-			templates.Ticket{"T1d", "T1descd", 7},
-			templates.Ticket{"T2d", "T2descd", 8},
-			templates.Ticket{"T3d", "T3descd", 9},
+			templates.Ticket{"Ticket1 done", "Task 1 - already done", 7},
+			templates.Ticket{"Ticket2d done", "Task 2 - already done", 8},
+			templates.Ticket{"Ticket3d done", "Task 3 - already done", 9},
 		}
 
 		switch r.Method {
