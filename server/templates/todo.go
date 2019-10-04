@@ -7,4 +7,4 @@ type Ticket struct {
 }
 
 // TicketList will be passed over to the HTML template
-type TicketList []Ticket
+type Tickets []Ticket
