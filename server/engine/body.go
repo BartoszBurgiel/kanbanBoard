@@ -68,11 +68,23 @@ const body = `<!DOCTYPE html>
 		{{end}}
 
 		</div>
-
-	<!-- close board-body -->
 	</div>
+	<div class="new-ticket">
+                <div class="new-ticket-head">New ticket...</div>
+                <div class="new-ticket-body">
+                    <form action="/" method="POST">
+                        <div class="new-ticket-title">
+                            <input type="text" name="newTitle" placeholder="Title..." required />
+                        </div>
 
-<!-- close main -->
-</div>
-</body>
+                        <div class="new-ticket-description">
+                            <textarea name="newDescription" placeholder="Description..." required/></textarea>
+                        </div>
+                        
+                        <input class="new-ticket-button" type="submit" name="submitNewTicket" value="Add" />
+                    </form>
+                </div>
+            </div>
+		</div>
+	</body>
 </html>`

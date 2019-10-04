@@ -2,7 +2,7 @@ body {
     background-color: #ffeec0;
 }
 
-.board-header{
+.board-header, .new-ticket-head{
     font-size: 32px;
 }
 
@@ -39,7 +39,7 @@ body {
     display: grid;
 }
 
-.ticket-header {
+.ticket-header, .new-ticket-title{
     text-align: left;
     font-family: 'Courier New', Courier, monospace;
     font-size: 24px;
@@ -47,14 +47,14 @@ body {
     grid-column: 1;
 }
 
-.ticket-desc {
+.ticket-desc, .new-ticket-description{
     margin-top: 5px;
     font-family: 'Courier New', Courier, monospace;
     font-size: 16px;
     grid-column: 1;
 }
 
-.ticket-button {
+.ticket-button, .new-ticket-button {
     text-align: center;
     vertical-align: middle;
     background-color: #c0ffcf;
@@ -66,7 +66,37 @@ body {
     grid-row: 1/3;
     margin: 20px;
     width: 20%;
+}
 
+.new-ticket {
+    background-color: #c0f0ff;
+    margin: 1%;
+    width: 30%;
+}
+
+.new-ticket-body {
+    margin: 10px;
+    background-color: #ffcfc0;   
+    box-shadow: 5px 5px #ffbca7;
+}
+
+.new-ticket-body > form {
+    display: grid;
+}
+
+.new-ticket-title, .new-ticket-description {
+    grid-column: 1;
+}
+
+.new-ticket-title {
+    font-size: 24px;
+}
+
+.new-ticket-button {
+    grid-column: 2;
+    grid-row: 1/3;
+    font-size: 18px;
+    margin: 12%;
 }
 
 @media screen and (max-width: 700px) {
@@ -84,5 +114,9 @@ body {
         grid-column:  2;
         grid-row: 1/3;
         justify-self: right;
+    }
+
+    .new-ticket {
+        width: 100%;
     }
 }
