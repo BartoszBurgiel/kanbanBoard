@@ -1,9 +1,10 @@
 body {
-    background-color: #ffeec0;
+    background-color:#ffeec0;
 }
 
 .board-header, .new-ticket-head{
     font-size: 32px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
 .board-body {
