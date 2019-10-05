@@ -1,14 +1,25 @@
 body {
-    background:
-    radial-gradient(circle, transparent 20%, #f1ffc0 20%, #f1ffc0 80%, transparent 80%, transparent),
-    radial-gradient(circle, transparent 20%, #f1ffc0 20%, #f1ffc0 80%, transparent 80%, transparent) 50px 50px,
-    linear-gradient(#ffeec0 8px, transparent 8px) 0 -4px,
-    linear-gradient(90deg, 	#ffeec0 8px, transparent 8px) -4px 0;
-    background-color: #f1ffc0;
-    background-size:100px 100px, 100px 100px, 50px 50px, 50px 50px;
+background:
+    radial-gradient(black 3px, transparent 4px),
+    radial-gradient(black 3px, transparent 4px),
+    linear-gradient(#fff 4px, transparent 0),
+    linear-gradient(45deg, transparent 74px, transparent 75px, #a4a4a4 75px, #a4a4a4 76px, transparent 77px, transparent 109px),
+    linear-gradient(-45deg, transparent 75px, transparent 76px, #a4a4a4 76px, #a4a4a4 77px, transparent 78px, transparent 109px),
+    #fff;
+    background-size: 109px 109px, 109px 109px,100% 6px, 109px 109px, 109px 109px;
+    background-position: 54px 55px, 0px 0px, 0px 0px, 0px 0px, 0px 0px;
 }
 
-.board-header, .new-ticket-head, #header{
+.header {
+    font-size: 48px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
+    background-color: white;
+    width: min-content;
+    white-space: nowrap;
+    margin: 1%;
+}
+
+.board-header, .new-ticket-head{
     font-size: 32px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
@@ -108,13 +119,20 @@ body {
 }
 
 @media screen and (max-width: 700px) {
+    .header {
+        font-size: 40px;
+        margin: auto;
+        margin-bottom: 5%;
+    }
+
     .board-body {
         flex-flow: column;
         flex-wrap: column wrap;
+        margin: auto;
     }
 
     .board-body-column {
-        width: 95%;
+        width: auto;
         margin-bottom: 10%;
     }
 
@@ -125,5 +143,6 @@ body {
 
     .new-ticket {
         width: 95%;
+        margin: auto;
     }
 }

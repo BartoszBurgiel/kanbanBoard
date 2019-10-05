@@ -9,7 +9,7 @@ const body = `<!DOCTYPE html>
 	</head>
 
 <body>
-	<h1 id="header">My kanban board</h1>
+	<div class="header">My kanban board</div>
 
 	<div class="main">
 

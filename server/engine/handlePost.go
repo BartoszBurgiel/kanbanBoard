@@ -5,6 +5,7 @@ import (
 	"net/http"
 )
 
+// handlePost handles a http request
 func handlePost(r *http.Request) {
 	switch r.Method {
 	case "POST":
