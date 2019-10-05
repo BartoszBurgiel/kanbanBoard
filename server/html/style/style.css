@@ -1,8 +1,14 @@
 body {
-    background-color:#ffeec0;
+    background:
+    radial-gradient(circle, transparent 20%, #f1ffc0 20%, #f1ffc0 80%, transparent 80%, transparent),
+    radial-gradient(circle, transparent 20%, #f1ffc0 20%, #f1ffc0 80%, transparent 80%, transparent) 50px 50px,
+    linear-gradient(#ffeec0 8px, transparent 8px) 0 -4px,
+    linear-gradient(90deg, 	#ffeec0 8px, transparent 8px) -4px 0;
+    background-color: #f1ffc0;
+    background-size:100px 100px, 100px 100px, 50px 50px, 50px 50px;
 }
 
-.board-header, .new-ticket-head{
+.board-header, .new-ticket-head, #header{
     font-size: 32px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
@@ -35,7 +41,7 @@ body {
 
 .ticket {
     margin: 10px;
-    background-color: #ffcfc0;   
+    background-color: #ffcfc0;
     box-shadow: 5px 5px #ffbca7;
     display: grid;
 }
@@ -44,7 +50,7 @@ body {
     text-align: left;
     font-family: 'Courier New', Courier, monospace;
     font-size: 24px;
-    font-weight: bold; 
+    font-weight: bold;
     grid-column: 1;
 }
 
@@ -78,7 +84,7 @@ body {
 
 .new-ticket-body {
     margin: 10px;
-    background-color: #ffcfc0;   
+    background-color: #ffcfc0;
     box-shadow: 5px 5px #ffbca7;
 }
 
