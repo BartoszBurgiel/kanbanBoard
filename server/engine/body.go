@@ -23,7 +23,8 @@ const body = `<!DOCTYPE html>
 				<div class="ticket-header">{{.Title}}</div>
 				<div class="ticket-desc">{{.Description}}</div>
 				<form action="/" method="POST">
-					<input type="hidden" id="custId" name="ticketID" value="{{.ID}}">
+					<input type="hidden" name="ticketID" value="{{.ID}}">
+					<input type="hidden" name="state" value="ToDo">
 					<input class="ticket-button" type="submit" name='{{.ID}}' value="&rarr;" />
 				</form>
 
@@ -41,7 +42,8 @@ const body = `<!DOCTYPE html>
 				<div class="ticket-header">{{.Title}}</div>
 				<div class="ticket-desc">{{.Description}}</div>
 				<form action="/" method="POST">
-					<input type="hidden" id="custId" name="ticketID" value="{{.ID}}">
+					<input type="hidden" name="ticketID" value="{{.ID}}">
+					<input type="hidden" name="state" value="InProgress">
 					<input class="ticket-button" type="submit" name='{{.ID}}' value="&rarr;" />
 				</form>
 
@@ -59,7 +61,8 @@ const body = `<!DOCTYPE html>
 					<div class="ticket-header">{{.Title}}</div>
 					<div class="ticket-desc">{{.Description}}</div>
 					<form action="/" method="post">
-						<input type="hidden" id="custId" name="ticketID" value="{{.ID}}">
+						<input type="hidden" name="ticketID" value="{{.ID}}">
+						<input type="hidden" name="state" value="Done">
 						<input class="ticket-button" type="submit" name='{{.ID}}' value="X" />
 					</form>
 

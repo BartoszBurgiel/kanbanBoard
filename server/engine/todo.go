@@ -4,7 +4,7 @@ package engine
 type Ticket struct {
 	Title       string
 	Description string
-	ID          int
+	ID          string
 }
 
 // Tickets will be passed over to the HTML template
@@ -17,3 +17,7 @@ type Tasks struct {
 
 func (t *Tickets) Set() {}
 func (t *Ticket) Get()  {}
+
+func NewTicket(title, desc string) Ticket {
+	return Ticket{Title: title, Description: desc, ID: "10"}
+}

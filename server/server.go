@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 	"webserver/server/engine"
@@ -25,8 +26,8 @@ func (s *Server) init() error {
 	// daten von Db holen?
 	// start  engine <- ptr  of model
 
-	s.router.Route("/api/")["GET"] = http.HandlerFunc(s.handleGET)
-	s.router.Route("/api/")["POST"] = http.HandlerFunc(s.HandleUserInput)
+	s.router.Route("/")["GET"] = http.HandlerFunc(s.handleGET)
+	s.router.Route("/")["POST"] = http.HandlerFunc(s.handleUserInput)
 
 	return nil
 }
@@ -35,32 +36,19 @@ func (s *Server) handleGET(w http.ResponseWriter, r *http.Request) {
 	s.engine.Render(w, r)
 }
 
-func (s *Server) HandleUserInput(w http.ResponseWriter, r *http.Request) {
-
-	//daten manipulieren
-	//set/get foo bar bazz
-
-	/*
-		if r.FormValue("ticketID") != "" {
-			fmt.Println("Button pressed: ", r.FormValue("ticketID"))
-		} else {
-			fmt.Println("New ticket:")
-			fmt.Println("title: ", r.FormValue("newTitle"))
-			fmt.Println("desc: ", r.FormValue("newDescription"))
-		}
-	*/
-
-}
-
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	url := r.URL.String()
-	if strings.HasPrefix(url, "/api/") {
+	if !strings.HasPrefix(url, "/style.css") {
 		p := Path(r.URL.Path)
 		m := Method(r.Method)
+
+		fmt.Println(p, m)
+
 		s.router.Route(p)[m].ServeHTTP(w, r)
-	} else {
-		s.handleGETAssets(w, r)
 	}
+
+	// 	s.handleGETAssets(w, r)
+	// }
 }
 
 func (s Server) handleGETAssets(w http.ResponseWriter, r *http.Request) {
