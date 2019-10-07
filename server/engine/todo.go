@@ -50,12 +50,10 @@ func ChangeTicket(state, id string, tasks *Tasks) {
 			fmt.Println("todo")
 			fmt.Println("ticket: ", ticket)
 
-			// modify
+			(*tickets)[i] = (*tickets)[len(*tickets)-1]
+			(*tickets) = (*tickets)[:len(*tickets)-1]
 
-			if nextState == nil {
-				(*tickets)[i] = (*tickets)[len(*tickets)-1]
-				(*tickets) = (*tickets)[:len(*tickets)-1]
-			} else {
+			if nextState != nil {
 				*nextState = append(*nextState, ticket)
 			}
 
