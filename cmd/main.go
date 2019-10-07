@@ -7,6 +7,8 @@ import (
 
 func main() {
 
+	//http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./ui/"))))
+
 	s, err := server.NewServer()
 	if err != nil {
 		panic(err)

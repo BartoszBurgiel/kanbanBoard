@@ -40,21 +40,20 @@ func (s *Server) handleGET(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	url := r.URL.String()
-	if !strings.HasPrefix(url, "/style.css") {
+	if !strings.HasPrefix(url, "/style") {
 		p := Path(r.URL.Path)
 		m := Method(r.Method)
 
 		fmt.Println(p, m)
 
 		s.router.Route(p)[m].ServeHTTP(w, r)
+		return
 	}
 
-	// 	s.handleGETAssets(w, r)
-	// }
+	s.handleGETAssets(w, r)
 }
 
 func (s Server) handleGETAssets(w http.ResponseWriter, r *http.Request) {
-	// http.FileServer(http.Dir("./ui")).ServeHTTP(w, r)
-	// http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./ui/"))))
-
+	//w.Header().Set("Content-Type", "text/css")
+	http.FileServer(http.Dir("./ui")).ServeHTTP(w, r)
 }
