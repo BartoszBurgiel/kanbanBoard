@@ -52,12 +52,11 @@ func ChangeTicket(state, id string, tasks *Tasks) {
 
 			// modify
 
-			*nextState = append(*nextState, ticket)
-
 			if nextState == nil {
 				(*tickets)[i] = (*tickets)[len(*tickets)-1]
 				(*tickets) = (*tickets)[:len(*tickets)-1]
-
+			} else {
+				*nextState = append(*nextState, ticket)
 			}
 
 			break
