@@ -18,44 +18,7 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 		id := r.FormValue("ticketID")
 		state := r.FormValue("state")
 
-		var tickets *engine.Tickets
-		var nextState *engine.Tickets
-
-		switch state {
-		case "ToDo":
-			//tickets = &tasks.ToDo
-			//nextState = &tasks.InProgress
-			break
-		case "InProgress":
-			tickets = &tasks.InProgress
-			nextState = &tasks.Done
-			break
-		case "Done":
-			tickets = &tasks.Done
-			nextState = nil
-			break
-		}
-
-		// search in each slices for the given ID
-		for i, ticket := range *tickets {
-			if ticket.ID == id {
-
-				fmt.Println("todo")
-				fmt.Println("ticket: ", ticket)
-
-				// modify
-
-				*nextState = append(*nextState, ticket)
-
-				if nextState == nil {
-					(*tickets)[i] = (*tickets)[len(*tickets)-1]
-					(*tickets) = (*tickets)[:len(*tickets)-1]
-
-				}
-
-				break
-			}
-		}
+		engine.ChangeTicket(state, id, tasks)
 
 	} else {
 		fmt.Println("New ticket:")
