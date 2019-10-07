@@ -1,6 +1,7 @@
 package server
 
 import (
+	"database/sql"
 	"fmt"
 	"net/http"
 	"strings"
@@ -11,12 +12,14 @@ import (
 type Server struct {
 	router *Router
 	engine *engine.Engine
+	repo   *sql.DB
 }
 
 // NewServer returns new server
-func NewServer() (*Server, error) {
+func NewServer(r *sql.DB) (*Server, error) {
 	s := &Server{
 		engine: engine.New(),
+		repo:   r,
 	}
 
 	return s, s.init()
@@ -25,8 +28,35 @@ func NewServer() (*Server, error) {
 func (s *Server) init() error {
 	s.router = NewRouter()
 
-	// daten von Db holen?
-	// start  engine <- ptr  of model
+	// Get all todos
+	toDos, err := s.repo.Query("SELECT * FROM todotasks ;")
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	// Get all inprogress
+	inprogress, err := s.repo.Query("SELECT * FROM inprogresstasks ;")
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	// Get all done
+	done, err := s.repo.Query("SELECT * FROM donetasks ;")
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	// Build tasks
+	tasks := engine.Tasks{
+		ToDo:       engine.QueryToTickets(toDos),
+		InProgress: engine.QueryToTickets(inprogress),
+		Done:       engine.QueryToTickets(done),
+	}
+
+	s.engine.SetTasks(tasks)
 
 	s.router.Route("/")["GET"] = http.HandlerFunc(s.handleGET)
 	s.router.Route("/")["POST"] = http.HandlerFunc(s.handleUserInput)
@@ -57,5 +87,5 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (s Server) handleGETAssets(w http.ResponseWriter, r *http.Request) {
 	//w.Header().Set("Content-Type", "text/css")
-	http.FileServer(http.Dir("./server/html/style")).ServeHTTP(w, r)
+	http.FileServer(http.Dir("../server/html/style")).ServeHTTP(w, r)
 }
