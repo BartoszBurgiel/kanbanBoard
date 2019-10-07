@@ -3,8 +3,8 @@ package engine
 const body = `<!DOCTYPE html>
 <html>
 	<head>
-		<title>My kanban board</title>
-		<link rel="stylesheet" href="/css/style.css" />
+	<title>My kanban board</title>
+		<link rel="stylesheet" type="text/css" href="./style.css" />
 		<meta content="width=device-width, initial-scale=1" name="viewport" />
 	</head>
 

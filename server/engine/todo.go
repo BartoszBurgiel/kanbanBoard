@@ -1,4 +1,4 @@
-package templates
+package engine
 
 // Ticket represents a ticket on the kanban board
 type Ticket struct {
@@ -14,3 +14,6 @@ type Tickets []Ticket
 type Tasks struct {
 	ToDo, InProgress, Done Tickets
 }
+
+func (t *Tickets) Set() {}
+func (t *Ticket) Get()  {}

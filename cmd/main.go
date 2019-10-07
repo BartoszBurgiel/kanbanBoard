@@ -1,16 +1,16 @@
 package main
 
 import (
-	"kanbanBoard/server/engine"
 	"net/http"
+	"webserver/server"
 )
 
 func main() {
 
-	// Handle all CSS files
-	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("../server/html/style/"))))
+	s, err := server.NewServer()
+	if err != nil {
+		panic(err)
+	}
 
-	http.HandleFunc("/", engine.Run)
-
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8080", s)
 }
