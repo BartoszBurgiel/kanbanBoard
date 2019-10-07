@@ -18,7 +18,7 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 		id := r.FormValue("ticketID")
 		state := r.FormValue("state")
 
-		engine.ChangeTicket(state, id, tasks)
+		tasks.ChangeTicket(state, id)
 
 	} else {
 		fmt.Println("New ticket:")

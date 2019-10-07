@@ -54,6 +54,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s Server) handleGETAssets(w http.ResponseWriter, r *http.Request) {
-	http.FileServer(http.Dir("./ui")).ServeHTTP(w, r)
-	//http.Handle("/css", http.FileServer(http.Dir("../server/html/style/")))
+	// http.FileServer(http.Dir("./ui")).ServeHTTP(w, r)
+	// http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./ui/"))))
+
 }

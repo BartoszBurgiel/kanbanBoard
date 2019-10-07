@@ -23,40 +23,75 @@ func NewTicket(title, desc string) Ticket {
 }
 
 // ChangeTicket handles a given ticket according to it's state
-func ChangeTicket(state, id string, tasks *Tasks) {
-	var tickets *Tickets
-	var nextState *Tickets
+func (t *Tasks) ChangeTicket(state, id string) {
+	//var tickets *Tickets
+	//var nextState *Tickets
 
 	switch state {
 	case "ToDo":
-		tickets = &tasks.ToDo
-		nextState = &tasks.InProgress
+		t.moveTicketToInProgress(id)
 		break
 	case "InProgress":
-		tickets = &tasks.InProgress
-		nextState = &tasks.Done
+		t.moveTicketToDone(id)
 		break
 	case "Done":
-		tickets = &tasks.Done
-		nextState = nil
+		t.deleteTask(id)
 		break
 	}
 
 	// search in each slices for the given ID
-	for i, ticket := range *tickets {
+
+}
+
+// Delcare ticket as in progress by removing it from todo slice and moving it to
+// inprogress slice
+func (t *Tasks) moveTicketToInProgress(id string) {
+	for i, ticket := range t.ToDo {
 		if ticket.ID == id {
 
 			fmt.Println("todo")
 			fmt.Println("ticket: ", ticket)
 
-			(*tickets)[i] = (*tickets)[len(*tickets)-1]
-			(*tickets) = (*tickets)[:len(*tickets)-1]
+			// Delete from current state
+			t.ToDo[i] = t.ToDo[len(t.ToDo)-1]
+			t.ToDo = t.ToDo[:len(t.ToDo)-1]
 
-			if nextState != nil {
-				*nextState = append(*nextState, ticket)
-			}
+			// Append in next state
+			t.InProgress = append(t.InProgress, ticket)
 
 			break
+		}
+	}
+}
+
+// Delcare ticket as done by removing it from inprogress slice and moving it to
+// done slice
+func (t *Tasks) moveTicketToDone(id string) {
+	for i, ticket := range t.InProgress {
+		if ticket.ID == id {
+
+			fmt.Println("todo")
+			fmt.Println("ticket: ", ticket)
+
+			// Delete from current state
+			t.InProgress[i] = t.InProgress[len(t.InProgress)-1]
+			t.InProgress = t.InProgress[:len(t.InProgress)-1]
+
+			// Append in next state
+			t.Done = append(t.Done, ticket)
+
+			break
+		}
+	}
+}
+
+// Remove one task from state "done"
+func (t *Tasks) deleteTask(id string) {
+
+	for i, ticket := range t.Done {
+		if ticket.ID == id {
+			t.Done[i] = t.Done[len(t.Done)-1]
+			t.Done = t.Done[:len(t.Done)-1]
 		}
 	}
 }
