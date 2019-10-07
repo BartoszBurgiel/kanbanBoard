@@ -1,18 +1,19 @@
 package main
 
 import (
-	"net/http"
-	"webserver/server"
+	"webserver/server/database"
 )
 
 func main() {
 
 	//http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./ui/"))))
 
-	s, err := server.NewServer()
-	if err != nil {
-		panic(err)
-	}
+	database.InitRepository()
 
-	http.ListenAndServe(":8080", s)
+	// s, err := server.NewServer()
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	// http.ListenAndServe(":8080", s)
 }

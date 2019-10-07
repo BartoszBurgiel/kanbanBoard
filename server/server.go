@@ -34,10 +34,12 @@ func (s *Server) init() error {
 	return nil
 }
 
+// if client sends a get request -> render page
 func (s *Server) handleGET(w http.ResponseWriter, r *http.Request) {
 	s.engine.Render(w, r)
 }
 
+// ServeHTTP to the server
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	url := r.URL.String()
 	if !strings.HasPrefix(url, "/style") {
@@ -55,5 +57,5 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (s Server) handleGETAssets(w http.ResponseWriter, r *http.Request) {
 	//w.Header().Set("Content-Type", "text/css")
-	http.FileServer(http.Dir("./ui")).ServeHTTP(w, r)
+	http.FileServer(http.Dir("./server/html/style")).ServeHTTP(w, r)
 }
