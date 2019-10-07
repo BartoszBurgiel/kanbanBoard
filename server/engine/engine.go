@@ -5,16 +5,19 @@ import (
 	"net/http"
 )
 
+// Engine contains all tasks and sends a HTML document build from templates
 type Engine struct {
 	tasks Tasks
 }
 
+// New Engine constructor
 func New() *Engine {
 	e := &Engine{}
 	e.tasks = e.dummyData()
 	return e
 }
 
+// Generate dummy data
 func (e *Engine) dummyData() Tasks {
 	return Tasks{
 		ToDo: Tickets{
@@ -37,11 +40,13 @@ func (e *Engine) dummyData() Tasks {
 	}
 }
 
+// Render and send HTML document to the server
 func (e *Engine) Render(w http.ResponseWriter, r *http.Request) {
 	temp := template.Must(template.New("body").Parse(body))
 	temp.Execute(w, e.tasks)
 }
 
+// GetTasks is a for the tasks struct
 func (e *Engine) GetTasks() *Tasks {
 	return &e.tasks
 }

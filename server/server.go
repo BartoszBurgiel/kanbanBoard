@@ -7,11 +7,13 @@ import (
 	"webserver/server/engine"
 )
 
+// Server struct
 type Server struct {
 	router *Router
 	engine *engine.Engine
 }
 
+// NewServer returns new server
 func NewServer() (*Server, error) {
 	s := &Server{
 		engine: engine.New(),

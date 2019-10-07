@@ -17,13 +17,12 @@ type Tasks struct {
 	ToDo, InProgress, Done Tickets
 }
 
-func (t *Tickets) Set() {}
-func (t *Ticket) Get()  {}
-
+// NewTicket returns new ticket struct
 func NewTicket(title, desc string) Ticket {
 	return Ticket{Title: title, Description: desc, ID: "10"}
 }
 
+// ChangeTicket handles a given ticket according to it's state
 func ChangeTicket(state, id string, tasks *Tasks) {
 	var tickets *Tickets
 	var nextState *Tickets
