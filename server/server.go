@@ -28,7 +28,7 @@ func NewServer(r sql.SqliteRepository) (*Server, error) {
 func (s *Server) init() error {
 	s.router = NewRouter()
 
-	allTasks := engine.RowsToTask(s.repo.GetAllTasks())
+	allTasks := engine.RowsToTasks(s.repo.GetAllTasks())
 	s.engine.SetTasks(allTasks)
 
 	s.router.Route("/")["GET"] = http.HandlerFunc(s.handleGET)

@@ -25,8 +25,8 @@ func NewTicket(title, desc string) Ticket {
 	return Ticket{Title: title, Description: desc, ID: "10"}
 }
 
-// RowsToTask converts given sql rows to Tasks struct
-func RowsToTask(r *sql.Rows) Tasks {
+// RowsToTasks converts given sql rows to Tasks struct
+func RowsToTasks(r *sql.Rows) Tasks {
 
 	tasks := Tasks{}
 

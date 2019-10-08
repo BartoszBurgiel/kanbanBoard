@@ -20,6 +20,8 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 
 		s.repo.ChangeTicket(state, id)
 
+		// Reset engine data
+		s.engine.SetTasks(engine.RowsToTasks(s.repo.GetAllTasks()))
 	} else {
 		fmt.Println("New ticket:")
 
