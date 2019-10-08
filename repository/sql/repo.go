@@ -3,6 +3,7 @@ package sql
 import (
 	"database/sql"
 	"fmt"
+	"strconv"
 	"time"
 
 	// Sqlite driver
@@ -22,7 +23,9 @@ func NewRepo(path string) (*Repo, error) {
 		panic(err)
 	}
 
-	r := &Repo{db}
+	r := &Repo{
+		db: db,
+	}
 
 	return r, r.init()
 }
@@ -67,8 +70,8 @@ func (r Repo) ChangeState(state, id string) error {
 func (r Repo) SetAsDone(id string) error {
 
 	query, _ := r.db.Prepare(`DELETE FROM tasks
-										WHERE state = 'done' 
-										AND id = ? ;`)
+								WHERE state = 'done' 
+								AND id = ? ;`)
 
 	res, err := query.Exec(id)
 	n, _ := res.RowsAffected()
@@ -82,7 +85,7 @@ func (r Repo) SetAsDone(id string) error {
 // into the database
 func (r Repo) AddTicket(title, desc string) error {
 	// Transfer data to inprogress
-	query, _ := r.db.Prepare(`INSERT INTO tasks
+	query, err := r.db.Prepare(`INSERT INTO tasks
 										VALUES (
 												?, 
 												?, 
@@ -90,8 +93,14 @@ func (r Repo) AddTicket(title, desc string) error {
 												?
 											) ;`)
 
-	res, err := query.Exec(title, desc, "todo", generateID())
+	fmt.Println(err)
+
+	id := generateID()
+
+	res, err := query.Exec(title, desc, "todo", id)
 	n, _ := res.RowsAffected()
+
+	fmt.Println("title:", title, "desc:", desc, "id:", id)
 
 	fmt.Println("Updated", n, "rows")
 
@@ -100,7 +109,7 @@ func (r Repo) AddTicket(title, desc string) error {
 
 // ID = time in milliseconds
 func generateID() string {
-	return string(time.Now().UnixNano())
+	return strconv.FormatInt(time.Now().UnixNano(), 10)
 }
 
 const initstate = `Create table xy if not exist`

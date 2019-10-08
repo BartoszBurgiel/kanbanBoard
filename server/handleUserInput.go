@@ -8,10 +8,6 @@ import (
 
 func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 
-	//daten manipulieren
-	//set/get foo bar bazz
-	tasks := s.engine.GetTasks()
-
 	if r.FormValue("ticketID") != "" {
 		fmt.Println("Button pressed: ", r.FormValue("ticketID"))
 
@@ -20,8 +16,6 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 
 		s.repo.ChangeTicket(state, id)
 
-		// Reset engine data
-		s.engine.SetTasks(engine.RowsToTasks(s.repo.GetAllTasks()))
 	} else {
 		fmt.Println("New ticket:")
 
@@ -31,8 +25,12 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("title: ", title)
 		fmt.Println("desc: ", desc)
 
-		tasks.ToDo = append(tasks.ToDo, engine.NewTicket(title, desc))
+		s.repo.AddTicket(title, desc)
+
 	}
+
+	// Reset engine data
+	s.engine.SetTasks(engine.RowsToTasks(s.repo.GetAllTasks()))
 
 	s.engine.Render(w, r)
 

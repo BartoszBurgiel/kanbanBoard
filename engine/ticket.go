@@ -40,6 +40,8 @@ func RowsToTasks(r *sql.Rows) Tasks {
 			fmt.Println(err)
 		}
 
+		fmt.Println("state:", state)
+
 		// Distinguish between states
 		switch state {
 		case "todo":
