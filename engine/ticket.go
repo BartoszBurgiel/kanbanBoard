@@ -1,6 +1,9 @@
 package engine
 
-import "fmt"
+import (
+	"database/sql"
+	"fmt"
+)
 
 // Ticket represents a ticket on the kanban board
 type Ticket struct {
@@ -94,4 +97,36 @@ func (t *Tasks) deleteTask(id string) {
 			t.Done = t.Done[:len(t.Done)-1]
 		}
 	}
+}
+
+// RowsToTask converts given sql rows to Tasks struct
+func RowsToTask(r *sql.Rows) Tasks {
+
+	tasks := Tasks{}
+
+	var title, desc, state, id string
+
+	for r.Next() {
+
+		err := r.Scan(&title, &desc, &state, &id)
+
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		// Distinguish between states
+		switch state {
+		case "todo":
+			tasks.ToDo = append(tasks.ToDo, Ticket{Title: title, Description: desc, ID: id})
+			break
+		case "inprogress":
+			tasks.InProgress = append(tasks.InProgress, Ticket{Title: title, Description: desc, ID: id})
+			break
+		case "done":
+			tasks.Done = append(tasks.Done, Ticket{Title: title, Description: desc, ID: id})
+			break
+		}
+	}
+
+	return tasks
 }

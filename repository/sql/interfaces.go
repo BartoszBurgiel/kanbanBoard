@@ -1,12 +1,10 @@
-package server
+package sql
 
-import (
-	"kanbanBoard/server/engine"
-)
+import "database/sql"
 
 // SqliteRepository handles a sqlite database
 type SqliteRepository interface {
-	GetAllTasks() engine.Tasks
+	GetAllTasks() *sql.Rows
 	ChangeState(state, id string) error
 	SetAsDone(id string) error
 	AddTicket(title, desc string) error

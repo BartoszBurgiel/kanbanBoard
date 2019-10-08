@@ -3,6 +3,7 @@ package server
 import (
 	"fmt"
 	"kanbanBoard/engine"
+	"kanbanBoard/repository/sql"
 	"net/http"
 	"strings"
 )
@@ -11,11 +12,11 @@ import (
 type Server struct {
 	router *Router
 	engine *engine.Engine
-	repo   SqliteRepository
+	repo   sql.SqliteRepository
 }
 
 // NewServer returns new server
-func NewServer(r SqliteRepository) (*Server, error) {
+func NewServer(r sql.SqliteRepository) (*Server, error) {
 	s := &Server{
 		engine: engine.New(),
 		repo:   r,
@@ -27,7 +28,7 @@ func NewServer(r SqliteRepository) (*Server, error) {
 func (s *Server) init() error {
 	s.router = NewRouter()
 
-	allTasks := s.repo.GetAllTasks()
+	allTasks := engine.RowsToTask(s.repo.GetAllTasks())
 	s.engine.SetTasks(allTasks)
 
 	s.router.Route("/")["GET"] = http.HandlerFunc(s.handleGET)

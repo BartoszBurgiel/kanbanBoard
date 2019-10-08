@@ -2,8 +2,8 @@ package server
 
 import (
 	"fmt"
+	"kanbanBoard/engine"
 	"net/http"
-	"kanbanBoard/server/engine"
 )
 
 func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
