@@ -2,8 +2,8 @@ package main
 
 import (
 	"net/http"
-	"webserver/server"
-	"webserver/server/database"
+	"kanbanBoard/server"
+	"kanbanBoard/server/database"
 )
 
 func main() {

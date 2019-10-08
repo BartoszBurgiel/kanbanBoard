@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
-	"webserver/server/engine"
+	"kanbanBoard/server/engine"
 )
 
 // Server struct
