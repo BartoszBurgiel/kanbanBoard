@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"kanbanBoard/repository/sql"
+	"kanbanBoard/repository"
 	"kanbanBoard/server"
 	"net/http"
 )
 
 func main() {
 
-	repo, err := sql.NewRepo("../repository/sql/repo.db")
+	repo, err := repository.NewRepo("../repository/repo.db")
 
 	if err != nil {
 		fmt.Println(err)

@@ -1,11 +1,9 @@
-package sql
+package repository
 
 import "fmt"
 
 // ChangeTicket handles a given ticket according to it's state
 func (r Repo) ChangeTicket(state, id string) {
-	//var tickets *Tickets
-	//var nextState *Tickets
 
 	switch state {
 	case "ToDo":

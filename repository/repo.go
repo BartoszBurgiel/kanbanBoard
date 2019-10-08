@@ -1,9 +1,11 @@
-package sql
+package repository
 
 import (
 	"database/sql"
 	"fmt"
+	kb "kanbanBoard"
 	"strconv"
+
 	"time"
 
 	// Sqlite driver
@@ -42,12 +44,38 @@ func (r *Repo) init() error {
 
 // GetAllTasks pulls all tasks from the database and converts them
 // into Tasks struct
-func (r Repo) GetAllTasks() *sql.Rows {
+func (r Repo) GetAllTasks() kb.Tasks {
 
 	// Get all todos
 	allTodos, _ := r.db.Query("SELECT * FROM tasks")
 
-	return allTodos
+	tasks := kb.Tasks{}
+
+	var title, desc, state, id string
+
+	for allTodos.Next() {
+
+		err := allTodos.Scan(&title, &desc, &state, &id)
+
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		// Distinguish between states
+		switch state {
+		case "todo":
+			tasks.ToDo = append(tasks.ToDo, kb.Ticket{Title: title, Description: desc, ID: id})
+			break
+		case "inprogress":
+			tasks.InProgress = append(tasks.InProgress, kb.Ticket{Title: title, Description: desc, ID: id})
+			break
+		case "done":
+			tasks.Done = append(tasks.Done, kb.Ticket{Title: title, Description: desc, ID: id})
+			break
+		}
+	}
+
+	return tasks
 }
 
 // ChangeState changes the state of a given ticket

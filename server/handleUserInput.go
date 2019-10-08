@@ -2,7 +2,6 @@ package server
 
 import (
 	"fmt"
-	"kanbanBoard/engine"
 	"net/http"
 )
 
@@ -30,7 +29,7 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Reset engine data
-	s.engine.SetTasks(engine.RowsToTasks(s.repo.GetAllTasks()))
+	s.engine.SetTasks(s.repo.GetAllTasks())
 
 	s.engine.Render(w, r)
 

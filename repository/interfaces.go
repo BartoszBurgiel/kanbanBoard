@@ -1,10 +1,10 @@
-package sql
+package repository
 
-import "database/sql"
+import kb "kanbanBoard"
 
 // SqliteRepository handles a sqlite database
 type SqliteRepository interface {
-	GetAllTasks() *sql.Rows
+	GetAllTasks() kb.Tasks
 	ChangeState(state, id string) error
 	SetAsDone(id string) error
 	AddTicket(title, desc string) error
