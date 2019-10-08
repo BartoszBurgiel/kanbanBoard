@@ -3,9 +3,9 @@ package server
 import (
 	"database/sql"
 	"fmt"
+	"kanbanBoard/server/engine"
 	"net/http"
 	"strings"
-	"kanbanBoard/server/engine"
 )
 
 // Server struct
@@ -27,34 +27,6 @@ func NewServer(r *sql.DB) (*Server, error) {
 
 func (s *Server) init() error {
 	s.router = NewRouter()
-
-	// Get all todos
-	toDos, err := s.repo.Query("SELECT * FROM todotasks ;")
-
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	// Get all inprogress
-	inprogress, err := s.repo.Query("SELECT * FROM inprogresstasks ;")
-
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	// Get all done
-	done, err := s.repo.Query("SELECT * FROM donetasks ;")
-
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	// Build tasks
-	tasks := engine.Tasks{
-		ToDo:       engine.QueryToTickets(toDos),
-		InProgress: engine.QueryToTickets(inprogress),
-		Done:       engine.QueryToTickets(done),
-	}
 
 	s.engine.SetTasks(tasks)
 
