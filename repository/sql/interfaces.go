@@ -8,4 +8,5 @@ type SqliteRepository interface {
 	ChangeState(state, id string) error
 	SetAsDone(id string) error
 	AddTicket(title, desc string) error
+	ChangeTicket(state, id string)
 }

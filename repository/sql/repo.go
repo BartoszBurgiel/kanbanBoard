@@ -51,8 +51,8 @@ func (r Repo) GetAllTasks() *sql.Rows {
 func (r Repo) ChangeState(state, id string) error {
 
 	query, _ := r.db.Prepare(`UPDATE tasks
-										SET state = ? 
-										WHERE id = ? ;`)
+								SET state = ? 
+								WHERE id = ? ;`)
 
 	res, err := query.Exec(state, id)
 	n, _ := res.RowsAffected()
