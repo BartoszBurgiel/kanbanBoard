@@ -9,5 +9,5 @@ type SqliteRepository interface {
 	GetAllTasks() engine.Tasks
 	ChangeState(state, id string) error
 	SetAsDone(id string) error
-	AddTicket() error
+	AddTicket(title, desc string) error
 }

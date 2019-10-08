@@ -2,7 +2,7 @@ package server
 
 import (
 	"fmt"
-	"kanbanBoard/server/engine"
+	"kanbanBoard/engine"
 	"net/http"
 	"strings"
 )
@@ -28,7 +28,6 @@ func (s *Server) init() error {
 	s.router = NewRouter()
 
 	allTasks := s.repo.GetAllTasks()
-
 	s.engine.SetTasks(allTasks)
 
 	s.router.Route("/")["GET"] = http.HandlerFunc(s.handleGET)

@@ -1,28 +1,38 @@
-package database
+package sql
 
 import (
 	"database/sql"
 	"fmt"
-	"kanbanBoard/server/engine"
+	"kanbanBoard/engine"
 	"time"
 
+	// Sqlite driver
 	_ "github.com/mattn/go-sqlite3"
 )
 
 // Repo represents a data base with its all methods
 type Repo struct {
-	Db interface{}
+	db *sql.DB
 }
 
 // NewRepo creates a new repository
-func NewRepo(path string) *Repo {
+func NewRepo(path string) (*Repo, error) {
 	db, err := sql.Open("sqlite3", path)
-
 	if err != nil {
 		panic(err)
 	}
 
-	return &Repo{db}
+	return &Repo{}, r.init()
+}
+
+func (r *Repo) init() error {
+	//init
+	//db exists?
+	//no-> create db init tables
+
+	//db.Exec(initstate)
+
+	return nil
 }
 
 // GetAllTasks pulls all tasks from the database and converts them
@@ -32,7 +42,7 @@ func (r Repo) GetAllTasks() engine.Tasks {
 	tasks := engine.Tasks{}
 
 	// Get all todos
-	allTodos, _ := r.Db.(*sql.DB).Query("SELECT * FROM tasks")
+	allTodos, _ := r.db.Query("SELECT * FROM tasks")
 
 	var title, desc, state, id string
 
@@ -116,3 +126,5 @@ func (r Repo) AddTicket(title, desc string) error {
 func generateID() string {
 	return string(time.Now().UnixNano())
 }
+
+const initstate = `Create table xy if not exist`
