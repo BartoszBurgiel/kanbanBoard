@@ -13,7 +13,7 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 		id := r.FormValue("ticketID")
 		state := r.FormValue("state")
 
-		s.repo.ChangeTicket(state, id)
+		s.repo.HandleTicketEvent(state, id)
 
 	} else {
 		fmt.Println("New ticket:")
@@ -24,7 +24,7 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("title: ", title)
 		fmt.Println("desc: ", desc)
 
-		s.repo.AddTicket(title, desc)
+		s.repo.AddNewTicket(title, desc)
 
 	}
 

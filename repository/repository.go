@@ -22,7 +22,7 @@ func NewRepo(path string) (*Repo, error) {
 	db, err := sql.Open("sqlite3", path)
 
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
 	}
 
 	r := &Repo{
@@ -34,7 +34,8 @@ func NewRepo(path string) (*Repo, error) {
 
 func (r *Repo) init() error {
 	//init
-	//db exists?
+
+	// Check if db exists
 	//no-> create db init tables
 
 	//db.Exec(initstate)
@@ -78,8 +79,8 @@ func (r Repo) GetAllTasks() kb.Tasks {
 	return tasks
 }
 
-// ChangeState changes the state of a given ticket
-func (r Repo) ChangeState(state, id string) error {
+// UpdateTicketState changes the state of a given ticket
+func (r Repo) UpdateTicketState(state, id string) error {
 
 	query, _ := r.db.Prepare(`UPDATE tasks
 								SET state = ? 
@@ -93,9 +94,9 @@ func (r Repo) ChangeState(state, id string) error {
 	return err
 }
 
-// SetAsDone sets given ticket as done and removes it
+// SetTicketAsDoneAndDelete sets given ticket as done and removes it
 // from the database
-func (r Repo) SetAsDone(id string) error {
+func (r Repo) SetTicketAsDoneAndDelete(id string) error {
 
 	query, _ := r.db.Prepare(`DELETE FROM tasks
 								WHERE state = 'done' 
@@ -109,9 +110,9 @@ func (r Repo) SetAsDone(id string) error {
 	return err
 }
 
-// AddTicket puts a ticket with given title and desc
+// AddNewTicket puts a ticket with given title and desc
 // into the database
-func (r Repo) AddTicket(title, desc string) error {
+func (r Repo) AddNewTicket(title, desc string) error {
 	// Transfer data to inprogress
 	query, err := r.db.Prepare(`INSERT INTO tasks
 										VALUES (

@@ -5,8 +5,8 @@ import kb "kanbanBoard"
 // SqliteRepository handles a sqlite database
 type SqliteRepository interface {
 	GetAllTasks() kb.Tasks
-	ChangeState(state, id string) error
-	SetAsDone(id string) error
-	AddTicket(title, desc string) error
-	ChangeTicket(state, id string)
+	UpdateTicketState(newState, id string) error
+	SetTicketAsDoneAndDelete(id string) error
+	AddNewTicket(title, desc string) error
+	HandleTicketEvent(state, id string) error
 }

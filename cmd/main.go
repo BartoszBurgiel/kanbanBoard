@@ -8,7 +8,6 @@ import (
 )
 
 func main() {
-
 	repo, err := repository.NewRepo("../repository/repo.db")
 
 	if err != nil {
