@@ -9,8 +9,8 @@ import (
 type SqliteRepository interface {
 	GetTable(table string) *sql.Rows
 	GetAllTasks() engine.Tasks
-	TransferToInProgress() error
-	TransferToDone() error
-	SetAsDone() error
+	TransferToInProgress(id string) error
+	TransferToDone(id string) error
+	SetAsDone(id string) error
 	AddTicket() error
 }

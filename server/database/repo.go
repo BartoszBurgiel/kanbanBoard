@@ -55,3 +55,13 @@ func (r Repo) GetAllTasks() engine.Tasks {
 
 	return tasks
 }
+
+func (r Repo) TransferToInProgress(id string) error {
+
+	// Transfer data to inprogress
+
+	r.Db.(*sql.DB).Query(`INSERT INTO 'inprogresstasks
+							VALUES (`)
+
+	return nil
+}

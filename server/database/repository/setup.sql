@@ -1,44 +1,34 @@
-CREATE TABLE 'todotasks' (
+CREATE TABLE 'tasks' (
     'title' VARCHAR(64), 
-    'desc'  VARCHAR(256), 
+    'desc'  VARCHAR(256),
+    'state' VARCHAR(64), 
     'ID'    VARCHAR(64)
 )
 ;
 
-CREATE TABLE 'inprogresstasks' (
-    'title' VARCHAR(64), 
-    'desc'  VARCHAR(256), 
-    'ID'    VARCHAR(64)
-)
-;
-
-CREATE TABLE 'donetasks' (
-    'title' VARCHAR(64), 
-    'desc'  VARCHAR(256), 
-    'ID'    VARCHAR(64)
-)
-;
-
-INSERT INTO todotasks 
+INSERT INTO tasks 
 VALUES (
     'first', 
+    'todo',
     'desc', 
     '1'
 )
 ;
 
-INSERT INTO inprogresstasks 
+INSERT INTO tasks 
 VALUES (
     'sec', 
-    'desc', 
+    'desc',
+    'todo', 
     '2'
 )
 ;
 
-INSERT INTO donetasks 
+INSERT INTO tasks 
 VALUES (
     'third', 
-    'desc', 
+    'desc',
+    'todo', 
     '3'
 )
 ;
