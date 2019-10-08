@@ -6,11 +6,11 @@ import (
 	"net/http"
 )
 
-func main() {)
+func main() {
 
 	repo := database.NewRepo("../server/database/repository/repo.db")
-
 	s, err := server.NewServer(repo)
+
 	if err != nil {
 		panic(err)
 	}
