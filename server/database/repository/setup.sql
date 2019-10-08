@@ -19,7 +19,7 @@ INSERT INTO tasks
 VALUES (
     'sec', 
     'desc',
-    'todo', 
+    'inprogress', 
     '2'
 )
 ;
@@ -28,7 +28,7 @@ INSERT INTO tasks
 VALUES (
     'third', 
     'desc',
-    'todo', 
+    'done', 
     '3'
 )
 ;
