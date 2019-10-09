@@ -13,7 +13,6 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 
 		id := r.FormValue("ticketID")
 		state := r.FormValue("state")
-
 		s.repo.HandleTicketEvent(state, id)
 
 	} else {
@@ -30,6 +29,7 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 		dateSnipplets := strings.Split(date, "-")
 		newDate := ""
 
+		// "Flip" data snipplets
 		for i := 2; i >= 0; i-- {
 			newDate += dateSnipplets[i]
 			if i > 0 {
@@ -49,5 +49,4 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 	s.engine.SetTasks(s.repo.GetAllTasks())
 
 	s.engine.Render(w, r)
-
 }

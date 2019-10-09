@@ -41,7 +41,6 @@ func (r *Repo) init() error {
 	}
 
 	q, err := db.Exec(initState)
-
 	fmt.Println(err)
 	fmt.Println(q)
 	r.db = db
@@ -55,15 +54,11 @@ func (r Repo) GetAllTasks() kb.Tasks {
 
 	// Get all todos
 	allTodos, _ := r.db.Query("SELECT title, desc, state, deadline, id FROM tasks")
-
 	tasks := kb.Tasks{}
-
 	var title, desc, state, deadline, id string
 
 	for allTodos.Next() {
-
 		err := allTodos.Scan(&title, &desc, &state, &deadline, &id)
-
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -111,7 +106,6 @@ func (r Repo) UpdateTicketState(state, id string) error {
 
 	res, err := query.Exec(state, id)
 	n, _ := res.RowsAffected()
-
 	fmt.Println("Updated", n, "rows")
 
 	return err
@@ -127,7 +121,6 @@ func (r Repo) SetTicketAsDoneAndDelete(id string) error {
 
 	res, err := query.Exec(id)
 	n, _ := res.RowsAffected()
-
 	fmt.Println("Updated", n, "rows")
 
 	return err
@@ -150,12 +143,9 @@ func (r Repo) AddNewTicket(title, desc, deadline string) error {
 	fmt.Println(err)
 
 	id := uuid.New().String()
-
 	res, err := query.Exec(title, desc, "todo", deadline, id)
 	n, _ := res.RowsAffected()
-
 	fmt.Println("title:", title, "desc:", desc, "id:", id)
-
 	fmt.Println("Updated", n, "rows")
 
 	return err
@@ -172,12 +162,12 @@ func (r Repo) ClearDatabase() error {
 
 	res, err := query.Exec()
 	n, _ := res.RowsAffected()
-
 	fmt.Println("Updated", n, "rows")
 
 	return err
 }
 
+// Query to setup the database
 const initState = `CREATE TABLE IF NOT EXISTS 'tasks' (
 						'title' 	VARCHAR(64),
 						'desc'  	VARCHAR(256), 
