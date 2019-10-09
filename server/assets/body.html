@@ -29,7 +29,14 @@
 				
 				<div class="ticket-footer">
 					<div class="footer-element" id="{{.ID}}">
+						<div class="footer-element-header">Deadline</div>
+						<hr>
 						{{.Deadline}}
+					</div>
+					<div class="footer-element" id="{{.ID}}">
+						<div class="footer-element-header">Priority</div>
+						<hr>
+						{{.Priority}}
 					</div>
 				</div>
 
@@ -54,7 +61,14 @@
 
 				<div class="ticket-footer">
 					<div class="footer-element" id="{{.ID}}">
+						<div class="footer-element-header">Deadline</div>
+						<hr>
 						{{.Deadline}}
+					</div>
+					<div class="footer-element" id="{{.ID}}">
+						<div class="footer-element-header">Priority</div>
+						<hr>
+						{{.Priority}}
 					</div>
 				</div>
 			</div>
@@ -78,7 +92,14 @@
 
 				<div class="ticket-footer">
 					<div class="footer-element" id="{{.ID}}">
+						<div class="footer-element-header">Deadline</div>
+						<hr>
 						{{.Deadline}}
+					</div>
+					<div class="footer-element" id="{{.ID}}">
+						<div class="footer-element-header">Priority</div>
+						<hr>
+						{{.Priority}}
 					</div>
 				</div>
 			</div>
@@ -102,11 +123,13 @@
 						<div class="ticket-footer">
 							<div class="footer-element">
 								<div class="footer-element-header">Deadline</div>
+								<hr>
 								<input type="date" name="newDate" required />
 							</div>
 
 							<div class="footer-element">
 								<div class="footer-element-header">Priority</div>
+								<hr>
 								<input type="number" name="newPriority" min="1" max="10" placeholder="5" required />
 							</div>
 						</div>

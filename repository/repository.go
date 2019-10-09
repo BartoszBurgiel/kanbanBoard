@@ -55,9 +55,10 @@ func (r *Repo) init() error {
 func (r Repo) GetAllTasks() kb.Tasks {
 
 	// Get all todos
-	allTodos, _ := r.db.Query("SELECT title, desc, state, deadline, priority, id FROM tasks ORDER BY priority")
+	allTodos, _ := r.db.Query("SELECT title, desc, state, deadline, priority, id FROM tasks ORDER BY priority DESC ;")
 	tasks := kb.Tasks{}
-	var title, desc, state, deadline, priority, id string
+	var title, desc, state, deadline, id string
+	var priority int
 
 	for allTodos.Next() {
 		err := allTodos.Scan(&title, &desc, &state, &deadline, &priority, &id)
@@ -149,7 +150,7 @@ func (r Repo) SetTicketAsDoneAndDelete(id string) error {
 
 // AddNewTicket puts a ticket with given title and desc
 // into the database
-func (r Repo) AddNewTicket(title, desc string, deadline time.Time, priority string) error {
+func (r Repo) AddNewTicket(title, desc string, deadline time.Time, priority int) error {
 
 	// Transfer data to inprogress
 	query, err := r.db.Prepare(`INSERT INTO tasks
@@ -196,6 +197,6 @@ const initState = `CREATE TABLE IF NOT EXISTS 'tasks' (
 						'desc'  	VARCHAR(256), 
 						'state' 	VARCHAR(64),
 						'deadline' 	VARCHAR(16),
-						'priority'  VARCHAR(16),
+						'priority'  INT,
 						'id'    	VARCHAR(16) 
 						) ;`
