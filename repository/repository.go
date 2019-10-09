@@ -6,7 +6,6 @@ import (
 	kb "kanbanBoard"
 	"os"
 	"path"
-	"time"
 
 	"github.com/google/uuid"
 
@@ -136,7 +135,7 @@ func (r Repo) SetTicketAsDoneAndDelete(id string) error {
 
 // AddNewTicket puts a ticket with given title and desc
 // into the database
-func (r Repo) AddNewTicket(title, desc string) error {
+func (r Repo) AddNewTicket(title, desc, deadline string) error {
 
 	// Transfer data to inprogress
 	query, err := r.db.Prepare(`INSERT INTO tasks
@@ -152,7 +151,7 @@ func (r Repo) AddNewTicket(title, desc string) error {
 
 	id := uuid.New().String()
 
-	res, err := query.Exec(title, desc, "todo", time.Now().Format("02-01-2006"), id)
+	res, err := query.Exec(title, desc, "todo", deadline, id)
 	n, _ := res.RowsAffected()
 
 	fmt.Println("title:", title, "desc:", desc, "id:", id)

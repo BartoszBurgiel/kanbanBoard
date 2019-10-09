@@ -3,6 +3,7 @@ package server
 import (
 	"fmt"
 	"net/http"
+	"strings"
 )
 
 func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
@@ -20,11 +21,24 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 
 		title := r.FormValue("newTitle")
 		desc := r.FormValue("newDescription")
+		date := r.FormValue("newDate")
 
 		fmt.Println("title: ", title)
 		fmt.Println("desc: ", desc)
 
-		s.repo.AddNewTicket(title, desc)
+		// Reformat date
+		dateSnipplets := strings.Split(date, "-")
+		newDate := ""
+
+		for i := 2; i >= 0; i-- {
+			newDate += dateSnipplets[i]
+			if i > 0 {
+				newDate += "-"
+			}
+		}
+
+		fmt.Println("date: ", newDate)
+		s.repo.AddNewTicket(title, desc, newDate)
 
 	}
 
