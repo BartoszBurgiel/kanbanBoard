@@ -4,7 +4,7 @@ const body = `<!DOCTYPE html>
 <html>
 	<head>
 	<title>My kanban board</title>
-		<link rel="stylesheet" type="text/css" href="./style.css" />
+		<link rel="stylesheet" type="text/css" href="./style/style.css" />
 		<meta content="width=device-width, initial-scale=1" name="viewport" />
 	</head>
 

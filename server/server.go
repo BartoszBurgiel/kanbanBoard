@@ -45,7 +45,7 @@ func (s *Server) handleGET(w http.ResponseWriter, r *http.Request) {
 // ServeHTTP to the server
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	url := r.URL.String()
-	if !strings.HasPrefix(url, "/style") {
+	if !strings.HasPrefix(url, "/style") && !strings.HasPrefix(url, "/favicon.ico") {
 		p := Path(r.URL.Path)
 		m := Method(r.Method)
 
@@ -60,6 +60,5 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (s Server) handleGETAssets(w http.ResponseWriter, r *http.Request) {
 	//w.Header().Set("Content-Type", "text/css")
-	http.FileServer(http.Dir("../server/assets/style")).ServeHTTP(w, r)
-	http.ServeFile(w, r, "../server/assets/favicon.ico")
+	http.FileServer(http.Dir("../server/assets/")).ServeHTTP(w, r)
 }

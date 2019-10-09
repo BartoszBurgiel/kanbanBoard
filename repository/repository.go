@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	kb "kanbanBoard"
+	"os"
 	"strconv"
 
 	"time"
@@ -19,26 +20,38 @@ type Repo struct {
 
 // NewRepo creates a new repository
 func NewRepo(path string) (*Repo, error) {
-	db, err := sql.Open("sqlite3", path)
+	r := &Repo{}
 
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	r := &Repo{
-		db: db,
-	}
-
-	return r, r.init()
+	return r, r.init(path)
 }
 
-func (r *Repo) init() error {
-	//init
+func (r *Repo) init(path string) error {
 
-	// Check if db exists
-	//no-> create db init tables
+	// Check if file does not exists
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		fmt.Println("Database does not exist")
+		fmt.Println("Creating a new database...")
 
-	//db.Exec(initstate)
+		// Create database file
+		os.Create(path)
+
+		// Open databse
+		db, err := sql.Open("sqlite3", path)
+
+		fmt.Println(err)
+
+		// Create table
+		db.Exec(initState)
+
+		// Define database in r
+		r.db = db
+	} else {
+		db, err := sql.Open("sqlite3", path)
+
+		fmt.Println(err)
+
+		r.db = db
+	}
 
 	return nil
 }
@@ -49,6 +62,8 @@ func (r Repo) GetAllTasks() kb.Tasks {
 
 	// Get all todos
 	allTodos, _ := r.db.Query("SELECT * FROM tasks")
+
+	r.db.Close()
 
 	tasks := kb.Tasks{}
 
@@ -91,6 +106,8 @@ func (r Repo) UpdateTicketState(state, id string) error {
 
 	fmt.Println("Updated", n, "rows")
 
+	r.db.Close()
+
 	return err
 }
 
@@ -106,6 +123,8 @@ func (r Repo) SetTicketAsDoneAndDelete(id string) error {
 	n, _ := res.RowsAffected()
 
 	fmt.Println("Updated", n, "rows")
+
+	r.db.Close()
 
 	return err
 }
@@ -133,6 +152,8 @@ func (r Repo) AddNewTicket(title, desc string) error {
 
 	fmt.Println("Updated", n, "rows")
 
+	r.db.Close()
+
 	return err
 }
 
@@ -141,4 +162,9 @@ func generateID() string {
 	return strconv.FormatInt(time.Now().UnixNano(), 10)
 }
 
-const initstate = `Create table xy if not exist`
+const initState = `CREATE TABLE 'tasks' (
+						'title' VARCHAR(64),
+						'desc'  VARCHAR(256), 
+						'state' VARCHAR(64),
+						'id'    VARCHAR(64) 
+						) ;`
