@@ -48,7 +48,7 @@ func (r Repo) GetAllTasks() kb.Tasks {
 				Temp: struct {
 					State, Icon string
 				}{
-					"ToDo", "&rarr;",
+					"ToDo", "→",
 				},
 				ID: id,
 			})
@@ -63,7 +63,7 @@ func (r Repo) GetAllTasks() kb.Tasks {
 				Temp: struct {
 					State, Icon string
 				}{
-					"InProgress", "&rarr;",
+					"InProgress", "→",
 				},
 				ID: id,
 			})
