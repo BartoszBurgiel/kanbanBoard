@@ -34,5 +34,6 @@ func (r Repo) HandleTicketEvent(state, id string) error {
 
 		break
 	}
+
 	return nil
 }
