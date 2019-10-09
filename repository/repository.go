@@ -63,8 +63,6 @@ func (r Repo) GetAllTasks() kb.Tasks {
 	// Get all todos
 	allTodos, _ := r.db.Query("SELECT * FROM tasks")
 
-	r.db.Close()
-
 	tasks := kb.Tasks{}
 
 	var title, desc, state, id string
@@ -106,8 +104,6 @@ func (r Repo) UpdateTicketState(state, id string) error {
 
 	fmt.Println("Updated", n, "rows")
 
-	r.db.Close()
-
 	return err
 }
 
@@ -123,8 +119,6 @@ func (r Repo) SetTicketAsDoneAndDelete(id string) error {
 	n, _ := res.RowsAffected()
 
 	fmt.Println("Updated", n, "rows")
-
-	r.db.Close()
 
 	return err
 }
@@ -151,8 +145,6 @@ func (r Repo) AddNewTicket(title, desc string) error {
 	fmt.Println("title:", title, "desc:", desc, "id:", id)
 
 	fmt.Println("Updated", n, "rows")
-
-	r.db.Close()
 
 	return err
 }
