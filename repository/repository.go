@@ -54,7 +54,7 @@ func (r *Repo) init() error {
 func (r Repo) GetAllTasks() kb.Tasks {
 
 	// Get all todos
-	allTodos, _ := r.db.Query("SELECT * FROM tasks")
+	allTodos, _ := r.db.Query("SELECT title, desc, state, id FROM tasks")
 
 	tasks := kb.Tasks{}
 
