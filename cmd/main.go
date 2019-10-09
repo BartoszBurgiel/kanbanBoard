@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	repo, err := repository.NewRepo("../repository/repo.db")
+	repo, err := repository.New("../repository/repo.db")
 
 	if err != nil {
 		fmt.Println(err)
