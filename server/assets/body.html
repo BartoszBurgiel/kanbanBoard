@@ -28,7 +28,7 @@
 				</form>
 				
 				<div class="ticket-footer">
-					<div class="deadline" id="{{.ID}}">
+					<div class="footer-element" id="{{.ID}}">
 						{{.Deadline}}
 					</div>
 				</div>
@@ -53,7 +53,7 @@
 				</form>
 
 				<div class="ticket-footer">
-					<div class="deadline" id="{{.ID}}">
+					<div class="footer-element" id="{{.ID}}">
 						{{.Deadline}}
 					</div>
 				</div>
@@ -68,16 +68,16 @@
 		{{range .Done}}
 
 			<div class="ticket">
-					<div class="ticket-header">{{.Title}}</div>
-					<div class="ticket-desc">{{.Description}}</div>
-					<form action="/" method="post">
-						<input type="hidden" name="ticketID" value="{{.ID}}">
-						<input type="hidden" name="state" value="Done">
-						<input class="ticket-button" type="submit" name='{{.ID}}' value="X" />
-					</form>
+				<div class="ticket-header">{{.Title}}</div>
+				<div class="ticket-desc">{{.Description}}</div>
+				<form action="/" method="post">
+					<input type="hidden" name="ticketID" value="{{.ID}}">
+					<input type="hidden" name="state" value="Done">
+					<input class="ticket-button" type="submit" name='{{.ID}}' value="X" />
+				</form>
 
 				<div class="ticket-footer">
-					<div class="deadline" id="{{.ID}}">
+					<div class="footer-element" id="{{.ID}}">
 						{{.Deadline}}
 					</div>
 				</div>
@@ -88,25 +88,32 @@
 		</div>
 	</div>
 	<div class="new-ticket">
-                <div class="new-ticket-head">New ticket...</div>
-                <div class="new-ticket-body">
-                    <form action="/" method="POST">
-                        <div class="new-ticket-title">
+            <div class="board-header">New ticket...</div>
+
+                    <form action="/" method="POST" class="ticket">
+                        <div class="ticket-header">
                             <input type="text" name="newTitle" placeholder="Title..." required />
                         </div>
 
-                        <div class="new-ticket-description">
+                        <div class="ticket-desc">
                             <textarea name="newDescription" placeholder="Description..." required/></textarea>
-                        </div>
+						</div>
 						
-						<div class="new-ticket-date">
-							<div class="deadline-header">Deadline</div>
-							<input type="date" name="newDate" required/></input>
+						<div class="ticket-footer">
+							<div class="footer-element">
+								<div class="footer-element-header">Deadline</div>
+								<input type="date" name="newDate" required />
+							</div>
+
+							<div class="footer-element">
+								<div class="footer-element-header">Priority</div>
+								<input type="number" name="newPriority" min="1" max="10" placeholder="5" required />
+							</div>
 						</div>
 
-                        <input class="new-ticket-button" type="submit" name="submitNewTicket" value="Add" />
+                        <input class="ticket-button" type="submit" name="submitNewTicket" value="Add" />
                     </form>
-                </div>
+
             </div>
 		</div>
 	</body>
