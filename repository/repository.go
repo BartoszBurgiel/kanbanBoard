@@ -5,6 +5,7 @@ import (
 	"fmt"
 	kb "kanbanBoard"
 	"os"
+	"path"
 
 	"github.com/google/uuid"
 
@@ -29,60 +30,28 @@ func New(path string) (*Repo, error) {
 
 func (r *Repo) init() error {
 
-	// Check if file does not exists
-	if _, err := os.Stat(r.path); os.IsNotExist(err) {
-		fmt.Println("Database does not exist")
-		fmt.Println("Creating a new database...")
-
-		// Create database file
-		os.Create(r.path)
-
-		// Open databse
-		db, err := sql.Open("sqlite3", r.path)
-
-		fmt.Println(err)
-
-		// Create table
-		db.Exec(initState)
-
-		// Define database in r
-		r.db = db
-	} else {
-		db, err := sql.Open("sqlite3", r.path)
-
-		fmt.Println(err)
-
-		r.db = db
-	}
-
-	return nil
-}
-
-// Open database connection
-func (r *Repo) Open() error {
-
-	// Check db connection
-	if err := r.db.Ping(); err != nil {
-		db, err := sql.Open("sqlite3", r.path)
-		r.db = db
-
+	p := path.Dir(r.path)
+	if err := os.MkdirAll(p, os.ModePerm); err != nil {
 		return err
 	}
 
+	db, err := sql.Open("sqlite3", r.path)
+	if err != nil {
+		return err
+	}
+
+	q, err := db.Exec(initState)
+
+	fmt.Println(err)
+	fmt.Println(q)
+	r.db = db
+
 	return nil
-
-}
-
-// Close database connection
-func (r *Repo) Close() {
-	r.db.Close()
 }
 
 // GetAllTasks pulls all tasks from the database and converts them
 // into Tasks struct
 func (r Repo) GetAllTasks() kb.Tasks {
-
-	r.Open()
 
 	// Get all todos
 	allTodos, _ := r.db.Query("SELECT * FROM tasks")
@@ -112,8 +81,6 @@ func (r Repo) GetAllTasks() kb.Tasks {
 			break
 		}
 	}
-
-	r.Close()
 
 	return tasks
 }
@@ -153,8 +120,6 @@ func (r Repo) SetTicketAsDoneAndDelete(id string) error {
 // into the database
 func (r Repo) AddNewTicket(title, desc string) error {
 
-	r.Open()
-
 	// Transfer data to inprogress
 	query, err := r.db.Prepare(`INSERT INTO tasks
 										VALUES (
@@ -175,12 +140,10 @@ func (r Repo) AddNewTicket(title, desc string) error {
 
 	fmt.Println("Updated", n, "rows")
 
-	r.Close()
-
 	return err
 }
 
-const initState = `CREATE TABLE 'tasks' (
+const initState = `CREATE TABLE IF NOT EXISTS 'tasks' (
 						'title' VARCHAR(64),
 						'desc'  VARCHAR(256), 
 						'state' VARCHAR(64),
