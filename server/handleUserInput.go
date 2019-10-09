@@ -21,6 +21,7 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 		title := r.FormValue("newTitle")
 		desc := r.FormValue("newDescription")
 		date := r.FormValue("newDate")
+		priority := r.FormValue("newPriority")
 
 		fmt.Println("title: ", title)
 		fmt.Println("desc: ", desc)
@@ -31,7 +32,7 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err)
 		}
 
-		s.repo.AddNewTicket(title, desc, newDate)
+		s.repo.AddNewTicket(title, desc, newDate, priority)
 
 	}
 
