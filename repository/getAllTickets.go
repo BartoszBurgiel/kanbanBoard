@@ -45,7 +45,12 @@ func (r Repo) GetAllTasks() kb.Tasks {
 				Description: desc,
 				Deadline:    newDeadline,
 				Priority:    priority,
-				ID:          id,
+				Temp: struct {
+					State, Icon string
+				}{
+					"ToDo", "&rarr;",
+				},
+				ID: id,
 			})
 			break
 
@@ -55,7 +60,11 @@ func (r Repo) GetAllTasks() kb.Tasks {
 				Description: desc,
 				Deadline:    newDeadline,
 				Priority:    priority,
-
+				Temp: struct {
+					State, Icon string
+				}{
+					"InProgress", "&rarr;",
+				},
 				ID: id,
 			})
 			break
@@ -66,7 +75,12 @@ func (r Repo) GetAllTasks() kb.Tasks {
 				Description: desc,
 				Deadline:    newDeadline,
 				Priority:    priority,
-				ID:          id,
+				Temp: struct {
+					State, Icon string
+				}{
+					"Done", "X",
+				},
+				ID: id,
 			})
 			break
 		}

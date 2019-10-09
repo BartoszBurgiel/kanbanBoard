@@ -10,6 +10,11 @@ type Ticket struct {
 	Deadline    string
 	Priority    int
 	ID          string
+
+	// For template setup
+	Temp struct {
+		State, Icon string
+	}
 }
 
 // Tickets will be passed over to the HTML template
