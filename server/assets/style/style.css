@@ -119,9 +119,15 @@ background:
     margin: 12%;
 }
 
+.ticket-footer{
+    grid-column: 1/3;
+    grid-row:3;
+    display: flex;
+}
+
 .deadline{
-    margin-top: 15%;
-    padding: 5%;
+    padding: 1%;
+    margin-top:3%;
     background-color: #ffbca7;
     width: max-content;
     font-family: 'Courier New', Courier, monospace;

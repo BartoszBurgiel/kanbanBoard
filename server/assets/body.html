@@ -26,10 +26,11 @@
 					<input type="hidden" name="state" value="ToDo">
 					<input class="ticket-button" type="submit" name='{{.ID}}' value="&rarr;" />
 				</form>
-
-				<div class="deadline-header">Deadline</div>
-				<div class="deadline" id="{{.ID}}">
-					{{.Deadline}}
+				
+				<div class="ticket-footer">
+					<div class="deadline" id="{{.ID}}">
+						{{.Deadline}}
+					</div>
 				</div>
 
 			</div>
@@ -51,8 +52,10 @@
 					<input class="ticket-button" type="submit" name='{{.ID}}' value="&rarr;" />
 				</form>
 
-				<div class="deadline" id="{{.ID}}">
-					{{.Deadline}}
+				<div class="ticket-footer">
+					<div class="deadline" id="{{.ID}}">
+						{{.Deadline}}
+					</div>
 				</div>
 			</div>
 
@@ -73,8 +76,10 @@
 						<input class="ticket-button" type="submit" name='{{.ID}}' value="X" />
 					</form>
 
-				<div class="deadline" id="{{.ID}}">
-					{{.Deadline}}
+				<div class="ticket-footer">
+					<div class="deadline" id="{{.ID}}">
+						{{.Deadline}}
+					</div>
 				</div>
 			</div>
 
