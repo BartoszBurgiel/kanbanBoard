@@ -4,6 +4,7 @@ package kanbanboard
 type Ticket struct {
 	Title       string
 	Description string
+	Deadline    string
 	ID          string
 }
 

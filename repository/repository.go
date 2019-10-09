@@ -6,6 +6,7 @@ import (
 	kb "kanbanBoard"
 	"os"
 	"path"
+	"time"
 
 	"github.com/google/uuid"
 
@@ -54,15 +55,15 @@ func (r *Repo) init() error {
 func (r Repo) GetAllTasks() kb.Tasks {
 
 	// Get all todos
-	allTodos, _ := r.db.Query("SELECT title, desc, state, id FROM tasks")
+	allTodos, _ := r.db.Query("SELECT title, desc, state, deadline, id FROM tasks")
 
 	tasks := kb.Tasks{}
 
-	var title, desc, state, id string
+	var title, desc, state, deadline, id string
 
 	for allTodos.Next() {
 
-		err := allTodos.Scan(&title, &desc, &state, &id)
+		err := allTodos.Scan(&title, &desc, &state, &deadline, &id)
 
 		if err != nil {
 			fmt.Println(err)
@@ -71,13 +72,13 @@ func (r Repo) GetAllTasks() kb.Tasks {
 		// Distinguish between states
 		switch state {
 		case "todo":
-			tasks.ToDo = append(tasks.ToDo, kb.Ticket{Title: title, Description: desc, ID: id})
+			tasks.ToDo = append(tasks.ToDo, kb.Ticket{Title: title, Description: desc, Deadline: deadline, ID: id})
 			break
 		case "inprogress":
-			tasks.InProgress = append(tasks.InProgress, kb.Ticket{Title: title, Description: desc, ID: id})
+			tasks.InProgress = append(tasks.InProgress, kb.Ticket{Title: title, Description: desc, Deadline: deadline, ID: id})
 			break
 		case "done":
-			tasks.Done = append(tasks.Done, kb.Ticket{Title: title, Description: desc, ID: id})
+			tasks.Done = append(tasks.Done, kb.Ticket{Title: title, Description: desc, Deadline: deadline, ID: id})
 			break
 		}
 	}
@@ -126,6 +127,7 @@ func (r Repo) AddNewTicket(title, desc string) error {
 												?, 
 												?, 
 												?, 
+												?,
 												?
 											) ;`)
 
@@ -133,7 +135,7 @@ func (r Repo) AddNewTicket(title, desc string) error {
 
 	id := uuid.New().String()
 
-	res, err := query.Exec(title, desc, "todo", id)
+	res, err := query.Exec(title, desc, "todo", time.Now().Format("02-01-2006"), id)
 	n, _ := res.RowsAffected()
 
 	fmt.Println("title:", title, "desc:", desc, "id:", id)
@@ -148,6 +150,7 @@ func (r Repo) ClearDatabase() error {
 	query, _ := r.db.Prepare(`DELETE FROM tasks WHERE 
 							state = '' OR
 							desc = '' OR
+							deadline = '' OR
 							id = '' 
 							;`)
 
@@ -160,8 +163,9 @@ func (r Repo) ClearDatabase() error {
 }
 
 const initState = `CREATE TABLE IF NOT EXISTS 'tasks' (
-						'title' VARCHAR(64),
-						'desc'  VARCHAR(256), 
-						'state' VARCHAR(64),
-						'id'    VARCHAR(16) 
+						'title' 	VARCHAR(64),
+						'desc'  	VARCHAR(256), 
+						'state' 	VARCHAR(64),
+						'deadline' 	VARCHAR(16),
+						'id'    	VARCHAR(16) 
 						) ;`
