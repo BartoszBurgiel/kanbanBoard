@@ -119,6 +119,15 @@ background:
     margin: 12%;
 }
 
+.deadline{
+    margin-top: 15%;
+    padding: 5%;
+    border-radius: 7%;
+    width: max-content;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+}
+
 @media screen and (max-width: 700px) {
     .header {
         font-size: 40px;
