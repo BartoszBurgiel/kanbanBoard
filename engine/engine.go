@@ -26,14 +26,10 @@ func New() *Engine {
 // Render and send HTML document to the server
 func (e *Engine) Render(w http.ResponseWriter, r *http.Request) {
 
-	temp := template.Must(template.ParseFiles("../server/assets/body.html"))
+	p := "../engine/templates/"
+	temp := template.Must(template.ParseFiles(p+"body.html", p+"ticket.html"))
 
 	temp.Execute(w, e.tasks)
-}
-
-// GetTasks is a for the tasks struct
-func (e *Engine) GetTasks() *kb.Tasks {
-	return &e.tasks
 }
 
 // SetTasks is a setter to 'update' the tasks

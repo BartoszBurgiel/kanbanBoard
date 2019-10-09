@@ -18,8 +18,7 @@
 		<div class="board-header">Todo</div>
 		{{range .ToDo}}
 
-            {{block "ticket" .}}
-            {{end}}
+            {{template "ticket" .}}
 
 		{{end}}
 
@@ -29,8 +28,7 @@
 
 		{{range .InProgress}}
 
-        {{block "ticket" .}}
-        {{end}}
+        {{template "ticket" .}}
 
 		{{end}}
 
