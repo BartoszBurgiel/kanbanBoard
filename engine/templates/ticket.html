@@ -1,0 +1,22 @@
+<div class="ticket">
+    <div class="ticket-header">{{.Title}}</div>
+    <div class="ticket-desc">{{.Description}}</div>
+    <form action="/" method="post">
+        <input type="hidden" name="ticketID" value="{{.ID}}">
+        <input type="hidden" name="state" value="Done">
+        <input class="ticket-button" type="submit" name='{{.ID}}' value="X" />
+    </form>
+
+    <div class="ticket-footer">
+        <div class="footer-element" id="{{.ID}}">
+            <div class="footer-element-header">Deadline</div>
+            <hr>
+            {{.Deadline}}
+        </div>
+        <div class="footer-element" id="{{.ID}}">
+            <div class="footer-element-header">Priority</div>
+            <hr>
+            {{.Priority}}
+        </div>
+    </div>
+</div>
