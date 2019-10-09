@@ -1,10 +1,13 @@
 package kanbanboard
 
 // Ticket represents a ticket on the kanban board
+// every attribute is a string, because data retrieved from
+// POST is allways string
 type Ticket struct {
 	Title       string
 	Description string
 	Deadline    string
+	Priority    string
 	ID          string
 }
 
