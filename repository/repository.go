@@ -5,9 +5,8 @@ import (
 	"fmt"
 	kb "kanbanBoard"
 	"os"
-	"strconv"
 
-	"time"
+	"github.com/google/uuid"
 
 	// Sqlite driver
 	_ "github.com/mattn/go-sqlite3"
@@ -15,28 +14,31 @@ import (
 
 // Repo represents a data base with its all methods
 type Repo struct {
-	db *sql.DB
+	db   *sql.DB
+	path string
 }
 
-// NewRepo creates a new repository
-func NewRepo(path string) (*Repo, error) {
-	r := &Repo{}
+// New creates a new repository
+func New(path string) (*Repo, error) {
+	r := &Repo{
+		path: path,
+	}
 
-	return r, r.init(path)
+	return r, r.init()
 }
 
-func (r *Repo) init(path string) error {
+func (r *Repo) init() error {
 
 	// Check if file does not exists
-	if _, err := os.Stat(path); os.IsNotExist(err) {
+	if _, err := os.Stat(r.path); os.IsNotExist(err) {
 		fmt.Println("Database does not exist")
 		fmt.Println("Creating a new database...")
 
 		// Create database file
-		os.Create(path)
+		os.Create(r.path)
 
 		// Open databse
-		db, err := sql.Open("sqlite3", path)
+		db, err := sql.Open("sqlite3", r.path)
 
 		fmt.Println(err)
 
@@ -46,7 +48,7 @@ func (r *Repo) init(path string) error {
 		// Define database in r
 		r.db = db
 	} else {
-		db, err := sql.Open("sqlite3", path)
+		db, err := sql.Open("sqlite3", r.path)
 
 		fmt.Println(err)
 
@@ -56,14 +58,31 @@ func (r *Repo) init(path string) error {
 	return nil
 }
 
+// Open database connection
+func (r *Repo) Open() error {
+	db, err := sql.Open("sqlite3", r.path)
+
+	r.db = db
+
+	return err
+}
+
+// Close database connection
+func (r *Repo) Close() {
+	r.db.Close()
+}
+
 // GetAllTasks pulls all tasks from the database and converts them
 // into Tasks struct
 func (r Repo) GetAllTasks() kb.Tasks {
 
+	// Check db connection
+	if err := r.db.Ping(); err != nil {
+		r.Open()
+	}
+
 	// Get all todos
 	allTodos, _ := r.db.Query("SELECT * FROM tasks")
-
-	r.db.Close()
 
 	tasks := kb.Tasks{}
 
@@ -91,6 +110,8 @@ func (r Repo) GetAllTasks() kb.Tasks {
 		}
 	}
 
+	r.Close()
+
 	return tasks
 }
 
@@ -105,8 +126,6 @@ func (r Repo) UpdateTicketState(state, id string) error {
 	n, _ := res.RowsAffected()
 
 	fmt.Println("Updated", n, "rows")
-
-	r.db.Close()
 
 	return err
 }
@@ -124,14 +143,18 @@ func (r Repo) SetTicketAsDoneAndDelete(id string) error {
 
 	fmt.Println("Updated", n, "rows")
 
-	r.db.Close()
-
 	return err
 }
 
 // AddNewTicket puts a ticket with given title and desc
 // into the database
 func (r Repo) AddNewTicket(title, desc string) error {
+
+	// Check db connection
+	if err := r.db.Ping(); err != nil {
+		r.Open()
+	}
+
 	// Transfer data to inprogress
 	query, err := r.db.Prepare(`INSERT INTO tasks
 										VALUES (
@@ -143,7 +166,7 @@ func (r Repo) AddNewTicket(title, desc string) error {
 
 	fmt.Println(err)
 
-	id := generateID()
+	id := uuid.New().String()
 
 	res, err := query.Exec(title, desc, "todo", id)
 	n, _ := res.RowsAffected()
@@ -152,19 +175,14 @@ func (r Repo) AddNewTicket(title, desc string) error {
 
 	fmt.Println("Updated", n, "rows")
 
-	r.db.Close()
+	r.Close()
 
 	return err
-}
-
-// ID = time in milliseconds
-func generateID() string {
-	return strconv.FormatInt(time.Now().UnixNano(), 10)
 }
 
 const initState = `CREATE TABLE 'tasks' (
 						'title' VARCHAR(64),
 						'desc'  VARCHAR(256), 
 						'state' VARCHAR(64),
-						'id'    VARCHAR(64) 
+						'id'    VARCHAR(16) 
 						) ;`
