@@ -55,12 +55,13 @@ func (r *Repo) init() error {
 func (r Repo) GetAllTasks() kb.Tasks {
 
 	// Get all todos
-	allTodos, _ := r.db.Query("SELECT title, desc, state, deadline, id FROM tasks")
+	allTodos, _ := r.db.Query("SELECT title, desc, state, deadline, priority, id FROM tasks ORDER BY priority DESC ;")
 	tasks := kb.Tasks{}
 	var title, desc, state, deadline, id string
+	var priority int
 
 	for allTodos.Next() {
-		err := allTodos.Scan(&title, &desc, &state, &deadline, &id)
+		err := allTodos.Scan(&title, &desc, &state, &deadline, &priority, &id)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -87,6 +88,7 @@ func (r Repo) GetAllTasks() kb.Tasks {
 				Title:       title,
 				Description: desc,
 				Deadline:    newDeadline,
+				Priority:    priority,
 				ID:          id,
 			})
 			break
@@ -96,7 +98,9 @@ func (r Repo) GetAllTasks() kb.Tasks {
 				Title:       title,
 				Description: desc,
 				Deadline:    newDeadline,
-				ID:          id,
+				Priority:    priority,
+
+				ID: id,
 			})
 			break
 
@@ -105,6 +109,7 @@ func (r Repo) GetAllTasks() kb.Tasks {
 				Title:       title,
 				Description: desc,
 				Deadline:    newDeadline,
+				Priority:    priority,
 				ID:          id,
 			})
 			break
@@ -145,7 +150,7 @@ func (r Repo) SetTicketAsDoneAndDelete(id string) error {
 
 // AddNewTicket puts a ticket with given title and desc
 // into the database
-func (r Repo) AddNewTicket(title, desc string, deadline time.Time) error {
+func (r Repo) AddNewTicket(title, desc string, deadline time.Time, priority int) error {
 
 	// Transfer data to inprogress
 	query, err := r.db.Prepare(`INSERT INTO tasks
@@ -154,13 +159,14 @@ func (r Repo) AddNewTicket(title, desc string, deadline time.Time) error {
 												?, 
 												?, 
 												?,
+												?,
 												?
 											) ;`)
 
 	fmt.Println(err)
 
 	id := uuid.New().String()
-	res, err := query.Exec(title, desc, "todo", deadline, id)
+	res, err := query.Exec(title, desc, "todo", deadline, priority, id)
 	n, _ := res.RowsAffected()
 	fmt.Println("title:", title, "desc:", desc, "id:", id)
 	fmt.Println("Updated", n, "rows")
@@ -174,6 +180,7 @@ func (r Repo) ClearDatabase() error {
 							state = '' OR
 							desc = '' OR
 							deadline = '' OR
+							priority = '' OR
 							id = '' 
 							;`)
 
@@ -190,5 +197,6 @@ const initState = `CREATE TABLE IF NOT EXISTS 'tasks' (
 						'desc'  	VARCHAR(256), 
 						'state' 	VARCHAR(64),
 						'deadline' 	VARCHAR(16),
+						'priority'  INT,
 						'id'    	VARCHAR(16) 
 						) ;`

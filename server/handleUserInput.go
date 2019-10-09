@@ -3,6 +3,7 @@ package server
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -21,6 +22,7 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 		title := r.FormValue("newTitle")
 		desc := r.FormValue("newDescription")
 		date := r.FormValue("newDate")
+		priority := r.FormValue("newPriority")
 
 		fmt.Println("title: ", title)
 		fmt.Println("desc: ", desc)
@@ -31,7 +33,13 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err)
 		}
 
-		s.repo.AddNewTicket(title, desc, newDate)
+		// Convert priority to int
+		newPriority, err := strconv.Atoi(priority)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		s.repo.AddNewTicket(title, desc, newDate, newPriority)
 
 	}
 
