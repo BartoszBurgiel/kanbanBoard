@@ -6,6 +6,8 @@ import (
 	kb "kanbanBoard"
 	"os"
 	"path"
+	"strings"
+	"time"
 
 	"github.com/google/uuid"
 
@@ -63,13 +65,28 @@ func (r Repo) GetAllTasks() kb.Tasks {
 			fmt.Println(err)
 		}
 
+		// Format deadline for displaying
+		// Remove time
+		deadlineNoTime := strings.Split(deadline, " ")[0]
+
+		// Prepare to reverse
+		deadlineSnipplets := strings.Split(deadlineNoTime, "-")
+		newDeadline := ""
+		for i := 2; i >= 0; i-- {
+			/// Reverse
+			newDeadline += deadlineSnipplets[i]
+			if i > 0 {
+				newDeadline += "-"
+			}
+		}
+
 		// Distinguish between states
 		switch state {
 		case "todo":
 			tasks.ToDo = append(tasks.ToDo, kb.Ticket{
 				Title:       title,
 				Description: desc,
-				Deadline:    deadline,
+				Deadline:    newDeadline,
 				ID:          id,
 			})
 			break
@@ -78,7 +95,7 @@ func (r Repo) GetAllTasks() kb.Tasks {
 			tasks.InProgress = append(tasks.InProgress, kb.Ticket{
 				Title:       title,
 				Description: desc,
-				Deadline:    deadline,
+				Deadline:    newDeadline,
 				ID:          id,
 			})
 			break
@@ -87,7 +104,7 @@ func (r Repo) GetAllTasks() kb.Tasks {
 			tasks.Done = append(tasks.Done, kb.Ticket{
 				Title:       title,
 				Description: desc,
-				Deadline:    deadline,
+				Deadline:    newDeadline,
 				ID:          id,
 			})
 			break
@@ -128,7 +145,7 @@ func (r Repo) SetTicketAsDoneAndDelete(id string) error {
 
 // AddNewTicket puts a ticket with given title and desc
 // into the database
-func (r Repo) AddNewTicket(title, desc, deadline string) error {
+func (r Repo) AddNewTicket(title, desc string, deadline time.Time) error {
 
 	// Transfer data to inprogress
 	query, err := r.db.Prepare(`INSERT INTO tasks

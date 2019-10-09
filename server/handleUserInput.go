@@ -3,7 +3,7 @@ package server
 import (
 	"fmt"
 	"net/http"
-	"strings"
+	"time"
 )
 
 func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
@@ -24,20 +24,13 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 
 		fmt.Println("title: ", title)
 		fmt.Println("desc: ", desc)
+		fmt.Println("date: ", date)
 
-		// Reformat date
-		dateSnipplets := strings.Split(date, "-")
-		newDate := ""
-
-		// "Flip" data snipplets
-		for i := 2; i >= 0; i-- {
-			newDate += dateSnipplets[i]
-			if i > 0 {
-				newDate += "-"
-			}
+		newDate, err := time.Parse("2006-01-02", date)
+		if err != nil {
+			fmt.Println(err)
 		}
 
-		fmt.Println("date: ", newDate)
 		s.repo.AddNewTicket(title, desc, newDate)
 
 	}
