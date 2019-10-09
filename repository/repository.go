@@ -72,13 +72,30 @@ func (r Repo) GetAllTasks() kb.Tasks {
 		// Distinguish between states
 		switch state {
 		case "todo":
-			tasks.ToDo = append(tasks.ToDo, kb.Ticket{Title: title, Description: desc, Deadline: deadline, ID: id})
+			tasks.ToDo = append(tasks.ToDo, kb.Ticket{
+				Title:       title,
+				Description: desc,
+				Deadline:    deadline,
+				ID:          id,
+			})
 			break
+
 		case "inprogress":
-			tasks.InProgress = append(tasks.InProgress, kb.Ticket{Title: title, Description: desc, Deadline: deadline, ID: id})
+			tasks.InProgress = append(tasks.InProgress, kb.Ticket{
+				Title:       title,
+				Description: desc,
+				Deadline:    deadline,
+				ID:          id,
+			})
 			break
+
 		case "done":
-			tasks.Done = append(tasks.Done, kb.Ticket{Title: title, Description: desc, Deadline: deadline, ID: id})
+			tasks.Done = append(tasks.Done, kb.Ticket{
+				Title:       title,
+				Description: desc,
+				Deadline:    deadline,
+				ID:          id,
+			})
 			break
 		}
 	}

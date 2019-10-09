@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<title>My kanban board</title>
+		<title>My kanban board</title>
 		<link rel="stylesheet" type="text/css" href="./style/style.css" />
 		<meta content="width=device-width, initial-scale=1" name="viewport" />
+		
 	</head>
 
 <body>
+	<script type="text/javascript" src="./js/date.js"></script>
 	<div class="header">My kanban board</div>
 
 	<div class="main">
@@ -26,7 +28,10 @@
 					<input class="ticket-button" type="submit" name='{{.ID}}' value="&rarr;" />
 				</form>
 
-				<div class="deadline">{{.Deadline}}</div>
+				<div class="deadline" id="{{.ID}}">
+					{{.Deadline}}
+				</div>
+
 			</div>
 
 		{{end}}
@@ -46,7 +51,9 @@
 					<input class="ticket-button" type="submit" name='{{.ID}}' value="&rarr;" />
 				</form>
 
-				<div class="deadline">{{.Deadline}}</div>
+				<div class="deadline" id="{{.ID}}">
+					{{.Deadline}}
+				</div>
 			</div>
 
 		{{end}}
@@ -66,7 +73,9 @@
 						<input class="ticket-button" type="submit" name='{{.ID}}' value="X" />
 					</form>
 
-				<div class="deadline">{{.Deadline}}</div>
+				<div class="deadline" id="{{.ID}}">
+					{{.Deadline}}
+				</div>
 			</div>
 
 		{{end}}
