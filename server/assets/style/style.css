@@ -90,7 +90,7 @@ background:
 
 .ticket > form {
     grid-column:  2;
-    grid-row: 1/3;
+    grid-row: 1/4;
     margin-right: 10%;
 }
 
@@ -135,7 +135,7 @@ background:
 
     .ticket > form {
         grid-column:  2;
-        grid-row: 1/3;
+        grid-row: 1/4;
     }
 
     .new-ticket {
