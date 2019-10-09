@@ -45,7 +45,7 @@ func (s *Server) handleGET(w http.ResponseWriter, r *http.Request) {
 // ServeHTTP to the server
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	url := r.URL.String()
-	if prefixChecker(url, "/style", "/favicon.ico") {
+	if !prefixChecker(url, "/style", "/favicon.ico") {
 		p := Path(r.URL.Path)
 		m := Method(r.Method)
 
@@ -65,10 +65,10 @@ func (s Server) handleGETAssets(w http.ResponseWriter, r *http.Request) {
 
 // prefixChecker checks if any of given prefixes is in the url
 func prefixChecker(url string, prefix ...string) bool {
-	out := true
+	out := false
 	for _, p := range prefix {
 		if strings.HasPrefix(url, p) {
-			out = false
+			out = true
 		}
 	}
 	return out
