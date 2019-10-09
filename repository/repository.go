@@ -143,6 +143,22 @@ func (r Repo) AddNewTicket(title, desc string) error {
 	return err
 }
 
+// ClearDatabase deletes all entries with empty data
+func (r Repo) ClearDatabase() error {
+	query, _ := r.db.Prepare(`DELETE FROM tasks WHERE 
+							state = '' OR
+							desc = '' OR
+							id = '' 
+							;`)
+
+	res, err := query.Exec()
+	n, _ := res.RowsAffected()
+
+	fmt.Println("Updated", n, "rows")
+
+	return err
+}
+
 const initState = `CREATE TABLE IF NOT EXISTS 'tasks' (
 						'title' VARCHAR(64),
 						'desc'  VARCHAR(256), 

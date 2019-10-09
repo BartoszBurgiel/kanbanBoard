@@ -25,7 +25,9 @@ func New() *Engine {
 
 // Render and send HTML document to the server
 func (e *Engine) Render(w http.ResponseWriter, r *http.Request) {
-	temp := template.Must(template.New("body").Parse(body))
+
+	temp := template.Must(template.ParseFiles("../server/assets/body.html"))
+
 	temp.Execute(w, e.tasks)
 }
 

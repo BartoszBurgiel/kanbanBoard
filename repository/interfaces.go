@@ -9,4 +9,5 @@ type SqliteRepository interface {
 	SetTicketAsDoneAndDelete(id string) error
 	AddNewTicket(title, desc string) error
 	HandleTicketEvent(state, id string) error
+	ClearDatabase() error
 }

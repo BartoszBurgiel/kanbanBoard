@@ -28,6 +28,9 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 
 	}
 
+	// Clean database
+	s.repo.ClearDatabase()
+
 	// Reset engine data
 	s.engine.SetTasks(s.repo.GetAllTasks())
 
