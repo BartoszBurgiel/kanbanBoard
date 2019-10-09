@@ -60,11 +60,17 @@ func (r *Repo) init() error {
 
 // Open database connection
 func (r *Repo) Open() error {
-	db, err := sql.Open("sqlite3", r.path)
 
-	r.db = db
+	// Check db connection
+	if err := r.db.Ping(); err != nil {
+		db, err := sql.Open("sqlite3", r.path)
+		r.db = db
 
-	return err
+		return err
+	}
+
+	return nil
+
 }
 
 // Close database connection
@@ -76,10 +82,7 @@ func (r *Repo) Close() {
 // into Tasks struct
 func (r Repo) GetAllTasks() kb.Tasks {
 
-	// Check db connection
-	if err := r.db.Ping(); err != nil {
-		r.Open()
-	}
+	r.Open()
 
 	// Get all todos
 	allTodos, _ := r.db.Query("SELECT * FROM tasks")
@@ -150,10 +153,7 @@ func (r Repo) SetTicketAsDoneAndDelete(id string) error {
 // into the database
 func (r Repo) AddNewTicket(title, desc string) error {
 
-	// Check db connection
-	if err := r.db.Ping(); err != nil {
-		r.Open()
-	}
+	r.Open()
 
 	// Transfer data to inprogress
 	query, err := r.db.Prepare(`INSERT INTO tasks

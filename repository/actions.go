@@ -5,10 +5,7 @@ import "fmt"
 // HandleTicketEvent handles a given ticket according to it's state
 func (r Repo) HandleTicketEvent(state, id string) error {
 
-	// Check db connection
-	if err := r.db.Ping(); err != nil {
-		r.Open()
-	}
+	r.Open()
 
 	switch state {
 	case "ToDo":
