@@ -45,6 +45,10 @@ func (r *Repo) init() error {
 	fmt.Println(err)
 	fmt.Println(q)
 
+	q, err = db.Exec(basicColumns)
+	fmt.Println(err)
+	fmt.Println(q)
+
 	r.db = db
 
 	return nil

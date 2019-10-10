@@ -15,3 +15,19 @@ const newTickets = `CREATE TABLE IF NOT EXISTS 'tickets' (
 						'id'    	VARCHAR(16) PRIMARY KEY,
 						'columnID'  VARCHAR(16) 
 						) ;`
+
+const basicColumns = `INSERT INTO columns VALUES (
+							"ToDo", 
+							"todo"	
+						) ; 
+
+						INSERT INTO columns VALUES (
+							"InProgress", 
+							"inprogress"	
+						) ;
+
+						INSERT INTO columns VALUES (
+							"Done", 
+							"done"	
+						) ;
+						`
