@@ -38,7 +38,7 @@ background:
     width: 30%;
 }
 
-.new-ticket {
+.new-instance {
     display: grid;
     background-color: #c0f0ff;
     margin: 1%;
@@ -125,6 +125,11 @@ background:
 .footer-element-header {
     font-family: 'Courier New', Courier, monospace;
     font-weight: bold;
+}
+
+.new-actions-container {
+    display: flex;
+    flex-direction: row;
 }
 
 @media screen and (max-width: 700px) {
