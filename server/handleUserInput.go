@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"time"
 )
 
 func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
@@ -40,15 +39,13 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 		desc := r.FormValue("newDescription")
 		date := r.FormValue("newDate")
 		priority := r.FormValue("newPriority")
+		state := r.FormValue("newState")
 
 		fmt.Println("title: ", title)
 		fmt.Println("desc: ", desc)
 		fmt.Println("date: ", date)
-
-		newDate, err := time.Parse("2006-01-02", date)
-		if err != nil {
-			fmt.Println(err)
-		}
+		fmt.Println("priority", priority)
+		fmt.Println("state", state)
 
 		// Convert priority to int
 		newPriority, err := strconv.Atoi(priority)
@@ -56,12 +53,9 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err)
 		}
 
-		s.repo.AddNewTicket(title, desc, newDate, newPriority)
+		s.repo.AddNewTicket(title, desc, date, newPriority, state)
 
 	}
-
-	// Clean database
-	s.repo.ClearDatabase()
 
 	// Reset engine data
 	s.engine.SetBoard(s.repo.GetBoard())

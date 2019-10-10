@@ -21,9 +21,6 @@ func New() *Engine {
 	return e
 }
 
-//save to repo
-//template render
-
 // Render and send HTML document to the server
 func (e *Engine) Render(w http.ResponseWriter, r *http.Request) {
 

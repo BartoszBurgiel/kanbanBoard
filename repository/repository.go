@@ -49,20 +49,3 @@ func (r *Repo) init() error {
 
 	return nil
 }
-
-// ClearDatabase deletes all entries with empty data
-func (r Repo) ClearDatabase() error {
-	query, _ := r.db.Prepare(`DELETE FROM tasks WHERE 
-							state = '' OR
-							desc = '' OR
-							deadline = '' OR
-							priority = '' OR
-							id = '' 
-							;`)
-
-	res, err := query.Exec()
-	n, _ := res.RowsAffected()
-	fmt.Println("Updated", n, "rows")
-
-	return err
-}
