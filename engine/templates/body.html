@@ -14,7 +14,7 @@
 			
 			{{range .States}}
 				<div class="board-body-column">
-					<div class="board-header">{{.State}}</div>
+					<div class="board-header">{{.State}} -> {{.Limit}}</div>
 						{{range .Tickets}}
 							{{template "ticket" .}}
 						{{end}}

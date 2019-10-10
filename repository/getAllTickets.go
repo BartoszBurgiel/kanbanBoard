@@ -57,9 +57,9 @@ func (r Repo) GetBoard() kb.Board {
 		board.States = append(board.States, kb.State{
 			State:   stateName,
 			Tickets: tempTickets,
+			Limit:   limit,
 		})
 	}
 
-	fmt.Println(board)
 	return board
 }

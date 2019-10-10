@@ -16,6 +16,7 @@ type Ticket struct {
 type State struct {
 	State   string
 	Tickets []Ticket
+	Limit   int
 }
 
 // Board is a collection of all states with their tickets
