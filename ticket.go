@@ -10,19 +10,15 @@ type Ticket struct {
 	Deadline    string
 	Priority    int
 	ID          string
-
-	// For template setup
-	Temp struct {
-		State, Icon string
-		ToDo        bool
-		BackIcon    string
-	}
 }
 
 // Tickets will be passed over to the HTML template
-type Tickets []Ticket
+type Tickets struct {
+	Column  string
+	Tickets []Ticket
+}
 
 // Tasks is a collection of all of the ticktes (ToDo, InProgress and Done)
 type Tasks struct {
-	ToDo, InProgress, Done Tickets
+	Tickets []Tickets
 }
