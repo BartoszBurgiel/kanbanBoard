@@ -11,39 +11,81 @@ func (r Repo) GetBoard() kb.Board {
 
 	board := kb.Board{}
 
+	stateMap := make(map[string]struct {
+		name  string
+		limit int
+	})
+
 	var stateName, stateID, title, desc, deadline, id, statesIDTicket string
-	var priority, limit int
+	var priority, limit, position int
 
 	// Get all states
-	allStates, err := r.db.Query(`SELECT * FROM states ; `)
+	allStates, err := r.db.Query(`SELECT * FROM states ORDER BY states.position ASC; `)
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	for allStates.Next() {
 
-		err := allStates.Scan(&stateName, &stateID, &limit)
+		err := allStates.Scan(&stateName, &stateID, &limit, &position)
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		// Get tickets
-		tickets, err := r.db.Query("SELECT * FROM tickets WHERE tickets.stateID = ? ; ", stateID)
-		if err != nil {
-			fmt.Println("s", err)
+		// Put id and state name to map
+		stateMap[stateID] = struct {
+			name  string
+			limit int
+		}{
+			stateName,
+			limit,
 		}
 
-		tempTickets := []kb.Ticket{}
+	}
 
-		for tickets.Next() {
+	// Get tickets
+	tickets, err := r.db.Query("SELECT * FROM tickets ORDER BY tickets.stateID DESC;")
+	if err != nil {
+		fmt.Println(err)
+	}
 
-			err := tickets.Scan(&title, &desc, &deadline, &priority, &id, &statesIDTicket)
-			if err != nil {
-				fmt.Println(err)
+	tempState := kb.State{}
+	newTempState := kb.State{}
+	currentState := ""
+	currentStateCheck := true
+	newTempStateCheck := true
+
+	for tickets.Next() {
+
+		err := tickets.Scan(&title, &desc, &deadline, &priority, &id, &statesIDTicket)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		// Only in the first run define in the beginning of the loop
+		if currentStateCheck {
+			currentState = statesIDTicket
+			currentStateCheck = false
+		}
+
+		fmt.Println("current state:", currentState)
+		fmt.Println("ticekt state:", statesIDTicket)
+
+		// check if currentState didn't change
+		if currentState == statesIDTicket {
+
+			// 'Update' only once
+			if newTempStateCheck {
+				tempState = newTempState
+				newTempState = kb.State{}
+				newTempStateCheck = false
 			}
 
-			// Append task to the temporary list
-			tempTickets = append(tempTickets, kb.Ticket{
+			tempState.State = stateMap[statesIDTicket].name
+			tempState.Limit = stateMap[statesIDTicket].limit
+
+			// Append tasks to the temporary list
+			tempState.Tickets = append(tempState.Tickets, kb.Ticket{
 				Title:       title,
 				Description: desc,
 				Deadline:    deadline,
@@ -51,15 +93,36 @@ func (r Repo) GetBoard() kb.Board {
 				ID:          id,
 			})
 
+		} else {
+
+			// New tempState for the current ticket (that's skipped)
+			newTempState = kb.State{
+				State: stateMap[statesIDTicket].name,
+				Tickets: []kb.Ticket{kb.Ticket{
+					Title:       title,
+					Description: desc,
+					Deadline:    deadline,
+					Priority:    priority,
+					ID:          id,
+				}},
+				Limit: stateMap[statesIDTicket].limit,
+			}
+			newTempStateCheck = true
+
+			// Add to board
+			board.States = append(board.States, tempState)
+
+			// clear tempState
+			tempState = kb.State{}
 		}
 
-		// Append state to the board
-		board.States = append(board.States, kb.State{
-			State:   stateName,
-			Tickets: tempTickets,
-			Limit:   limit,
-		})
+		// redefine current state to used state
+		currentState = statesIDTicket
 	}
 
+	// Add last items to board
+	board.States = append(board.States, newTempState)
+
+	fmt.Println(board)
 	return board
 }

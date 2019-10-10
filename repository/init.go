@@ -5,7 +5,8 @@ package repository
 const initColumns = `CREATE TABLE IF NOT EXISTS 'states' (
 						'name' 		VARCHAR(16),
 						'stateID'  	VARCHAR(16),
-						'limit'   	INT
+						'limit'   	INT,
+						'position'	INT
 						) ;`
 
 const newTickets = `CREATE TABLE IF NOT EXISTS 'tickets' (
