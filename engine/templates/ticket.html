@@ -10,7 +10,7 @@
             <input class="ticket-button" type="submit" name='{{.ID}}' value='{{.Temp.Icon}}' />
         </form>
 
-        {{ if .Temp.Todo}}
+        {{if not .Temp.ToDo}}
         <form action="/" method="POST" id="#button-back">
             <input type="hidden" name="ticketID" value="{{.ID}}" />
             <input type="hidden" name="backState" value="{{.Temp.State}}" />

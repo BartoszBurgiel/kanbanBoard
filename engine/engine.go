@@ -1,6 +1,7 @@
 package engine
 
 import (
+	"fmt"
 	"html/template"
 	kb "kanbanBoard"
 	"kanbanBoard/repository"
@@ -29,7 +30,9 @@ func (e *Engine) Render(w http.ResponseWriter, r *http.Request) {
 	p := "../engine/templates/"
 	temp := template.Must(template.ParseFiles(p+"body.html", p+"ticket.html"))
 
-	temp.Execute(w, e.tasks)
+	err := temp.Execute(w, e.tasks)
+
+	fmt.Println(err)
 }
 
 // SetTasks is a setter to 'update' the tasks
