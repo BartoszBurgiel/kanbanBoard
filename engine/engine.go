@@ -28,10 +28,8 @@ func New() *Engine {
 func (e *Engine) Render(w http.ResponseWriter, r *http.Request) {
 
 	p := "../engine/templates/"
-	temp := template.Must(template.ParseFiles(p+"body.html", p+"ticket.html"))
-
+	temp := template.Must(template.ParseFiles(p+"body.html", p+"ticket.html", p+"footer.html"))
 	err := temp.Execute(w, e.board)
-
 	fmt.Println(err)
 }
 
