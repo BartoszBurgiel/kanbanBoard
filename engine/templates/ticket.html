@@ -4,19 +4,7 @@
     <div class="ticket-desc">{{.Description}}</div>
   
     <div class="ticket-action">
-        <form action="/" method="POST" id="#button-forth">
-            <input type="hidden" name="ticketID" value="{{.ID}}" />
-            <input type="hidden" name="state" value="{{.Temp.State}}" />
-            <input class="ticket-button" type="submit" name='{{.ID}}' value='{{.Temp.Icon}}' />
-        </form>
-
-        {{if not .Temp.ToDo}}
-        <form action="/" method="POST" id="#button-back">
-            <input type="hidden" name="ticketID" value="{{.ID}}" />
-            <input type="hidden" name="backState" value="{{.Temp.State}}" />
-            <input class="ticket-button" type="submit" name='{{.ID}}' value='{{.Temp.BackIcon}}' />
-        </form>
-        {{end}}
+        ACTION
     </div>
 
     <div class="ticket-footer">

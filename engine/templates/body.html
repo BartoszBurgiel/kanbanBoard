@@ -11,40 +11,16 @@
 		<div class="header">My kanban board</div>
 
 		<div class="board-body">
-			<div class="board-body-column">
+			
+			{{range .States}}
+				<div class="board-body-column">
+					<div class="board-header">{{.State}}</div>
+						{{range .Tickets}}
+							{{template "ticket" .}}
+						{{end}}
+				</div>
 
-				<div class="board-header">Todo</div>
-				{{range .ToDo}}
-
-					{{template "ticket" .}}
-
-				{{end}}
-
-			</div>
-
-			<div class="board-body-column">
-				<div class="board-header">InProgress</div>
-
-				{{range .InProgress}}
-
-				{{template "ticket" .}}
-
-				{{end}}
-
-			</div>
-
-			<div class="board-body-column">
-				<div class="board-header">Done</div>
-
-				{{range .Done}}
-
-				{{block "ticket" .}}
-				{{end}}
-
-				{{end}}
-
-			</div>
-		</div>
+			{{end}}
 
 		<div class="new-actions-container">
 
