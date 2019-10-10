@@ -17,7 +17,7 @@ func (r Repo) GetBoard() kb.Board {
 	var priority, limit, position int
 
 	// Get all states
-	allStates, err := r.db.Query(`SELECT states. FROM states ORDER BY states.position ASC; `)
+	allStates, err := r.db.Query(`SELECT * FROM states ORDER BY states.position ASC; `)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -61,7 +61,10 @@ func (r Repo) GetBoard() kb.Board {
 		})
 	}
 
-	// assemble board
+	// Assemble board
+	for _, v := range stateMap {
+		board.States = append(board.States, *v)
+	}
 
 	fmt.Println(board)
 	return board
