@@ -4,7 +4,11 @@
     <div class="ticket-desc">{{.Description}}</div>
   
     <div class="ticket-action">
-        ACTION
+        <select>
+            {{ range .StatesList }}
+                <option>{{.}}</option>
+            {{end}}
+        </select>
     </div>
 
     <div class="ticket-footer">
