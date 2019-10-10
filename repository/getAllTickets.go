@@ -11,43 +11,53 @@ func (r Repo) GetBoard() kb.Board {
 
 	board := kb.Board{}
 
-	// Get all states and their tickets
-	allStates, err := r.db.Query(`SELECT states.name, 
-										tickets.title, tickets.desc, tickets.deadline, tickets.priority, tickets.id, tickets.statesID
-										FROM states 
-										INNER JOIN tickets
-										ON states.statesID = tickets.statesID ; `)
+	var stateName, stateID, title, desc, deadline, id, statesIDTicket string
+	var priority, limit int
+
+	// Get all states
+	allStates, err := r.db.Query(`SELECT * FROM states ; `)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	var stateName, title, desc, deadline, id, statesIDTicket string
-	var priority int
-
 	for allStates.Next() {
 
-		err := allStates.Scan(&stateName, &title, &desc, &deadline, &priority, &id, &statesIDTicket)
+		err := allStates.Scan(&stateName, &stateID, &limit)
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		// If columns exist but 0 tickets
-		// allColumns.
+		// Get tickets
+		tickets, err := r.db.Query("SELECT * FROM tickets WHERE tickets.stateID = ? ; ", stateID)
+		if err != nil {
+			fmt.Println("s", err)
+		}
 
-		// Append column to the task
+		tempTickets := []kb.Ticket{}
+
+		for tickets.Next() {
+
+			err := tickets.Scan(&title, &desc, &deadline, &priority, &id, &statesIDTicket)
+			if err != nil {
+				fmt.Println(err)
+			}
+
+			// Append task to the temporary list
+			tempTickets = append(tempTickets, kb.Ticket{
+				Title:       title,
+				Description: desc,
+				Deadline:    deadline,
+				Priority:    priority,
+				ID:          id,
+			})
+
+		}
+
+		// Append state to the board
 		board.States = append(board.States, kb.State{
-			State: stateName,
-			Tickets: []kb.Ticket{
-				kb.Ticket{
-					Title:       title,
-					Description: desc,
-					Deadline:    deadline,
-					Priority:    priority,
-					ID:          id,
-				},
-			},
+			State:   stateName,
+			Tickets: tempTickets,
 		})
-
 	}
 
 	fmt.Println(board)
