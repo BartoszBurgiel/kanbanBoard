@@ -88,10 +88,22 @@ background:
     font-size: 36px;
 }
 
-.ticket > form {
+.ticket-action {
     grid-column:  2;
-    grid-row: 1/4;
+    grid-row: 1/3;
     margin-right: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#button-forth {
+    order: 1;
+}
+
+#button-back {
+    order: 2;
 }
 
 .ticket-footer{
@@ -131,11 +143,6 @@ background:
     .board-body-column {
         width: auto;
         margin-bottom: 10%;
-    }
-
-    .ticket > form {
-        grid-column:  2;
-        grid-row: 1/4;
     }
 
     .new-ticket {

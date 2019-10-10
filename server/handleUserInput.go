@@ -13,8 +13,25 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Button pressed: ", r.FormValue("ticketID"))
 
 		id := r.FormValue("ticketID")
-		state := r.FormValue("state")
-		s.repo.HandleTicketEvent(state, id)
+
+		// state logic
+		if r.FormValue("state") != "" {
+			s.repo.HandleTicketEvent(r.FormValue("state"), id)
+		} else {
+
+			// Check where ticket must be transfered
+			switch r.FormValue("backState") {
+			case "InProgress":
+				s.repo.UpdateTicketState("todo", id)
+				break
+			case "Done":
+				s.repo.UpdateTicketState("inprogress", id)
+				break
+			default:
+				fmt.Println("State error!")
+			}
+
+		}
 
 	} else {
 		fmt.Println("New ticket:")
