@@ -47,8 +47,13 @@ func (r Repo) GetAllTasks() kb.Tasks {
 				Priority:    priority,
 				Temp: struct {
 					State, Icon string
+					ToDo        bool
+					BackIcon    string
 				}{
-					"ToDo", "→",
+					"ToDo",
+					"→",
+					true,
+					"←",
 				},
 				ID: id,
 			})
@@ -62,8 +67,13 @@ func (r Repo) GetAllTasks() kb.Tasks {
 				Priority:    priority,
 				Temp: struct {
 					State, Icon string
+					ToDo        bool
+					BackIcon    string
 				}{
-					"InProgress", "→",
+					"InProgress",
+					"→",
+					false,
+					"←",
 				},
 				ID: id,
 			})
@@ -77,8 +87,13 @@ func (r Repo) GetAllTasks() kb.Tasks {
 				Priority:    priority,
 				Temp: struct {
 					State, Icon string
+					ToDo        bool
+					BackIcon    string
 				}{
-					"Done", "X",
+					"Done",
+					"X",
+					false,
+					"←",
 				},
 				ID: id,
 			})

@@ -14,6 +14,8 @@ type Ticket struct {
 	// For template setup
 	Temp struct {
 		State, Icon string
+		ToDo        bool
+		BackIcon    string
 	}
 }
 
