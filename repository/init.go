@@ -10,7 +10,6 @@ const initState = `CREATE TABLE IF NOT EXISTS 'columns' (
 const newColumn = `CREATE TABLE IF NOT EXISTS 'ticket' (
 						'title'		VARCHAR(64),
 						'desc'  	VARCHAR(256), 
-						'state' 	VARCHAR(64),
 						'deadline' 	VARCHAR(16),
 						'priority'  INT,
 						'id'    	VARCHAR(16),

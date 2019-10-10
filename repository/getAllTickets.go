@@ -3,103 +3,48 @@ package repository
 import (
 	"fmt"
 	kb "kanbanBoard"
-	"strings"
 )
 
 // GetAllTasks pulls all tasks from the database and converts them
 // into Tasks struct
 func (r Repo) GetAllTasks() kb.Tasks {
 
-	// Get all todos
-	allTodos, _ := r.db.Query("SELECT title, desc, state, deadline, priority, id FROM tasks ORDER BY priority DESC ;")
 	tasks := kb.Tasks{}
-	var title, desc, state, deadline, id string
+
+	// Get all columns and their tickets
+	allColumns, err := r.db.Query(`SELECT columns.name, columns.columnId, 
+											tickets.title, tickets.desc,  tickets.deadline, tickets.priority, tickets.id, tickets.columnID
+									FROM columns 
+									INNER JOINT tickets ON 
+									tickets.columnID = columns.columnID ; `)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	var columnName, columnID, title, desc, deadline, id, columnIDTicket string
 	var priority int
 
-	for allTodos.Next() {
-		err := allTodos.Scan(&title, &desc, &state, &deadline, &priority, &id)
+	for allColumns.Next() {
+
+		err := allColumns.Scan(&columnName, &columnID, title, desc, deadline, priority, id, columnIDTicket)
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		// Format deadline for displaying
-		// Remove time
-		deadlineNoTime := strings.Split(deadline, " ")[0]
-
-		// Prepare to reverse
-		deadlineSnipplets := strings.Split(deadlineNoTime, "-")
-		newDeadline := ""
-		for i := 2; i >= 0; i-- {
-			/// Reverse
-			newDeadline += deadlineSnipplets[i]
-			if i > 0 {
-				newDeadline += "-"
-			}
-		}
-
-		// Distinguish between states
-		switch state {
-		case "todo":
-			tasks.ToDo = append(tasks.ToDo, kb.Ticket{
-				Title:       title,
-				Description: desc,
-				Deadline:    newDeadline,
-				Priority:    priority,
-				Temp: struct {
-					State, Icon string
-					ToDo        bool
-					BackIcon    string
-				}{
-					"ToDo",
-					"→",
-					true,
-					"←",
+		// Append column to the task
+		tasks.Tickets = append(tasks.Tickets, kb.Tickets{
+			Column: columnName,
+			Tickets: []kb.Ticket{
+				kb.Ticket{
+					Title:       title,
+					Description: desc,
+					Deadline:    deadline,
+					Priority:    priority,
+					ID:          id,
 				},
-				ID: id,
-			})
-			break
+			},
+		})
 
-		case "inprogress":
-			tasks.InProgress = append(tasks.InProgress, kb.Ticket{
-				Title:       title,
-				Description: desc,
-				Deadline:    newDeadline,
-				Priority:    priority,
-				Temp: struct {
-					State, Icon string
-					ToDo        bool
-					BackIcon    string
-				}{
-					"InProgress",
-					"→",
-					false,
-					"←",
-				},
-				ID: id,
-			})
-			break
-
-		case "done":
-			tasks.Done = append(tasks.Done, kb.Ticket{
-				Title:       title,
-				Description: desc,
-				Deadline:    newDeadline,
-				Priority:    priority,
-				Temp: struct {
-					State, Icon string
-					ToDo        bool
-					BackIcon    string
-				}{
-					"Done",
-					"X",
-					false,
-					"←",
-				},
-				ID: id,
-			})
-			break
-		}
 	}
-
 	return tasks
 }
