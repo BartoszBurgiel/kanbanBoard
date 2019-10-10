@@ -14,9 +14,11 @@ type Ticket struct {
 
 // State will be passed over to the HTML template
 type State struct {
-	State   string
-	Tickets []Ticket
-	Limit   int
+	State    string
+	ID       string
+	Tickets  []Ticket
+	Position int
+	Limit    int
 }
 
 // Board is a collection of all states with their tickets

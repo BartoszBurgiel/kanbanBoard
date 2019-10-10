@@ -8,13 +8,13 @@ import (
 )
 
 // UpdateTicketState changes the state of a given ticket
-func (r Repo) UpdateTicketState(state, id string) error {
+func (r Repo) UpdateTicketState(stateID, id string) error {
 
-	query, _ := r.db.Prepare(`UPDATE tasks
-								SET state = ? 
+	query, _ := r.db.Prepare(`UPDATE tickets
+								SET tickets.stateID = ? 
 								WHERE id = ? ;`)
 
-	res, err := query.Exec(state, id)
+	res, err := query.Exec(stateID, id)
 	n, _ := res.RowsAffected()
 	fmt.Println("Updated", n, "rows")
 
@@ -25,9 +25,8 @@ func (r Repo) UpdateTicketState(state, id string) error {
 // from the database
 func (r Repo) SetTicketAsDoneAndDelete(id string) error {
 
-	query, _ := r.db.Prepare(`DELETE FROM tasks
-								WHERE state = 'done' 
-								AND id = ? ;`)
+	query, _ := r.db.Prepare(`DELETE FROM tickets
+								WHERE id = ? ;`)
 
 	res, err := query.Exec(id)
 	n, _ := res.RowsAffected()
@@ -41,7 +40,7 @@ func (r Repo) SetTicketAsDoneAndDelete(id string) error {
 func (r Repo) AddNewTicket(title, desc string, deadline time.Time, priority int) error {
 
 	// Transfer data to inprogress
-	query, err := r.db.Prepare(`INSERT INTO tasks
+	query, err := r.db.Prepare(`INSERT INTO tickets
 										VALUES (
 												?, 
 												?, 
