@@ -37,9 +37,14 @@ func (r *Repo) init() error {
 		return err
 	}
 
-	q, err := db.Exec(initState)
+	q, err := db.Exec(initColumns)
 	fmt.Println(err)
 	fmt.Println(q)
+
+	q, err = db.Exec(newTickets)
+	fmt.Println(err)
+	fmt.Println(q)
+
 	r.db = db
 
 	return nil

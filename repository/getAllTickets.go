@@ -12,21 +12,21 @@ func (r Repo) GetAllTasks() kb.Tasks {
 	tasks := kb.Tasks{}
 
 	// Get all columns and their tickets
-	allColumns, err := r.db.Query(`SELECT columns.name, columns.columnId, 
-											tickets.title, tickets.desc,  tickets.deadline, tickets.priority, tickets.id, tickets.columnID
-									FROM columns 
-									INNER JOINT tickets ON 
-									tickets.columnID = columns.columnID ; `)
+	allColumns, err := r.db.Query(`SELECT columns.name, 
+										tickets.title, tickets.desc, tickets.deadline, tickets.priority, tickets.id, tickets.columnID
+										FROM columns 
+										INNER JOIN tickets
+										ON columns.columnID = tickets.columnID ; `)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	var columnName, columnID, title, desc, deadline, id, columnIDTicket string
+	var columnName, title, desc, deadline, id, columnIDTicket string
 	var priority int
 
 	for allColumns.Next() {
 
-		err := allColumns.Scan(&columnName, &columnID, title, desc, deadline, priority, id, columnIDTicket)
+		err := allColumns.Scan(&columnName, &title, &desc, &deadline, &priority, &id, &columnIDTicket)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -46,5 +46,7 @@ func (r Repo) GetAllTasks() kb.Tasks {
 		})
 
 	}
+
+	fmt.Println(tasks)
 	return tasks
 }
