@@ -5,35 +5,38 @@ import (
 	kb "kanbanBoard"
 )
 
-// GetAllTasks pulls all tasks from the database and converts them
+// GetBoard pulls all tasks from the database and converts them
 // into Tasks struct
-func (r Repo) GetAllTasks() kb.Tasks {
+func (r Repo) GetBoard() kb.Board {
 
-	tasks := kb.Tasks{}
+	board := kb.Board{}
 
-	// Get all columns and their tickets
-	allColumns, err := r.db.Query(`SELECT columns.name, 
-										tickets.title, tickets.desc, tickets.deadline, tickets.priority, tickets.id, tickets.columnID
-										FROM columns 
+	// Get all states and their tickets
+	allStates, err := r.db.Query(`SELECT states.name, 
+										tickets.title, tickets.desc, tickets.deadline, tickets.priority, tickets.id, tickets.statesID
+										FROM states 
 										INNER JOIN tickets
-										ON columns.columnID = tickets.columnID ; `)
+										ON states.statesID = tickets.statesID ; `)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	var columnName, title, desc, deadline, id, columnIDTicket string
+	var stateName, title, desc, deadline, id, statesIDTicket string
 	var priority int
 
-	for allColumns.Next() {
+	for allStates.Next() {
 
-		err := allColumns.Scan(&columnName, &title, &desc, &deadline, &priority, &id, &columnIDTicket)
+		err := allStates.Scan(&stateName, &title, &desc, &deadline, &priority, &id, &statesIDTicket)
 		if err != nil {
 			fmt.Println(err)
 		}
 
+		// If columns exist but 0 tickets
+		// allColumns.
+
 		// Append column to the task
-		tasks.Tickets = append(tasks.Tickets, kb.Tickets{
-			Column: columnName,
+		board.States = append(board.States, kb.State{
+			State: stateName,
 			Tickets: []kb.Ticket{
 				kb.Ticket{
 					Title:       title,
@@ -47,6 +50,6 @@ func (r Repo) GetAllTasks() kb.Tasks {
 
 	}
 
-	fmt.Println(tasks)
-	return tasks
+	fmt.Println(board)
+	return board
 }

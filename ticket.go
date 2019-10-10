@@ -12,13 +12,13 @@ type Ticket struct {
 	ID          string
 }
 
-// Tickets will be passed over to the HTML template
-type Tickets struct {
-	Column  string
+// State will be passed over to the HTML template
+type State struct {
+	State   string
 	Tickets []Ticket
 }
 
-// Tasks is a collection of all of the ticktes (ToDo, InProgress and Done)
-type Tasks struct {
-	Tickets []Tickets
+// Board is a collection of all states with their tickets
+type Board struct {
+	States []State
 }

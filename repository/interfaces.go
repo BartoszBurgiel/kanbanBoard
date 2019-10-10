@@ -7,7 +7,7 @@ import (
 
 // SqliteRepository handles a sqlite database
 type SqliteRepository interface {
-	GetAllTasks() kb.Tasks
+	GetBoard() kb.Board
 	UpdateTicketState(newState, id string) error
 	SetTicketAsDoneAndDelete(id string) error
 	AddNewTicket(title, desc string, deadline time.Time, priority int) error
