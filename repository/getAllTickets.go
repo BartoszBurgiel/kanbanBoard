@@ -52,6 +52,7 @@ func (r Repo) GetBoard() kb.Board {
 			fmt.Println(err)
 		}
 
+		// Add ticket to current ticketstate
 		stateMap[ticketStateID].Tickets = append(stateMap[ticketStateID].Tickets, kb.Ticket{
 			Title:       title,
 			Description: desc,
@@ -64,6 +65,28 @@ func (r Repo) GetBoard() kb.Board {
 	// Assemble board
 	for _, v := range stateMap {
 		board.States = append(board.States, *v)
+	}
+
+	// Sort board
+	for i := 0; i < len(board.States)-1; i++ {
+
+		// Check priority
+		if board.States[i].Position > board.States[i+1].Position {
+
+			j := i
+			for j < len(board.States)-1 {
+
+				if board.States[j].Position > board.States[j+1].Position {
+					// Swap
+					temp := board.States[j+1]
+					board.States[j+1] = board.States[j]
+					board.States[j] = temp
+					j++
+				}
+			}
+			i = 0
+		}
+		fmt.Print(".")
 	}
 
 	fmt.Println(board)
