@@ -74,15 +74,18 @@ func (r Repo) GetBoard() kb.Board {
 		if board.States[i].Position > board.States[i+1].Position {
 
 			j := i
+			// While j+1 is legal
 			for j < len(board.States)-1 {
 
+				// Compare
 				if board.States[j].Position > board.States[j+1].Position {
+
 					// Swap
 					temp := board.States[j+1]
 					board.States[j+1] = board.States[j]
 					board.States[j] = temp
-					j++
 				}
+				j++
 			}
 			i = 0
 		}
