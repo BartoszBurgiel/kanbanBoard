@@ -28,8 +28,8 @@ func NewServer(r repository.SqliteRepository) (*Server, error) {
 func (s *Server) init() error {
 	s.router = NewRouter()
 
-	allTasks := s.repo.GetAllTasks()
-	s.engine.SetTasks(allTasks)
+	allTasks := s.repo.GetBoard()
+	s.engine.SetBoard(allTasks)
 
 	s.router.Route("/")["GET"] = http.HandlerFunc(s.handleGET)
 	s.router.Route("/")["POST"] = http.HandlerFunc(s.handleUserInput)

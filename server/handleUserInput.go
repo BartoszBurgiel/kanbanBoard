@@ -64,7 +64,7 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 	s.repo.ClearDatabase()
 
 	// Reset engine data
-	s.engine.SetTasks(s.repo.GetAllTasks())
+	s.engine.SetBoard(s.repo.GetBoard())
 
 	s.engine.Render(w, r)
 }

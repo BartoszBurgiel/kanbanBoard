@@ -10,14 +10,14 @@ import (
 
 // Engine contains all tasks and sends a HTML document build from templates
 type Engine struct {
-	tasks kb.Tasks
+	board kb.Board
 	repo  repository.SqliteRepository
 }
 
 // New Engine constructor
 func New() *Engine {
 	e := &Engine{}
-	e.tasks = kb.Tasks{}
+	e.board = kb.Board{}
 	return e
 }
 
@@ -30,12 +30,12 @@ func (e *Engine) Render(w http.ResponseWriter, r *http.Request) {
 	p := "../engine/templates/"
 	temp := template.Must(template.ParseFiles(p+"body.html", p+"ticket.html"))
 
-	err := temp.Execute(w, e.tasks)
+	err := temp.Execute(w, e.board)
 
 	fmt.Println(err)
 }
 
-// SetTasks is a setter to 'update' the tasks
-func (e *Engine) SetTasks(t kb.Tasks) {
-	e.tasks = t
+// SetBoard is a setter to 'update' the Board
+func (e *Engine) SetBoard(t kb.Board) {
+	e.board = t
 }

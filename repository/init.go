@@ -4,7 +4,8 @@ package repository
 
 const initColumns = `CREATE TABLE IF NOT EXISTS 'states' (
 							'name' 		VARCHAR(16),
-							'stateID'  VARCHAR(16) PRIMARY KEY
+							'stateID'  	VARCHAR(16) PRIMARY KEY,
+							'limit'   	INT
 							) ;`
 
 const newTickets = `CREATE TABLE IF NOT EXISTS 'tickets' (
@@ -13,21 +14,24 @@ const newTickets = `CREATE TABLE IF NOT EXISTS 'tickets' (
 						'deadline' 	VARCHAR(16),
 						'priority'  INT,
 						'id'    	VARCHAR(16) PRIMARY KEY,
-						'stateID'  VARCHAR(16) 
+						'stateID'  	VARCHAR(16) 
 						) ;`
 
 const basicColumns = `INSERT INTO states VALUES (
 							"ToDo", 
-							"todo"	
+							"todo",
+							3	
 						) ; 
 
 						INSERT INTO states VALUES (
 							"InProgress", 
-							"inprogress"	
+							"inprogress",
+							3	
 						) ;
 
 						INSERT INTO states VALUES (
 							"Done", 
-							"done"	
+							"done",
+							3
 						) ;
 						`
