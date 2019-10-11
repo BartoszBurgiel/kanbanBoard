@@ -37,7 +37,8 @@
                     </div>
                 </div>
 
-                <input class="ticket-button" type="submit" name="submitNewTicket" value="Add" />
+                <input type="hidden" name="action" value="add-ticket" />
+                <input class="ticket-button" type="submit" name="action" value="Add" />
             </form>
         </div>
 
@@ -51,7 +52,8 @@
                         <input type="text" name="newColumn" placeholder="Name..." required />
                     </div>
 
-                    <input class="ticket-action ticket-button" type="submit" name="submitNewColumn" value="Add" />
+                    <input type="hidden" name="action" value="new-column" />
+                    <input class="ticket-action ticket-button" type="submit" name="action" value="Add" />
                 </form>
             </div>
         </div>
