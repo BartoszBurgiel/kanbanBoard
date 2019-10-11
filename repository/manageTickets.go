@@ -130,25 +130,34 @@ func (r Repo) PushTicketToTheDatabase(t core.TicketElement) error {
 		}
 	}
 
-	query := " INTO tickets VALUES (?, ?, ?, ?, ?, ?) ;"
-	prefix := ""
+	fmt.Println("n : ", n)
 
 	if n != 0 {
-		prefix = "REPLACE"
-	} else {
-		prefix = "INSERT"
-	}
+		fmt.Println("Here!!")
+		fmt.Println(t.StateID, t.ID, "<= data")
+		res, err := r.db.Exec("UPDATE tickets SET stateID = ? WHERE id = ? ;", t.StateID, t.ID)
+		if err != nil {
+			fmt.Println(err)
+			return err
+		}
 
-	res, err := r.db.Exec(prefix+query, t.Title, t.Description, t.Deadline, t.Priority, t.ID, t.StateID)
-	if err != nil {
-		fmt.Println(err)
-		return err
-	}
-
-	num, err := res.RowsAffected()
-	if err != nil {
+		num, err := res.RowsAffected()
 		fmt.Println("Updated", num, "rows")
-		return err
+		if err != nil {
+			return err
+		}
+	} else {
+		res, err := r.db.Exec("INSERT INTO tickets VALUES(?, ?, ?, ?, ?, ?) ;", t.Title, t.Description, t.Deadline, t.Priority, t.ID, t.StateID)
+		if err != nil {
+			fmt.Println(err)
+			return err
+		}
+
+		num, err := res.RowsAffected()
+		fmt.Println("Updated", num, "rows")
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil

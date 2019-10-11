@@ -33,18 +33,20 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 				fmt.Println(err)
 			}
 
-			state.MoveTicketToNewState(destinationState, ticketID)
-
 			// Update database
 			changedTicket, err := state.GetTicket(ticketID)
 			if err != nil {
 				fmt.Println(err)
 			}
 
+			changedTicket.StateID = destinationID
+
 			error := s.repo.PushTicketToTheDatabase(changedTicket)
 			if error != nil {
 				fmt.Println(error)
 			}
+
+			state.MoveTicketToNewState(destinationState, ticketID)
 
 		} else {
 			fmt.Println("LIMIT ERROR!")
