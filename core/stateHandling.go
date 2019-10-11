@@ -7,7 +7,7 @@ func (s State) AllowsNewTicket() bool {
 	if s.Limit == 0 {
 		return true
 	}
-	return (s.Limit < len(s.Tickets))
+	return (s.Limit > len(s.Tickets))
 }
 
 // MoveTicketToNewState transferres a ticket into given state

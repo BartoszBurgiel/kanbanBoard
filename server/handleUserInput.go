@@ -27,11 +27,12 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err)
 		}
 
-		if !state.AllowsNewTicket() {
-			destinationState, err := board.GetState(destinationID)
-			if err != nil {
-				fmt.Println(err)
-			}
+		destinationState, err := board.GetState(destinationID)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		if destinationState.AllowsNewTicket() {
 
 			// Update database
 			changedTicket, err := state.GetTicket(ticketID)
