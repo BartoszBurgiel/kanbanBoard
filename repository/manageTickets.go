@@ -162,3 +162,21 @@ func (r Repo) PushTicketToTheDatabase(t core.TicketElement) error {
 
 	return nil
 }
+
+// RemoveTicket deletes a ticket from the database
+func (r Repo) RemoveTicket(t string) error {
+	res, err := r.db.Exec("DELETE FROM tickets WHERE id = ? ", t)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	n, err := res.RowsAffected()
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	fmt.Println("Updated", n, "rows")
+	return nil
+}

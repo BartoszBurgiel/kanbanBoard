@@ -96,3 +96,18 @@ func (s *Server) handleAddTicket(w http.ResponseWriter, r *http.Request, board *
 func (s *Server) handleAddColumn(w http.ResponseWriter, r *http.Request, board *core.Board) {
 
 }
+
+func (s *Server) handleDeleteTicket(w http.ResponseWriter, r *http.Request, board *core.Board) {
+	ticketID := r.FormValue("ticketID")
+	stateID := r.FormValue("stateID")
+
+	state, err := board.GetState(stateID)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	state.DeleteTicket(ticketID)
+
+	// Remove from the database
+	s.repo.RemoveTicket(ticketID)
+}
