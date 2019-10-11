@@ -18,9 +18,16 @@
 				<div class="board-body-column"  style="order: {{.Position}}">
 					<div class="board-navbar">
 						<div class="board-navbar-header">{{.State}}</div>
-						
-						<div class="new-ticket">
-							<form>
+					</div>
+					
+					{{range .Tickets}}
+						{{template "ticket" .}}
+					{{end}}
+
+					<div id="filler"></div>
+			
+					<div class="new-ticket">
+							<form action="/" method="POST">
 								<div class="new-ticket-input">
 									Title
 									<br>
@@ -47,11 +54,6 @@
 								<input type="submit" name="action" value="Add" />
 							</form>
 						</div>
-					</div>
-					
-					{{range .Tickets}}
-						{{template "ticket" .}}
-					{{end}}
 				</div>
 					
 			{{end}}

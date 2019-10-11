@@ -1,14 +1,19 @@
 .new-ticket{
-    opacity: 0;
-    height: 0;
     font-weight: bold;
-    transition: all .1s ease-in-out;
+    background-color: #fff;
+    padding: 10%;
+    border-radius: 0px 25px 25px 25px;
+    opacity: 0;
+    transition: all .15s ease-in-out;
 }
 
-.board-navbar:hover .new-ticket {
+.new-ticket:hover {
     opacity: 1;
-    height: 200px;
     transition: all .4s ease-in-out;
+}
+
+#filler {
+    flex-grow: 1;
 }
 
 .new-ticket > form {
@@ -20,4 +25,12 @@
     display:flex;
     flex-flow: column;
     font-family: 'Courier New', Courier, monospace;
+}
+
+@media screen and (max-width: 700px) {
+    .new-ticket {
+        padding: 2%;
+        width: 90%;
+        margin:auto;
+    }
 }
