@@ -31,15 +31,22 @@ func (s *Server) init() error {
 	allTasks := s.repo.GetBoard()
 	s.engine.SetBoard(allTasks)
 
-	s.router.Route("/")["GET"] = http.HandlerFunc(s.handleGET)
+	s.router.Route("/")["GET"] = http.HandlerFunc(s.handleIndexGET)
 	s.router.Route("/")["POST"] = http.HandlerFunc(s.handleUserInput)
+
+	s.router.Route("/manage")["GET"] = http.HandlerFunc(s.handleManageGet)
 
 	return nil
 }
 
-// if client sends a get request -> render page
-func (s *Server) handleGET(w http.ResponseWriter, r *http.Request) {
-	s.engine.Render(w, r)
+// if client sends a get request -> render main page
+func (s *Server) handleIndexGET(w http.ResponseWriter, r *http.Request) {
+	s.engine.RenderIndex(w, r)
+}
+
+// if client sends a get request -> render manage page
+func (s *Server) handleManageGet(w http.ResponseWriter, r *http.Request) {
+	s.engine.RenderManage(w, r)
 }
 
 // ServeHTTP to the server

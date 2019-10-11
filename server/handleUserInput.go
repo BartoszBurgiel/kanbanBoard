@@ -25,5 +25,5 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 	// Reset engine data
 	s.engine.SetBoard(s.repo.GetBoard())
 
-	s.engine.Render(w, r)
+	s.engine.RenderIndex(w, r)
 }

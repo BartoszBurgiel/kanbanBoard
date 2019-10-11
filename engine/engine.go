@@ -21,11 +21,19 @@ func New() *Engine {
 	return e
 }
 
-// Render and send HTML document to the server
-func (e *Engine) Render(w http.ResponseWriter, r *http.Request) {
+// RenderIndex and send HTML document to the server
+func (e *Engine) RenderIndex(w http.ResponseWriter, r *http.Request) {
 
-	p := "../engine/templates/"
+	p := "../engine/templates/index/"
 	temp := template.Must(template.ParseFiles(p+"body.html", p+"ticket.html", p+"footer.html"))
+	err := temp.Execute(w, e.board)
+	fmt.Println(err)
+}
+
+// RenderManage and send HTML document to the server
+func (e *Engine) RenderManage(w http.ResponseWriter, r *http.Request) {
+	p := "../engine/templates/manage/"
+	temp := template.Must(template.ParseFiles(p + "index.html"))
 	err := temp.Execute(w, e.board)
 	fmt.Println(err)
 }
