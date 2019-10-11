@@ -14,11 +14,12 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 	case "add-ticket":
 		s.handleAddTicket(w, r, board)
 		break
-	case "add-column":
-		s.handleAddColumn(w, r, board)
-		break
 	case "delete-ticket":
 		s.handleDeleteTicket(w, r, board)
+		break
+	case "add-state":
+		s.handleAddState(w, r)
+		break
 	}
 
 	// Reset engine data

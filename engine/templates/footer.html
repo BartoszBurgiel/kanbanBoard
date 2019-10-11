@@ -49,10 +49,18 @@
                     <div class="ticket-header">
                         Name
                         <br>
-                        <input type="text" name="newColumn" placeholder="Name..." required />
+                        <input type="text" name="columnName" placeholder="Name..." required />
+
+                        Position
+                        <br>
+                        <input type="number" name="columnPosition" placeholder="5" required />
+
+                        Limit
+                        <br>
+                        <input type="number" name="columnLimit" placeholder="5" required />
                     </div>
 
-                    <input type="hidden" name="action" value="new-column" />
+                    <input type="hidden" name="action" value="add-state" />
                     <input class="ticket-action ticket-button" type="submit" name="action" value="Add" />
                 </form>
             </div>

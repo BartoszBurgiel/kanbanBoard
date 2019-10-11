@@ -93,10 +93,6 @@ func (s *Server) handleAddTicket(w http.ResponseWriter, r *http.Request, board *
 	}
 }
 
-func (s *Server) handleAddColumn(w http.ResponseWriter, r *http.Request, board *core.Board) {
-
-}
-
 func (s *Server) handleDeleteTicket(w http.ResponseWriter, r *http.Request, board *core.Board) {
 	ticketID := r.FormValue("ticketID")
 	stateID := r.FormValue("stateID")
@@ -110,4 +106,26 @@ func (s *Server) handleDeleteTicket(w http.ResponseWriter, r *http.Request, boar
 
 	// Remove from the database
 	s.repo.RemoveTicket(ticketID)
+}
+
+func (s *Server) handleAddState(w http.ResponseWriter, r *http.Request) {
+	columnName := r.FormValue("columnName")
+	columnPosition := r.FormValue("columnPosition")
+	columnLimit := r.FormValue("columnLimit")
+
+	nPosition, err := strconv.Atoi(columnPosition)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	nLimit, err := strconv.Atoi(columnLimit)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	// Insert given info to the database
+	error := s.repo.AddNewState(columnName, nPosition, nLimit)
+	if error != nil {
+		fmt.Println(error)
+	}
 }
