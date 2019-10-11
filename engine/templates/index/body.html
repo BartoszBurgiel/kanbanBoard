@@ -3,6 +3,7 @@
 	<head>
 		<title>My kanban board</title>
 		<link rel="stylesheet" type="text/css" href="./style/style.css" />
+		<link rel="stylesheet" type="text/css" href="./style/ticket.css" />
 		<meta content="width=device-width, initial-scale=1" name="viewport" />
 		
 	</head>
@@ -14,7 +15,7 @@
 			
 			{{range .States}}
 				<div class="board-body-column"  style="order: {{.Position}}">
-					<div class="board-header">{{.State}} -> {{.Limit}}</div>
+					<div class="board-header">{{.State}}</div>
 						{{range .Tickets}}
 							{{template "ticket" .}}
 						{{end}}

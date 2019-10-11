@@ -66,7 +66,6 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s Server) handleGETAssets(w http.ResponseWriter, r *http.Request) {
-	//w.Header().Set("Content-Type", "text/css")
 	http.FileServer(http.Dir("../server/assets/")).ServeHTTP(w, r)
 }
 
