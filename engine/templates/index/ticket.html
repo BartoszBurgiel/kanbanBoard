@@ -2,30 +2,9 @@
 <div class="ticket">
     <div class="ticket-header">{{.Title}}</div>
     <div class="ticket-desc">{{.Description}}</div>
-  
-    <div class="ticket-action">
-        <form action="/" method="POST">
-            <select name="destination">
-                {{ range .Destination }}
-                    <option value="{{.DestID}}">{{.DestName}}</option>
-                {{end}}
-            </select>
-            <input type="hidden" name="ticketID" value="{{.ID}}" />
-            <input type="hidden" name="currentState" value="{{.StateID}}" />
-            <input type="hidden" name="action" value="move-ticket" />
-            <input type="submit" value="Move" name="action"/> 
-        </form>
-    </div>
-    <div class="ticket-action">
-        <form action="/" method="POST">
-            <input type="hidden" name="ticketID" value="{{.ID}}" />
-            <input type="hidden" name="stateID" value="{{.StateID}}" />
-            <input type="hidden" name="action" value="delete-ticket" />
-            <input type="submit" value="Delete" name="action" />
-        </form>
-    </div>
-
     <div class="ticket-footer">
+
+        <!-- on hover !
         <div class="footer-element" id="{{.ID}}">
             <div class="footer-element-header">Deadline</div>
             <hr>
@@ -36,6 +15,7 @@
             <hr>
             {{.Priority}}
         </div>
+        -->
     </div>
 </div>
 {{end}}

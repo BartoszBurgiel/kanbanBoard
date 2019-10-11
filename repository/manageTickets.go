@@ -104,7 +104,6 @@ func (r Repo) GetBoard() core.Board {
 		board.States = append(board.States, *v)
 	}
 
-	fmt.Println(board)
 	return board
 }
 
