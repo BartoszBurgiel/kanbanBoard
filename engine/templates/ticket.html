@@ -4,11 +4,16 @@
     <div class="ticket-desc">{{.Description}}</div>
   
     <div class="ticket-action">
-        <select>
-            {{ range .StatesList }}
-                <option>{{.}}</option>
-            {{end}}
-        </select>
+        <form action="/" method="POST">
+            <select name="destination">
+                {{ range .Destination }}
+                    <option value="{{.DestID}}">{{.DestName}}</option>
+                {{end}}
+            </select>
+            <input type="hidden" name="ticketID" value="{{.ID}}" />
+            <input type="hidden" name="currentState" value="{{.StateID}}" />
+            <input type="submit" value="Move" name="moveTicket" />
+        </form>
     </div>
 
     <div class="ticket-footer">

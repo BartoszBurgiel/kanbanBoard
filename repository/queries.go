@@ -9,9 +9,12 @@ import (
 // UpdateTicketState changes the state of a given ticket
 func (r Repo) UpdateTicketState(stateID, id string) error {
 
-	query, _ := r.db.Prepare(`UPDATE tickets
-								SET tickets.stateID = ? 
+	query, err := r.db.Prepare(`UPDATE tickets
+								SET stateID = ? 
 								WHERE id = ? ;`)
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	res, err := query.Exec(stateID, id)
 	n, _ := res.RowsAffected()

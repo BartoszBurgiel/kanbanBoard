@@ -3,7 +3,7 @@ package kanbanboard
 // TicketElement stores all needed information to
 // display a ticket on the kanban board
 // every attribute except priority is a string, because data retrieved from
-// POST is allways string
+// POST returns allways string
 // Priority is the exception due to the sorting
 // StatesList holds all states -> needed to display drop list
 type TicketElement struct {
@@ -12,7 +12,11 @@ type TicketElement struct {
 	Deadline    string
 	Priority    int
 	ID          string
-	StatesList  []string
+	StateID     string
+	Destination []struct {
+		DestName string
+		DestID   string
+	}
 }
 
 // State will be passed over to the HTML template
