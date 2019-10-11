@@ -13,7 +13,7 @@
 		<div class="board-body">
 			
 			{{range .States}}
-				<div class="board-body-column">
+				<div class="board-body-column"  style="order: {{.Position}}">
 					<div class="board-header">{{.State}} -> {{.Limit}}</div>
 						{{range .Tickets}}
 							{{template "ticket" .}}

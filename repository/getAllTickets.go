@@ -79,27 +79,6 @@ func (r Repo) GetBoard() kb.Board {
 		board.States = append(board.States, *v)
 	}
 
-	// Sort board
-	for i := 0; i < len(board.States); i++ {
-
-		j := i
-		// While j+1 is legal
-		for j < len(board.States)-1 {
-
-			// Compare
-			if board.States[j].Position > board.States[j+1].Position {
-
-				// Swap
-				temp := board.States[j+1]
-				board.States[j+1] = board.States[j]
-				board.States[j] = temp
-			}
-			j++
-
-		}
-		fmt.Print(".")
-	}
-
 	fmt.Println(board)
 	return board
 }

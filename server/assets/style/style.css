@@ -45,18 +45,6 @@ background:
     width: 30%;
 }
 
-#toDo {
-    order: 1;
-}
-
-#inProgress {
-    order: 2;
-}
-
-#done {
-    order: 3;
-}
-
 .ticket {
     margin: 10px;
     background-color: #ffcfc0;
