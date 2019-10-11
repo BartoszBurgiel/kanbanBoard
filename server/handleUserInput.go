@@ -27,7 +27,7 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err)
 		}
 
-		if state.AllowsNewTicket() {
+		if !state.AllowsNewTicket() {
 			destinationState, err := board.GetState(destinationID)
 			if err != nil {
 				fmt.Println(err)
@@ -82,6 +82,7 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 			Deadline:    date,
 			Priority:    priorityN,
 			ID:          uuid.New().String(),
+			StateID:     stateID,
 		}
 
 		state.AddNewTicket(newTicket)
