@@ -107,3 +107,5 @@ func (r Repo) GetBoard() kb.Board {
 	fmt.Println(board)
 	return board
 }
+
+func UpdateBoard()
