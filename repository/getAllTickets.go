@@ -11,8 +11,12 @@ func (r Repo) GetBoard() kb.Board {
 
 	board := kb.Board{}
 	stateMap := make(map[string]*kb.State)
-	states := []string{}
-	stateIDs := []string{}
+
+	// stateProps stores all states and their IDs
+	stateProps := []struct {
+		Name string
+		ID   string
+	}{}
 
 	var stateName, stateID, title, desc, deadline, id, ticketStateID string
 	var priority, limit, position int
@@ -30,8 +34,14 @@ func (r Repo) GetBoard() kb.Board {
 			fmt.Println(err)
 		}
 
-		states = append(states, stateName)
-		stateIDs = append(stateIDs, stateID)
+		// fill stateProps
+		stateProps = append(stateProps, struct {
+			Name string
+			ID   string
+		}{
+			Name: stateName,
+			ID:   stateID,
+		})
 
 		// Put id and state name to map
 		stateMap[stateID] = &kb.State{
@@ -63,14 +73,16 @@ func (r Repo) GetBoard() kb.Board {
 		}{}
 
 		// Remove current state from states
-		for i := 0; i < len(states); i++ {
-			if states[i] != stateMap[ticketStateID].State {
+		for _, s := range stateProps {
+
+			// If not current ticket -> "remove"
+			if s.Name != stateMap[ticketStateID].State {
 				tempStates = append(tempStates, struct {
 					DestName string
 					DestID   string
 				}{
-					DestName: states[i],
-					DestID:   stateIDs[i],
+					DestName: s.Name,
+					DestID:   s.ID,
 				})
 			}
 		}
