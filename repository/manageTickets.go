@@ -108,4 +108,20 @@ func (r Repo) GetBoard() kb.Board {
 	return board
 }
 
-func UpdateBoard()
+// UpdateBoard pushes all structs into the database
+func (r Repo) UpdateBoard(k kb.Board) error {
+
+	// Iterate over the board
+	for _, s := range k.States {
+
+		// Update all states
+		r.db.Exec("REPLACE INTO states VALUES(?,?,?,?) ;", s.State, s.ID, s.Limit, s.Position)
+
+		// Update all tickets
+		for _, t := range s.Tickets {
+			r.db.Exec("REPLACE INTO tickets VALUES(?,?,?,?,?,?) ;", t.Title, t.Description, t.Deadline, t.Priority, t.ID, t.StateID)
+		}
+	}
+
+	return nil
+}
