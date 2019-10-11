@@ -108,19 +108,47 @@ func (r Repo) GetBoard() kb.Board {
 	return board
 }
 
-// UpdateBoard pushes all structs into the database
-func (r Repo) UpdateBoard(k kb.Board) error {
+// PushTicketToTheDatabase pushes all structs into the database
+func (r Repo) PushTicketToTheDatabase(t kb.TicketElement) error {
 
-	// Iterate over the board
-	for _, s := range k.States {
+	// Check if a ticket is in the database
+	row, err := r.db.Query("SELECT COUNT(tickets.id) FROM tickets WHERE tickets.id = ? ; ", t.ID)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	defer row.Close()
 
-		// Update all states
-		r.db.Exec("REPLACE INTO states VALUES(?,?,?,?) ;", s.State, s.ID, s.Limit, s.Position)
+	var n int
 
-		// Update all tickets
-		for _, t := range s.Tickets {
-			r.db.Exec("REPLACE INTO tickets VALUES(?,?,?,?,?,?) ;", t.Title, t.Description, t.Deadline, t.Priority, t.ID, t.StateID)
+	// Get n
+	for row.Next() {
+		err := row.Scan(&n)
+		if err != nil {
+			fmt.Println(err)
+			return err
 		}
+	}
+
+	query := " INTO tickets VALUES (?, ?, ?, ?, ?, ?) ;"
+	prefix := ""
+
+	if n != 0 {
+		prefix = "REPLACE"
+	} else {
+		prefix = "INSERT"
+	}
+
+	res, err := r.db.Exec(prefix+query, t.Title, t.Description, t.Deadline, t.Priority, t.ID, t.StateID)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	num, err := res.RowsAffected()
+	if err != nil {
+		fmt.Println("Updated", num, "rows")
+		return err
 	}
 
 	return nil

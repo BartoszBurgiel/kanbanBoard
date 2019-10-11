@@ -28,13 +28,6 @@ type State struct {
 	Limit    int
 }
 
-func (s State) AllowsNewTicket() bool {
-	if s.Limit == 0 {
-		return true
-	}
-	return (s.Limit < len(s.Tickets))
-}
-
 // Board is a collection of all states with their tickets
 type Board struct {
 	States []State
