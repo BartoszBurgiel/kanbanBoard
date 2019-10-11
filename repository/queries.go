@@ -61,3 +61,26 @@ func (r Repo) AddNewTicket(title, desc, deadline string, priority int, state str
 
 	return err
 }
+
+// GetStateLimit returns the limit of the given state
+// if the number of the tickets > GetStateLimit no more ticket can be
+// moved to this state
+func (r Repo) GetStateLimit(stateID string) (int, error) {
+
+	// Get limit result set
+	res, err := r.db.Query("SELECT states.limit FROM states WHERE states.stateID = ? LIMIT 1;", stateID)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	var n int
+
+	for res.Next() {
+		err := res.Scan(&n)
+		if err != nil {
+			return n, nil
+		}
+		return -1, err
+	}
+	return -1, err
+}
