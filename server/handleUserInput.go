@@ -11,13 +11,18 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 	if r.FormValue("ticketID") != "" {
 		ticketID := r.FormValue("ticketID")
 		ticktetState := r.FormValue("currentState")
-		destination := r.FormValue("destination")
+		destinationID := r.FormValue("destination")
 
 		fmt.Println("id", ticketID)
 		fmt.Println("ticketState", ticktetState)
-		fmt.Println("destination", destination)
+		fmt.Println("destinationID", destinationID)
 
-		s.repo.UpdateTicketState(destination, ticketID)
+		// Check if update is legal
+		if ok, _ := s.repo.CheckStateLimit(destinationID); ok {
+			s.repo.UpdateTicketState(destinationID, ticketID)
+		} else {
+			fmt.Println("LIMIT REACHED NO MORE TICKETS FOR THIS STATE! \nGET SOME STUFF DONE!")
+		}
 
 	} else {
 		fmt.Println("New ticket:")
