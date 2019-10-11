@@ -10,6 +10,10 @@ background:
     background-position: 54px 55px, 0px 0px, 0px 0px, 0px 0px, 0px 0px;
 }
 
+.flex-container {
+    display: flex;
+}
+
 .header {
     font-size: 48px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
@@ -19,16 +23,23 @@ background:
     margin: 1%;
 }
 
-.board-header{
-    font-size: 32px;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    width: 100%;
-    text-align: center;
-}
-
 .board-body {
     display: flex;
     flex-wrap: row wrap;
+}
+
+.board-navbar {
+    display: flex;
+    flex-flow: column;
+    margin-left: auto;
+    margin-right: auto;
+    width: 85%;
+    justify-content: space-between;
+}
+
+.board-navbar-header {
+    font-size: 32px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
 .board-body-column {
@@ -58,10 +69,6 @@ background:
     .board-body-column {
         width: auto;
         margin-bottom: 10%;
-    }
-
-    .new-ticket {
-        width:95%;
     }
 
 }

@@ -4,6 +4,7 @@
 		<title>My kanban board</title>
 		<link rel="stylesheet" type="text/css" href="./style/style.css" />
 		<link rel="stylesheet" type="text/css" href="./style/ticket.css" />
+		<link rel="stylesheet" type="text/css" href="./style/newTicket.css" />
 		<meta content="width=device-width, initial-scale=1" name="viewport" />
 		
 	</head>
@@ -15,14 +16,46 @@
 			
 			{{range .States}}
 				<div class="board-body-column"  style="order: {{.Position}}">
-					<div class="board-header">{{.State}}</div>
-						{{range .Tickets}}
-							{{template "ticket" .}}
-						{{end}}
+					<div class="board-navbar">
+						<div class="board-navbar-header">{{.State}}</div>
+						
+						<div class="new-ticket">
+							<form>
+								<div class="new-ticket-input">
+									Title
+									<br>
+									<input type="text" name="newTitle" placeholder="Title..." required />
+								</div>
+
+								<div class="new-ticket-input">
+									<div>Description</div>
+									<textarea name="newDescription" placeholder="Description..." required/></textarea>
+								</div>
+
+								<div class="new-ticket-input">
+									<div>Deadline</div>
+									<input type="date" name="newDate" required />
+								</div>
+
+								<div class="new-ticket-input">
+									<div>Priority</div>
+									<input type="number" name="newPriority" min="1" max="10" placeholder="5" required />
+								</div>
+
+								<input type="hidden" name="newState" value="{{.ID}}" />
+								<input type="hidden" name="action" value="add-ticket" />
+								<input type="submit" name="action" value="Add" />
+							</form>
+						</div>
+					</div>
+					
+					{{range .Tickets}}
+						{{template "ticket" .}}
+					{{end}}
 				</div>
-
+					
 			{{end}}
-
-		</div>
+				
+			</div>
 	</body>
 </html>

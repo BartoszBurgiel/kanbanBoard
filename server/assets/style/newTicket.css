@@ -1,0 +1,23 @@
+.new-ticket{
+    opacity: 0;
+    height: 0;
+    font-weight: bold;
+    transition: all .1s ease-in-out;
+}
+
+.board-navbar:hover .new-ticket {
+    opacity: 1;
+    height: 200px;
+    transition: all .4s ease-in-out;
+}
+
+.new-ticket > form {
+    display: flex;
+    flex-flow: column;
+}
+
+.new-ticket-input {
+    display:flex;
+    flex-flow: column;
+    font-family: 'Courier New', Courier, monospace;
+}
