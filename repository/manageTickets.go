@@ -2,15 +2,15 @@ package repository
 
 import (
 	"fmt"
-	kb "kanbanBoard"
+	"kanbanBoard/core"
 )
 
 // GetBoard pulls all tasks from the database and converts them
 // into Tasks struct
-func (r Repo) GetBoard() kb.Board {
+func (r Repo) GetBoard() core.Board {
 
-	board := kb.Board{}
-	stateMap := make(map[string]*kb.State)
+	board := core.Board{}
+	stateMap := make(map[string]*core.State)
 
 	// stateProps stores all states and their IDs
 	stateProps := []struct {
@@ -44,7 +44,7 @@ func (r Repo) GetBoard() kb.Board {
 		})
 
 		// Put id and state name to map
-		stateMap[stateID] = &kb.State{
+		stateMap[stateID] = &core.State{
 			State:    stateName,
 			ID:       stateID,
 			Position: position,
@@ -88,7 +88,7 @@ func (r Repo) GetBoard() kb.Board {
 		}
 
 		// Add ticket to current ticketstate
-		stateMap[ticketStateID].Tickets = append(stateMap[ticketStateID].Tickets, kb.TicketElement{
+		stateMap[ticketStateID].Tickets = append(stateMap[ticketStateID].Tickets, core.TicketElement{
 			Title:       title,
 			Description: desc,
 			Deadline:    deadline,
@@ -109,7 +109,7 @@ func (r Repo) GetBoard() kb.Board {
 }
 
 // PushTicketToTheDatabase pushes all structs into the database
-func (r Repo) PushTicketToTheDatabase(t kb.TicketElement) error {
+func (r Repo) PushTicketToTheDatabase(t core.TicketElement) error {
 
 	// Check if a ticket is in the database
 	row, err := r.db.Query("SELECT COUNT(tickets.id) FROM tickets WHERE tickets.id = ? ; ", t.ID)

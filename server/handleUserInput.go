@@ -2,11 +2,16 @@ package server
 
 import (
 	"fmt"
+	"kanbanBoard/core"
 	"net/http"
 	"strconv"
+
+	"github.com/google/uuid"
 )
 
 func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
+
+	board := s.engine.GetBoard()
 
 	if r.FormValue("ticketID") != "" {
 		ticketID := r.FormValue("ticketID")
@@ -17,11 +22,32 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("ticketState", ticktetState)
 		fmt.Println("destinationID", destinationID)
 
-		// Check if update is legal
-		if ok, _ := s.repo.CheckStateLimit(destinationID); ok {
-			s.repo.UpdateTicketState(destinationID, ticketID)
+		state, err := board.GetState(ticktetState)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		if state.AllowsNewTicket() {
+			destinationState, err := board.GetState(destinationID)
+			if err != nil {
+				fmt.Println(err)
+			}
+
+			state.MoveTicketToNewState(destinationState, ticketID)
+
+			// Update database
+			changedTicket, err := state.GetTicket(ticketID)
+			if err != nil {
+				fmt.Println(err)
+			}
+
+			error := s.repo.PushTicketToTheDatabase(changedTicket)
+			if error != nil {
+				fmt.Println(error)
+			}
+
 		} else {
-			fmt.Println("LIMIT REACHED NO MORE TICKETS FOR THIS STATE! \nGET SOME STUFF DONE!")
+			fmt.Println("LIMIT ERROR!")
 		}
 
 	} else {
@@ -31,21 +57,39 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 		desc := r.FormValue("newDescription")
 		date := r.FormValue("newDate")
 		priority := r.FormValue("newPriority")
-		state := r.FormValue("newState")
+		stateID := r.FormValue("newState")
 
 		fmt.Println("title: ", title)
 		fmt.Println("desc: ", desc)
 		fmt.Println("date: ", date)
 		fmt.Println("priority", priority)
-		fmt.Println("state", state)
+		fmt.Println("stateID", stateID)
 
-		// Convert priority to int
-		newPriority, err := strconv.Atoi(priority)
+		state, err := board.GetState(stateID)
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		s.repo.AddNewTicket(title, desc, date, newPriority, state)
+		// Format prority
+		priorityN, err := strconv.Atoi(priority)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		newTicket := core.TicketElement{
+			Title:       title,
+			Description: desc,
+			Deadline:    date,
+			Priority:    priorityN,
+			ID:          uuid.New().String(),
+		}
+
+		state.AddNewTicket(newTicket)
+
+		error := s.repo.PushTicketToTheDatabase(newTicket)
+		if error != nil {
+			fmt.Println(error)
+		}
 
 	}
 

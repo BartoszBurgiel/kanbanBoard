@@ -1,11 +1,9 @@
 package repository
 
-import (
-	kb "kanbanBoard"
-)
+import "kanbanBoard/core"
 
 // SqliteRepository handles a sqlite database
 type SqliteRepository interface {
-	GetBoard() kb.Board
-	UpdateBoard(kb.Board) error
+	GetBoard() core.Board
+	PushTicketToTheDatabase(core.TicketElement) error
 }

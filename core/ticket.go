@@ -1,4 +1,4 @@
-package kanbanboard
+package core
 
 // TicketElement stores all needed information to
 // display a ticket on the kanban board

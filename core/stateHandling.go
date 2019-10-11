@@ -1,4 +1,6 @@
-package kanbanboard
+package core
+
+import "fmt"
 
 // AllowsNewTicket returns true if addidtion of a new ticket is legal
 func (s State) AllowsNewTicket() bool {
@@ -15,6 +17,9 @@ func (s State) MoveTicketToNewState(newState *State, id string) {
 	// Search for the needed ticket
 	for n, t := range s.Tickets {
 		if t.ID == id {
+
+			// Change ticket's state attribute
+			t.StateID = newState.ID
 
 			// Append the ticket to the newState
 			newState.Tickets = append(newState.Tickets, t)
@@ -36,7 +41,7 @@ func (s State) AddNewTicket(t TicketElement) {
 	s.Tickets = append(s.Tickets, t)
 }
 
-// DeleteTicket removes a ticket from the state
+// DeleteTicket removes a ticket from the states
 func (s State) DeleteTicket(id string) {
 	// Search for the needed ticket
 	for n, t := range s.Tickets {
@@ -50,4 +55,15 @@ func (s State) DeleteTicket(id string) {
 			break
 		}
 	}
+}
+
+// GetTicket is a getter for the ticket in a state
+func (s State) GetTicket(id string) (TicketElement, error) {
+	for _, t := range s.Tickets {
+		if t.ID == id {
+			return t, nil
+		}
+	}
+
+	return TicketElement{}, fmt.Errorf("No ticket found with id %s", id)
 }

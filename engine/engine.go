@@ -3,21 +3,21 @@ package engine
 import (
 	"fmt"
 	"html/template"
-	kb "kanbanBoard"
+	"kanbanBoard/core"
 	"kanbanBoard/repository"
 	"net/http"
 )
 
 // Engine contains all tasks and sends a HTML document build from templates
 type Engine struct {
-	board kb.Board
+	board core.Board
 	repo  repository.SqliteRepository
 }
 
 // New Engine constructor
 func New() *Engine {
 	e := &Engine{}
-	e.board = kb.Board{}
+	e.board = core.Board{}
 	return e
 }
 
@@ -31,6 +31,21 @@ func (e *Engine) Render(w http.ResponseWriter, r *http.Request) {
 }
 
 // SetBoard is a setter to 'update' the Board
-func (e *Engine) SetBoard(t kb.Board) {
+func (e *Engine) SetBoard(t core.Board) {
 	e.board = t
+}
+
+// GetBoard returns current board
+func (e *Engine) GetBoard() *core.Board {
+	return &e.board
+}
+
+// GetState returns a state with given id -> else return error
+func (e *Engine) GetState(id string) (core.State, error) {
+	for _, state := range e.board.States {
+		if state.ID == id {
+			return state, nil
+		}
+	}
+	return core.State{}, fmt.Errorf("No state found with id %s", id)
 }
