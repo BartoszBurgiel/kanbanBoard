@@ -29,9 +29,9 @@
                     <div class="footer-element">
                         <div class="footer-element-header">State</div>
                         <hr>
-                        <select>
+                        <select name="newState">
                             {{ range .}}
-                                <option>{{.State}}</option>
+                                <option value="{{.ID}}">{{.State}}</option>
                             {{end}}
                         </select>
                     </div>

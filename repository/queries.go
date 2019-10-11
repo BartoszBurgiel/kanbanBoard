@@ -2,7 +2,6 @@ package repository
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/google/uuid"
 )
@@ -37,7 +36,7 @@ func (r Repo) SetTicketAsDoneAndDelete(id string) error {
 
 // AddNewTicket puts a ticket with given title and desc
 // into the database
-func (r Repo) AddNewTicket(title, desc string, deadline time.Time, priority int) error {
+func (r Repo) AddNewTicket(title, desc, deadline string, priority int, state string) error {
 
 	// Transfer data to inprogress
 	query, err := r.db.Prepare(`INSERT INTO tickets
@@ -53,9 +52,8 @@ func (r Repo) AddNewTicket(title, desc string, deadline time.Time, priority int)
 	fmt.Println(err)
 
 	id := uuid.New().String()
-	res, err := query.Exec(title, desc, "todo", deadline, priority, id)
+	res, err := query.Exec(title, desc, deadline, priority, id, state)
 	n, _ := res.RowsAffected()
-	fmt.Println("title:", title, "desc:", desc, "id:", id)
 	fmt.Println("Updated", n, "rows")
 
 	return err
