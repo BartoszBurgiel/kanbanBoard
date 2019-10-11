@@ -84,3 +84,27 @@ func (r Repo) GetStateLimit(stateID string) (int, error) {
 	}
 	return -1, err
 }
+
+// CheckStateLimit return true if a ticket can be pushed into the state
+// -> if ticketCount+1 < stateLimit
+func (r Repo) CheckStateLimit(stateID string) (bool, error) {
+
+	limit, err := r.GetStateLimit(stateID)
+	if err != nil {
+		fmt.Println(err)
+	}
+	// Get the ticketCount
+	var ticketCount int
+	res, err := r.db.Query("SELECT COUNT(tickets.stateID) FROM tickets WHERE tickets.stateID = ? LIMIT 1 ;", stateID)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	for res.Next() {
+		res.Scan(&ticketCount)
+
+		return (ticketCount+1 > limit), nil
+	}
+
+	return false, err
+}

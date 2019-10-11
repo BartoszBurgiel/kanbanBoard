@@ -12,4 +12,5 @@ type SqliteRepository interface {
 	AddNewTicket(title, desc, deadline string, priority int, state string) error
 	HandleTicketEvent(state, id string) error
 	GetStateLimit(stateID int) (int, error)
+	CheckStateLimit(stateID string) (bool, error)
 }
