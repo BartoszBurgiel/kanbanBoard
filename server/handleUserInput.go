@@ -11,6 +11,12 @@ import (
 
 func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 
+	switch r.FormValue("action") {
+	case "move-ticket":
+		// s.handleMove(w, r)
+		fmt.Println("works!")
+	}
+
 	board := s.engine.GetBoard()
 
 	if r.FormValue("ticketID") != "" {

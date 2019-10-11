@@ -12,7 +12,8 @@
             </select>
             <input type="hidden" name="ticketID" value="{{.ID}}" />
             <input type="hidden" name="currentState" value="{{.StateID}}" />
-            <input type="submit" value="Move" name="moveTicket" />
+            <input type="hidden" name="action" value="move-ticket" />
+            <input type="submit" value="Move" name="action"/> 
         </form>
     </div>
 
