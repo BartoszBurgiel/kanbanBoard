@@ -44,6 +44,13 @@
     border-radius: 0px 0px 25px 0px;
 }
 
+.highlight {
+    padding: 5px;
+    background-color: #d34848;
+    color: white;
+    border-radius: 5px;
+}
+
 .footer-element{
     margin:auto;
     width: max-content;
