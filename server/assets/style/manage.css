@@ -1,0 +1,28 @@
+.state {
+    display: flex;
+    flex-direction: column;
+}
+
+.state-header {
+    margin-bottom: 7%;
+    font-size: 32px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.state-info {
+    margin-bottom: 5%;
+}
+
+.info-title {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.state-id {
+    padding: 5px;
+    background-color: #d34848;
+    color: white;
+    width: min-content;
+    border-radius: 5px;
+}

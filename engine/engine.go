@@ -25,7 +25,7 @@ func New() *Engine {
 func (e *Engine) RenderIndex(w http.ResponseWriter, r *http.Request) {
 
 	p := "../engine/templates/index/"
-	temp := template.Must(template.ParseFiles(p+"body.html", p+"ticket.html"))
+	temp := template.Must(template.ParseFiles(p+"index.html", p+"ticket.html", p+"newTicket.html"))
 	err := temp.Execute(w, e.board)
 	fmt.Println(err)
 }
