@@ -26,8 +26,57 @@ func (r Repo) AddNewState(name string, position, limit int) error {
 	return nil
 }
 
-// PushStateToTheDatabase pushes a given state to the database
+// PushStateToTheDatabase updates a given state in the database
 func (r Repo) PushStateToTheDatabase(s core.State) error {
+
+	// Check if state is in the database
+	row, err := r.db.Query("SELECT COUNT(states.stateID) FROM states WHERE states.stateID = ? ; ", s.ID)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	defer row.Close()
+
+	var n int
+
+	// Get n
+	for row.Next() {
+		err := row.Scan(&n)
+		if err != nil {
+			fmt.Println(err)
+			return err
+		}
+	}
+
+	fmt.Println("n : ", n)
+
+	if n != 0 {
+		fmt.Println(t.StateID, t.ID, "<= data")
+		res, err := r.db.Exec("UPDATE states SET name = ?, limit = ?, position = ? WHERE id = ? ;", s.State, s.Limit, s.Position, s.ID)
+		if err != nil {
+			fmt.Println(err)
+			return err
+		}
+
+		num, err := res.RowsAffected()
+		fmt.Println("Updated", num, "rows")
+		if err != nil {
+			return err
+		}
+	} else {
+		res, err := r.db.Exec("INSERT INTO states VALUES(?, ?, ?, ?) ;",s.State, s.ID, s.Limit, s.Position)
+		if err != nil {
+			fmt.Println(err)
+			return err
+		}
+
+		num, err := res.RowsAffected()
+		fmt.Println("Updated", num, "rows")
+		if err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 

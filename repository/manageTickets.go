@@ -132,7 +132,6 @@ func (r Repo) PushTicketToTheDatabase(t core.TicketElement) error {
 	fmt.Println("n : ", n)
 
 	if n != 0 {
-		fmt.Println("Here!!")
 		fmt.Println(t.StateID, t.ID, "<= data")
 		res, err := r.db.Exec("UPDATE tickets SET stateID = ? WHERE id = ? ;", t.StateID, t.ID)
 		if err != nil {
