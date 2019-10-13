@@ -1,0 +1,43 @@
+{{define "state"}}
+<div class="board-body-column" style="order: {{.Position}}">
+    <div class="state-overview">
+        <form method="POST" action="/manage">
+            <div class="state-header">{{.State}}</div>
+            <div class="state-info">
+                <div class="info-title">State</div>
+                <input type="text" placeholder="{{.State}}" name="newName" required />
+            </div>
+
+            <div class="state-info">
+                <div class="info-title">Limit</div>
+                <input type="number" placeholder="{{.Limit}}" min="0" name="newLimit" required />
+            </div>
+
+            <div class="state-info">
+                <div class="info-title">Position</div>
+                <input type="text" placeholder="{{.Position}}" name="newPosition" required />
+            </div>
+
+            <div class="state-info">
+                <div class="info-title">ID</div>
+                <div class="state-id">{{.ID}}</div>
+            </div>
+
+            <div class="state-footer">
+            
+                <div class="state-button">
+                    <input type="hidden" name="stateID" value="{{.ID}}" />
+                    <input type="hidden" name="action" value="edit-state" />
+                    <input type="submit" name="action" value="Update" />
+                </div>
+                <div class="state-button">
+                    <input type="hidden" name="stateID" value="{{.ID}}" />
+                    <input type="hidden" name="action" value="delete-state" />
+                    <input type="submit" name="action" value="Delete" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+{{end}}

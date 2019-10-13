@@ -33,7 +33,7 @@ func (e *Engine) RenderIndex(w http.ResponseWriter, r *http.Request) {
 // RenderManage and send HTML document to the server
 func (e *Engine) RenderManage(w http.ResponseWriter, r *http.Request) {
 	p := "../engine/templates/manage/"
-	temp := template.Must(template.ParseFiles(p + "index.html"))
+	temp := template.Must(template.ParseFiles(p+"index.html", p+"state.html"))
 	err := temp.Execute(w, e.board)
 	fmt.Println(err)
 }
