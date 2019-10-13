@@ -22,7 +22,12 @@ func (r Repo) GetBoard() core.Board {
 	var priority, limit, position int
 
 	// Get all states
-	allStates, err := r.db.Query(`SELECT * FROM states ORDER BY states.position ASC; `)
+	allStates, err := r.db.Query(`SELECT 
+									name, 
+									stateID, 
+									ticket_limit, 
+									position 
+									FROM states ORDER BY states.position ASC; `)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -54,7 +59,14 @@ func (r Repo) GetBoard() core.Board {
 	}
 
 	// Get tickets
-	tickets, err := r.db.Query("SELECT * FROM tickets ORDER BY tickets.priority DESC;")
+	tickets, err := r.db.Query(`SELECT 
+									title, 
+									desc, 
+									deadline, 
+									priority, 
+									id, 
+									stateID 
+									FROM tickets ORDER BY tickets.priority DESC ;`)
 	if err != nil {
 		fmt.Println(err)
 	}
