@@ -30,14 +30,16 @@
                     <input type="hidden" name="action" value="edit-state" />
                     <input type="submit" name="action" value="Update" />
                 </div>
+
+            </form>
+            <form action="/manage" method="POST">
                 <div class="state-button">
                     <input type="hidden" name="stateID" value="{{.ID}}" />
                     <input type="hidden" name="action" value="delete-state" />
                     <input type="submit" name="action" value="Delete" />
                 </div>
             </form>
-
-        </div>
+            </div>
     </div>
 </div>
 {{end}}
