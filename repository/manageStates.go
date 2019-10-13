@@ -81,5 +81,18 @@ func (r Repo) PushStateToTheDatabase(s core.State) error {
 
 // RemoveState deletes a state with a given ID from the database
 func (r Repo) RemoveState(stateID string) error {
+	res, err := r.db.Exec("DELETE FROM states WHERE stateID = ? ", stateID)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	n, err := res.RowsAffected()
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	fmt.Println("Updated", n, "rows")
 	return nil
 }

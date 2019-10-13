@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"net/http"
 )
 
@@ -12,12 +11,7 @@ func (s *Server) handleManageInput(w http.ResponseWriter, r *http.Request) {
 
 		break
 	case "delete-state":
-
-		// Fetch variables
-		stateID := r.FormValue("stateID")
-
-		fmt.Println("State deletion:")
-		fmt.Println("id: ", stateID)
+		s.handleDeleteState(w, r)
 
 		break
 	case "new-state":

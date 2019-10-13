@@ -27,7 +27,7 @@ func (s *Server) handleEditState(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	nPosition, err :=strconv.Atoi(newPosition)
+	nPosition, err := strconv.Atoi(newPosition)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -53,7 +53,18 @@ func (s *Server) handleEditState(w http.ResponseWriter, r *http.Request) {
 }
 
 // deleteState removes a given state from the database
-func (s *Server) handleDeleteState() {
+func (s *Server) handleDeleteState(w http.ResponseWriter, r *http.Request) {
+	// Fetch variables
+	stateID := r.FormValue("stateID")
+
+	fmt.Println("State deletion:")
+	fmt.Println("id: ", stateID)
+	
+	// Insert given info to the database
+	error := s.repo.RemoveState(stateID)
+	if error != nil {
+		fmt.Println(error)
+	}
 
 }
 

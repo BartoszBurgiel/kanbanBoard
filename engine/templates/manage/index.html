@@ -30,7 +30,7 @@
         
                     <div class="state-info">
                         <div class="info-title">Position</div>
-                        <input type="text" name="newPosition" required />
+                        <input type="number" name="newPosition" min="{{.StateCount}}" required />
                     </div>
         
                     <input type="hidden" name="action" value="new-state" />
