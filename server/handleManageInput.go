@@ -33,16 +33,15 @@ func (s *Server) handleManageInput(w http.ResponseWriter, r *http.Request) {
 		break
 	case "new-state":
 
-		// Fetch variables
-		newName := r.FormValue("newName")
-		newLimit := r.FormValue("newLimit")
-		newPosition := r.FormValue("newPosition")
+
 		//stateID := r.FormValue("stateID")
 
 		fmt.Println("State addition:")
 		fmt.Println("newName:", newName)
 		fmt.Println("newLimit:", newLimit)
 		fmt.Println("newPosition:", newPosition)
+
+		s.handleAddState(w, r)
 
 		break
 	}

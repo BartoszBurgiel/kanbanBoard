@@ -107,25 +107,3 @@ func (s *Server) handleDeleteTicket(w http.ResponseWriter, r *http.Request, boar
 	// Remove from the database
 	s.repo.RemoveTicket(ticketID)
 }
-
-func (s *Server) handleAddState(w http.ResponseWriter, r *http.Request) {
-	columnName := r.FormValue("columnName")
-	columnPosition := r.FormValue("columnPosition")
-	columnLimit := r.FormValue("columnLimit")
-
-	nPosition, err := strconv.Atoi(columnPosition)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	nLimit, err := strconv.Atoi(columnLimit)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	// Insert given info to the database
-	error := s.repo.AddNewState(columnName, nPosition, nLimit)
-	if error != nil {
-		fmt.Println(error)
-	}
-}

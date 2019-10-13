@@ -9,4 +9,6 @@ type SqliteRepository interface {
 	RemoveTicket(ticketID string) error
 
 	AddNewState(name string, position, limit int) error
+	PushStateToTheDatabase(core.State) error
+	RemoveState(stateID string) error
 }

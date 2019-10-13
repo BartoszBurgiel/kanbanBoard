@@ -17,9 +17,6 @@ func (s *Server) handleUserInput(w http.ResponseWriter, r *http.Request) {
 	case "delete-ticket":
 		s.handleDeleteTicket(w, r, board)
 		break
-	case "add-state":
-		s.handleAddState(w, r)
-		break
 	}
 
 	// Reset engine data
