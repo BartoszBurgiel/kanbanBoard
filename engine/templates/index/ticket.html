@@ -6,7 +6,7 @@
     <div class="ticket-input">
         <div>
             <form method="POST" action="/">
-                <select name="destinationID">
+                <select name="destination">
                     {{range .Destination}}
                     <option value="{{.DestID}}">{{.DestName}}</option>
                     {{end}}
