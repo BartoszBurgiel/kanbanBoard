@@ -51,8 +51,7 @@ func (r Repo) PushStateToTheDatabase(s core.State) error {
 	fmt.Println("n : ", n)
 
 	if n != 0 {
-		fmt.Println(t.StateID, t.ID, "<= data")
-		res, err := r.db.Exec("UPDATE states SET name = ?, limit = ?, position = ? WHERE id = ? ;", s.State, s.Limit, s.Position, s.ID)
+		res, err := r.db.Exec("UPDATE states SET name = ?, ticket_limit = ?, position = ? WHERE stateID = ? ;", s.State, s.Limit, s.Position, s.ID)
 		if err != nil {
 			fmt.Println(err)
 			return err
@@ -64,7 +63,7 @@ func (r Repo) PushStateToTheDatabase(s core.State) error {
 			return err
 		}
 	} else {
-		res, err := r.db.Exec("INSERT INTO states VALUES(?, ?, ?, ?) ;",s.State, s.ID, s.Limit, s.Position)
+		res, err := r.db.Exec("INSERT INTO states VALUES(?, ?, ?, ?) ;", s.State, s.ID, s.Limit, s.Position)
 		if err != nil {
 			fmt.Println(err)
 			return err

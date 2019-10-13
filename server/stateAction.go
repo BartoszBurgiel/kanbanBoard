@@ -2,27 +2,50 @@ package server
 
 import (
 	"fmt"
-	"kanbanBoard/core"
 	"net/http"
 	"strconv"
 )
 
 // editState updates a given state
-func (s *Server) handleEditState(st core.State) {
+func (s *Server) handleEditState(w http.ResponseWriter, r *http.Request) {
 
-	// Replace the state from the board with the given state
+	// Fetch variables
+	newName := r.FormValue("newName")
+	newLimit := r.FormValue("newLimit")
+	newPosition := r.FormValue("newPosition")
+	stateID := r.FormValue("stateID")
+
+	fmt.Println("State edition:")
+	fmt.Println("newName:", newName)
+	fmt.Println("newLimit:", newLimit)
+	fmt.Println("newPosition:", newPosition)
+	fmt.Println("stateID:", stateID)
+
+	// Convert limit and position to int
+	nLimit, err := strconv.Atoi(newLimit)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	nPosition, err :=strconv.Atoi(newPosition)
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	board := s.repo.GetBoard()
 
 	for i := 0; i < len(board.States); i++ {
 
 		// Search state with the same id
-		if st.ID == board.States[i].ID {
+		if stateID == board.States[i].ID {
 			// Replace
-			board.States[i] = st
+			board.States[i].State = newName
+			board.States[i].Position = nPosition
+			board.States[i].Limit = nLimit
 
 			// Put changes to the databse
-			s.repo.PushStateToTheDatabase(st)
+			s.repo.PushStateToTheDatabase(board.States[i])
+			s.engine.SetBoard(board)
 			break
 		}
 	}

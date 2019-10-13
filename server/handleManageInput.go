@@ -8,18 +8,7 @@ import (
 func (s *Server) handleManageInput(w http.ResponseWriter, r *http.Request) {
 	switch r.FormValue("action") {
 	case "edit-state":
-
-		// Fetch variables
-		newName := r.FormValue("newName")
-		newLimit := r.FormValue("newLimit")
-		newPosition := r.FormValue("newPosition")
-		stateID := r.FormValue("stateID")
-
-		fmt.Println("State edition:")
-		fmt.Println("newName:", newName)
-		fmt.Println("newLimit:", newLimit)
-		fmt.Println("newPosition:", newPosition)
-		fmt.Println("stateID:", stateID)
+		s.handleEditState(w, r)
 
 		break
 	case "delete-state":
