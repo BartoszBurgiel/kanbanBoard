@@ -116,6 +116,12 @@ func (r Repo) GetBoard() core.Board {
 		board.States = append(board.States, *v)
 	}
 
+	// Add StateCount
+	board = core.Board{
+		States:     board.States,
+		StateCount: len(board.States),
+	}
+
 	return board
 }
 

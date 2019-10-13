@@ -30,5 +30,6 @@ type State struct {
 
 // Board is a collection of all states with their tickets
 type Board struct {
-	States []State
+	States     []State
+	StateCount int
 }
