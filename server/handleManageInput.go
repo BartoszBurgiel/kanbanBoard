@@ -32,15 +32,6 @@ func (s *Server) handleManageInput(w http.ResponseWriter, r *http.Request) {
 
 		break
 	case "new-state":
-
-
-		//stateID := r.FormValue("stateID")
-
-		fmt.Println("State addition:")
-		fmt.Println("newName:", newName)
-		fmt.Println("newLimit:", newLimit)
-		fmt.Println("newPosition:", newPosition)
-
 		s.handleAddState(w, r)
 
 		break
