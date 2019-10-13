@@ -35,6 +35,7 @@ func (s *Server) init() error {
 	s.router.Route("/")["POST"] = http.HandlerFunc(s.handleUserInput)
 
 	s.router.Route("/manage")["GET"] = http.HandlerFunc(s.handleManageGet)
+	s.router.Route("/manage")["POST"] = http.HandlerFunc(s.handleManageInput)
 
 	return nil
 }
