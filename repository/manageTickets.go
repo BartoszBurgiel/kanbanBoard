@@ -89,13 +89,18 @@ func (r Repo) GetBoard() core.Board {
 
 			// If not current ticket -> "remove"
 			if s.Name != stateMap[ticketStateID].State {
-				tempStates = append(tempStates, struct {
-					DestName string
-					DestID   string
-				}{
-					DestName: s.Name,
-					DestID:   s.ID,
-				})
+
+				// If not over the limit
+				if stateMap[ticketStateID].Limit > len(tempStates) {
+
+					tempStates = append(tempStates, struct {
+						DestName string
+						DestID   string
+					}{
+						DestName: s.Name,
+						DestID:   s.ID,
+					})
+				}
 			}
 		}
 

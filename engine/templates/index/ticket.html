@@ -3,6 +3,31 @@
     <div class="ticket-header">{{.Title}}</div>
     <div class="ticket-desc">{{.Description}}</div>
    
+    <div class="ticket-input">
+        <div>
+            <form method="POST" action="/">
+                <select name="destinationID">
+                    {{range .Destination}}
+                    <option value="{{.DestID}}">{{.DestName}}</option>
+                    {{end}}
+                </select>
+                <input type="hidden" name="currentState" value="{{.StateID}}" />
+                <input type="hidden" name="ticketID" value="{{.ID}}" />
+                <input type="hidden" name="action" value="move-ticket" /> 
+                <input type="submit" name="action" value="Move" />
+            </form>
+        </div>
+
+        <div>
+            <form method="POST" action="/">
+                <input type="hidden" name="stateID" value="{{.StateID}}" />
+                <input type="hidden" name="ticketID" value="{{.ID}}" />
+                <input type="hidden" name="action" value="delete-ticket" /> 
+                <input type="submit" name="action" value="Delete" />
+            </form>
+        </div>
+    </div>
+
     <div class="ticket-footer">
         <div class="footer-element">
             {{.Deadline}}
