@@ -41,11 +41,15 @@ func (s *Server) init() error {
 
 // if client sends a get request -> render main page
 func (s *Server) handleIndexGET(w http.ResponseWriter, r *http.Request) {
+	// Load board
+	s.engine.SetBoard(s.repo.GetBoard())
 	s.engine.RenderIndex(w, r)
 }
 
 // if client sends a get request -> render manage page
 func (s *Server) handleManageGet(w http.ResponseWriter, r *http.Request) {
+	// Load board
+	s.engine.SetBoard(s.repo.GetBoard())
 	s.engine.RenderManage(w, r)
 }
 
