@@ -94,5 +94,21 @@ func (r Repo) RemoveState(stateID string) error {
 	}
 
 	fmt.Println("Updated", n, "rows")
+
+	// Remove all belonging tickets as well
+	resTickets, errTickets := r.db.Exec("DELETE FROM tickets WHERE stateID = ? ", stateID)
+	if errTickets != nil {
+		fmt.Println(errTickets)
+		return errTickets
+	}
+
+	nTickets, errTickets := resTickets.RowsAffected()
+	if errTickets != nil {
+		fmt.Println(errTickets)
+		return errTickets
+	}
+
+	fmt.Println("Updated", nTickets, "rows")
+
 	return nil
 }
